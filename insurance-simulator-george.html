@@ -1,40 +1,55 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="cs">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Life Insurance Simulator - George Style</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Životní Pojištění Simulator</title>
+    <style>
+        /* CSS Styles for responsive layout */
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+        }
+        .column {
+            flex: 50%;
+            padding: 10px;
+        }
+    </style>
 </head>
 <body>
-    <header>
-        <h1>Welcome to the George Life Insurance Simulator</h1>
-        <nav>
-            <ul>
-                <li><a href="#home">Home</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
-        </nav>
-    </header>
-    <main>
-        <section id="home">
-            <h2>Simulate Your Insurance</h2>
-            <form>
-                <label for="age">Age:</label>
-                <input type="number" id="age" name="age" required>
-                <label for="amount">Insurance Amount:</label>
-                <input type="number" id="amount" name="amount" required>
-                <button type="submit">Calculate</button>
-            </form>
-        </section>
-        <section id="about">
-            <h2>About This Simulator</h2>
-            <p>This simulator helps you understand the potential life insurance amounts based on your age.</p>
-        </section>
-    </main>
-    <footer>
-        <p>&copy; 2026 George Finance Group</p>
-    </footer>
+    <div class="container">
+        <div class="column">
+            <!-- Risk Inputs -->
+            <h2>Vstup rizik</h2>
+            <label for="risk1">Risiko 1:</label>
+            <input type="range" id="risk1" min="0" max="100"><br>
+            <label for="risk2">Risiko 2:</label>
+            <input type="range" id="risk2" min="0" max="100"><br>
+            <label for="risk3">Risiko 3:</label>
+            <input type="range" id="risk3" min="0" max="100"><br>
+            <label for="risk4">Risiko 4:</label>
+            <input type="range" id="risk4" min="0" max="100"><br>
+            <label for="risk5">Risiko 5:</label>
+            <input type="range" id="risk5" min="0" max="100"><br>
+            <label for="risk6">Risiko 6:</label>
+            <input type="range" id="risk6" min="0" max="100"><br>
+            <label for="risk7">Risiko 7:</label>
+            <input type="range" id="risk7" min="0" max="100"><br>
+        </div>
+        <div class="column" id="summaryPanel">
+            <h2>Souhrn</h2>
+            <div id="priceBreakdown"></div>
+            <div id="progressIndicator"></div>
+        </div>
+    </div>
+    <script>
+        // JavaScript Pricing Logic
+        function calculatePrice() {
+            // Implement pricing logic based on input risks
+        }
+    </script>
 </body>
 </html>
