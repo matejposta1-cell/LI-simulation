@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simulátor životního pojištění</title>
+    <title>Simulátor pojistného</title>
     <style>
         * {
             margin: 0;
@@ -12,436 +12,399 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-            min-height: 100vh;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', sans-serif;
+            background-color: #f4f7f9;
+            color: #333;
             padding: 20px;
         }
 
         .container {
-            max-width: 900px;
+            max-width: 1400px;
             margin: 0 auto;
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-            overflow: hidden;
+            display: grid;
+            grid-template-columns: 1fr 380px;
+            gap: 20px;
         }
 
         .header {
-            background: linear-gradient(135deg, #004a99 0%, #005cb8 100%);
-            color: white;
-            padding: 40px 30px;
+            grid-column: 1 / -1;
             text-align: center;
+            margin-bottom: 20px;
         }
 
         .header h1 {
-            font-size: 32px;
+            font-size: 28px;
+            color: #0074e8;
             margin-bottom: 8px;
-            font-weight: 700;
         }
 
         .header p {
             font-size: 14px;
-            opacity: 0.9;
+            color: #666;
         }
 
-        .content {
-            padding: 40px 30px;
+        .inputs-section {
+            background-color: #ffffff;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
         }
 
-        .form-section {
-            margin-bottom: 30px;
-        }
-
-        .form-group {
+        .input-group {
             margin-bottom: 28px;
         }
 
-        .form-group label {
-            display: block;
-            margin-bottom: 12px;
-            font-size: 14px;
-            font-weight: 600;
-            color: #2c3e50;
-            letter-spacing: 0.3px;
+        .input-group:last-child {
+            margin-bottom: 0;
         }
 
-        .input-row {
+        .label {
+            display: block;
+            font-weight: 600;
+            font-size: 14px;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .input-wrapper {
             display: flex;
-            gap: 15px;
+            gap: 12px;
             align-items: center;
         }
 
-        .slider-container {
+        .range-slider {
             flex: 1;
-        }
-
-        input[type="range"] {
-            width: 100%;
             height: 6px;
             border-radius: 3px;
-            background: #e0e0e0;
+            background: linear-gradient(to right, #e0e0e0, #e0e0e0);
             outline: none;
             -webkit-appearance: none;
             appearance: none;
-            cursor: pointer;
         }
 
-        input[type="range"]::-webkit-slider-thumb {
+        .range-slider::-webkit-slider-thumb {
             -webkit-appearance: none;
             appearance: none;
-            width: 22px;
-            height: 22px;
+            width: 20px;
+            height: 20px;
             border-radius: 50%;
-            background: #004a99;
+            background-color: #0074e8;
             cursor: pointer;
-            box-shadow: 0 2px 8px rgba(0, 74, 153, 0.3);
-            transition: all 0.2s ease;
+            box-shadow: 0 2px 4px rgba(0, 116, 232, 0.3);
+            transition: box-shadow 0.2s;
         }
 
-        input[type="range"]::-webkit-slider-thumb:hover {
-            background: #005cb8;
-            box-shadow: 0 4px 12px rgba(0, 74, 153, 0.4);
+        .range-slider::-webkit-slider-thumb:hover {
+            box-shadow: 0 4px 8px rgba(0, 116, 232, 0.4);
         }
 
-        input[type="range"]::-moz-range-thumb {
-            width: 22px;
-            height: 22px;
+        .range-slider::-moz-range-thumb {
+            width: 20px;
+            height: 20px;
             border-radius: 50%;
-            background: #004a99;
-            cursor: pointer;
+            background-color: #0074e8;
             border: none;
-            box-shadow: 0 2px 8px rgba(0, 74, 153, 0.3);
-            transition: all 0.2s ease;
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0, 116, 232, 0.3);
+            transition: box-shadow 0.2s;
         }
 
-        input[type="range"]::-moz-range-thumb:hover {
-            background: #005cb8;
-            box-shadow: 0 4px 12px rgba(0, 74, 153, 0.4);
+        .range-slider::-moz-range-thumb:hover {
+            box-shadow: 0 4px 8px rgba(0, 116, 232, 0.4);
         }
 
-        .display-value {
+        .value-display {
             min-width: 140px;
             text-align: right;
-            font-size: 16px;
-            font-weight: 700;
-            color: #004a99;
-            background: #f0f4f8;
-            padding: 8px 14px;
-            border-radius: 6px;
-            font-variant-numeric: tabular-nums;
-        }
-
-        .divider {
-            height: 1px;
-            background: #e8ecf1;
-            margin: 30px 0;
+            font-weight: 600;
+            font-size: 15px;
+            color: #0074e8;
+            white-space: nowrap;
         }
 
         .summary-panel {
-            background: linear-gradient(135deg, #f8f9fa 0%, #e8ecf1 100%);
-            border: 2px solid #004a99;
+            background-color: #ffffff;
             border-radius: 12px;
-            padding: 30px;
-            margin-top: 30px;
+            padding: 24px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            position: sticky;
+            top: 20px;
+            height: fit-content;
         }
 
         .summary-title {
-            font-size: 12px;
+            font-size: 16px;
             font-weight: 700;
+            color: #333;
+            margin-bottom: 18px;
+            border-bottom: 2px solid #f4f7f9;
+            padding-bottom: 12px;
+        }
+
+        .summary-breakdown {
+            font-size: 12px;
             color: #666;
-            text-transform: uppercase;
-            letter-spacing: 1px;
             margin-bottom: 16px;
+            line-height: 1.6;
+        }
+
+        .breakdown-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 6px 0;
+            border-bottom: 1px solid #f4f7f9;
+        }
+
+        .breakdown-item:last-child {
+            border-bottom: none;
         }
 
         .summary-row {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 12px 0;
-            border-bottom: 1px solid rgba(0, 74, 153, 0.1);
-        }
-
-        .summary-row:last-child {
-            border-bottom: none;
-        }
-
-        .summary-label {
             font-size: 13px;
-            color: #2c3e50;
-            font-weight: 500;
+            margin-bottom: 12px;
+            padding: 8px 0;
         }
 
-        .summary-value {
-            font-size: 13px;
+        .summary-row.discount {
+            color: #1e8e3e;
             font-weight: 600;
-            color: #004a99;
-            font-variant-numeric: tabular-nums;
         }
 
-        .discount-info {
-            color: #27ae60 !important;
+        .summary-row.discount.hidden {
+            display: none;
+        }
+
+        .summary-row.final {
+            border-top: 2px solid #f4f7f9;
+            padding-top: 14px;
+            margin-top: 14px;
+            font-size: 18px;
             font-weight: 700;
+            color: #0074e8;
         }
 
-        .final-price {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-top: 20px;
-            padding-top: 20px;
-            border-top: 2px solid rgba(0, 74, 153, 0.2);
-            background: linear-gradient(90deg, rgba(0, 74, 153, 0.02) 0%, rgba(0, 74, 153, 0.05) 100%);
-            padding: 20px;
-            border-radius: 8px;
+        @media (max-width: 1024px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+
+            .summary-panel {
+                position: relative;
+                top: auto;
+            }
         }
 
-        .final-label {
-            font-size: 14px;
-            font-weight: 700;
-            color: #2c3e50;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .final-value {
-            font-size: 28px;
-            font-weight: 900;
-            color: #004a99;
-            font-variant-numeric: tabular-nums;
-        }
-
-        .discount-amount {
-            color: #27ae60;
-            font-weight: 700;
-        }
-
-        .no-discount {
-            color: #999;
+        .currency {
+            color: #666;
+            font-weight: 400;
         }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
-            <h1>Simulátor životního pojištění</h1>
-            <p>Vypočítejte si pojistné pro věk 20 let</p>
+            <h1>Simulátor pojistného</h1>
+            <p>Vypočítejte si své měsíční pojistné na základě vybraného rozsahu pojištění</p>
         </div>
 
-        <div class="content">
-            <div class="form-section">
-                <!-- Smrt -->
-                <div class="form-group">
-                    <label for="smrt">Smrt (Death)</label>
-                    <div class="input-row">
-                        <div class="slider-container">
-                            <input type="range" id="smrt" min="0" max="10000000" step="100000" value="0">
-                        </div>
-                        <div class="display-value" id="smrtDisplay">0 Kč</div>
-                    </div>
-                </div>
-
-                <!-- Vážná onemocnění -->
-                <div class="form-group">
-                    <label for="vyznamna">Vážná onemocnění (Critical Illness)</label>
-                    <div class="input-row">
-                        <div class="slider-container">
-                            <input type="range" id="vyznamna" min="0" max="10000000" step="100000" value="0">
-                        </div>
-                        <div class="display-value" id="vyznamnaDisplay">0 Kč</div>
-                    </div>
-                </div>
-
-                <!-- Invalidita 3. stupně -->
-                <div class="form-group">
-                    <label for="inv3">Invalidita 3. stupně (Invalidity Degree 3)</label>
-                    <div class="input-row">
-                        <div class="slider-container">
-                            <input type="range" id="inv3" min="0" max="10000000" step="100000" value="0">
-                        </div>
-                        <div class="display-value" id="inv3Display">0 Kč</div>
-                    </div>
-                </div>
-
-                <!-- Invalidita 1. a 2. stupně -->
-                <div class="form-group">
-                    <label for="inv12">Invalidita 1. a 2. stupně (Invalidity Degrees 1 & 2)</label>
-                    <div class="input-row">
-                        <div class="slider-container">
-                            <input type="range" id="inv12" min="0" max="10000000" step="100000" value="0">
-                        </div>
-                        <div class="display-value" id="inv12Display">0 Kč</div>
-                    </div>
-                </div>
-
-                <!-- Trvalé následky úrazu -->
-                <div class="form-group">
-                    <label for="trvalenasledky">Trvalé následky úrazu (Permanent Accident)</label>
-                    <div class="input-row">
-                        <div class="slider-container">
-                            <input type="range" id="trvalenasledky" min="0" max="10000000" step="100000" value="0">
-                        </div>
-                        <div class="display-value" id="trvalenasledkyDisplay">0 Kč</div>
-                    </div>
-                </div>
-
-                <!-- Pracovní neschopnost -->
-                <div class="form-group">
-                    <label for="pracovni">Pracovní neschopnost (Incapacity for Work) - Kč/den</label>
-                    <div class="input-row">
-                        <div class="slider-container">
-                            <input type="range" id="pracovni" min="0" max="2000" step="100" value="0">
-                        </div>
-                        <div class="display-value" id="pracovniDisplay">0 Kč/den</div>
-                    </div>
+        <div class="inputs-section">
+            <!-- Death Coverage -->
+            <div class="input-group">
+                <label class="label">Pojištění pro případ smrti</label>
+                <div class="input-wrapper">
+                    <input type="range" class="range-slider" id="death-slider" min="0" max="10000000" step="100000" value="0">
+                    <div class="value-display" id="death-value">0 Kč</div>
                 </div>
             </div>
 
-            <div class="divider"></div>
-
-            <!-- Summary Panel -->
-            <div class="summary-panel">
-                <div class="summary-title">Shrnutí pojistného</div>
-
-                <div class="summary-row">
-                    <span class="summary-label">Součet pro slevu (Smrt + Vážná onemocnění + Inv. 3. st.):</span>
-                    <span class="summary-value" id="soubetZaSlev">0 Kč</span>
+            <!-- Serious Illness -->
+            <div class="input-group">
+                <label class="label">Vážná onemocnění</label>
+                <div class="input-wrapper">
+                    <input type="range" class="range-slider" id="illness-slider" min="0" max="10000000" step="100000" value="0">
+                    <div class="value-display" id="illness-value">0 Kč</div>
                 </div>
+            </div>
 
-                <div class="summary-row">
-                    <span class="summary-label">Základní měsíční pojistné (bez slevy):</span>
-                    <span class="summary-value" id="basePrice">0 Kč</span>
+            <!-- Disability Grade 3 -->
+            <div class="input-group">
+                <label class="label">Invalidita 3. stupně</label>
+                <div class="input-wrapper">
+                    <input type="range" class="range-slider" id="disability3-slider" min="0" max="10000000" step="100000" value="0">
+                    <div class="value-display" id="disability3-value">0 Kč</div>
                 </div>
+            </div>
 
-                <div class="summary-row">
-                    <span class="summary-label">Sleva (Komplexní sleva):</span>
-                    <span class="summary-value discount-info" id="discountInfo">0%: 0 Kč</span>
+            <!-- Disability Grade 1-2 -->
+            <div class="input-group">
+                <label class="label">Invalidita 1. a 2. stupně</label>
+                <div class="input-wrapper">
+                    <input type="range" class="range-slider" id="disability12-slider" min="0" max="10000000" step="100000" value="0">
+                    <div class="value-display" id="disability12-value">0 Kč</div>
                 </div>
+            </div>
 
-                <div class="final-price">
-                    <span class="final-label">Celkové měsíční pojistné k úhradě:</span>
-                    <span class="final-value" id="finalPrice">0 Kč</span>
+            <!-- Permanent Injury Consequences -->
+            <div class="input-group">
+                <label class="label">Trvalé následky úrazu</label>
+                <div class="input-wrapper">
+                    <input type="range" class="range-slider" id="injury-slider" min="0" max="10000000" step="100000" value="0">
+                    <div class="value-display" id="injury-value">0 Kč</div>
                 </div>
+            </div>
+
+            <!-- Work Incapacity -->
+            <div class="input-group">
+                <label class="label">Pracovní neschopnost</label>
+                <div class="input-wrapper">
+                    <input type="range" class="range-slider" id="incapacity-slider" min="0" max="2000" step="100" value="0">
+                    <div class="value-display" id="incapacity-value">0 Kč/den</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Summary Panel -->
+        <div class="summary-panel">
+            <div class="summary-title">Shrnutí modelace</div>
+            
+            <div class="summary-breakdown" id="breakdown">
+                <!-- Dynamically populated -->
+            </div>
+
+            <div class="summary-row">
+                <span>Základní měsíční pojistné:</span>
+                <span id="base-premium">0 Kč</span>
+            </div>
+
+            <div class="summary-row">
+                <span>Součet pojistných částek pro slevu:</span>
+                <span id="discount-sum">0 Kč</span>
+            </div>
+
+            <div class="summary-row discount" id="discount-row">
+                <span id="discount-label">Sleva za komplexní rozsah (0%):</span>
+                <span id="discount-amount">-0 Kč</span>
+            </div>
+
+            <div class="summary-row final">
+                <span>Celkové měsíční pojistné:</span>
+                <span id="final-premium">0 Kč</span>
             </div>
         </div>
     </div>
 
     <script>
-        // Rate per 100,000 CZK (monthly)
-        const RATES = {
-            smrt: 15,                    // Smrt: 15 CZK per 100,000
-            vyznamna: 35,                // Vážná onemocnění: 35 CZK per 100,000
-            inv3: 30,                    // Invalidita 3. st.: 30 CZK per 100,000
-            inv12: 35,                   // Invalidita 1. a 2. st.: 35 CZK per 100,000
-            trvalenasledky: 10,          // Trvalé následky úrazu: 10 CZK per 100,000
-            pracovni: 40                 // Pracovní neschopnost: 40 CZK per 100 CZK/day
-        };
+        // Risk definitions
+        const risks = [
+            { id: 'death', label: 'Pojištění pro případ smrti', rate: 24.50, sliderId: 'death-slider', valueId: 'death-value', max: 10000000, step: 100000, suffix: ' Kč' },
+            { id: 'illness', label: 'Vážná onemocnění', rate: 48.20, sliderId: 'illness-slider', valueId: 'illness-value', max: 10000000, step: 100000, suffix: ' Kč' },
+            { id: 'disability3', label: 'Invalidita 3. stupně', rate: 42.10, sliderId: 'disability3-slider', valueId: 'disability3-value', max: 10000000, step: 100000, suffix: ' Kč' },
+            { id: 'disability12', label: 'Invalidita 1. a 2. stupně', rate: 54.30, sliderId: 'disability12-slider', valueId: 'disability12-value', max: 10000000, step: 100000, suffix: ' Kč' },
+            { id: 'injury', label: 'Trvalé následky úrazu', rate: 13.50, sliderId: 'injury-slider', valueId: 'injury-value', max: 10000000, step: 100000, suffix: ' Kč' },
+            { id: 'incapacity', label: 'Pracovní neschopnost', rate: 62.00, sliderId: 'incapacity-slider', valueId: 'incapacity-value', max: 2000, step: 100, suffix: ' Kč/den', divisor: 100 }
+        ];
 
-        // Elements
-        const inputs = {
-            smrt: document.getElementById('smrt'),
-            vyznamna: document.getElementById('vyznamna'),
-            inv3: document.getElementById('inv3'),
-            inv12: document.getElementById('inv12'),
-            trvalenasledky: document.getElementById('trvalenasledky'),
-            pracovni: document.getElementById('pracovni')
-        };
-
-        const displays = {
-            smrt: document.getElementById('smrtDisplay'),
-            vyznamna: document.getElementById('vyznamnaDisplay'),
-            inv3: document.getElementById('inv3Display'),
-            inv12: document.getElementById('inv12Display'),
-            trvalenasledky: document.getElementById('trvalenasledkyDisplay'),
-            pracovni: document.getElementById('pracovniDisplay')
-        };
-
-        const summaryElements = {
-            soubetZaSlev: document.getElementById('soubetZaSlev'),
-            basePrice: document.getElementById('basePrice'),
-            discountInfo: document.getElementById('discountInfo'),
-            finalPrice: document.getElementById('finalPrice')
-        };
-
-        // Format currency
-        function formatCurrency(value) {
-            return new Intl.NumberFormat('cs-CZ', {
-                style: 'currency',
-                currency: 'CZK',
-                minimumFractionDigits: 0,
-                maximumFractionDigits: 0
-            }).format(value);
-        }
-
-        // Update display values and calculate totals
-        function updateCalculations() {
-            // Update all display values
-            displays.smrt.textContent = formatCurrency(inputs.smrt.value);
-            displays.vyznamna.textContent = formatCurrency(inputs.vyznamna.value);
-            displays.inv3.textContent = formatCurrency(inputs.inv3.value);
-            displays.inv12.textContent = formatCurrency(inputs.inv12.value);
-            displays.trvalenasledky.textContent = formatCurrency(inputs.trvalenasledky.value);
-            displays.pracovni.textContent = formatCurrency(inputs.pracovni.value) + '/den';
-
-            // Get values
-            const smrt = parseFloat(inputs.smrt.value);
-            const vyznamna = parseFloat(inputs.vyznamna.value);
-            const inv3 = parseFloat(inputs.inv3.value);
-            const inv12 = parseFloat(inputs.inv12.value);
-            const trvalenasledky = parseFloat(inputs.trvalenasledky.value);
-            const pracovni = parseFloat(inputs.pracovni.value);
-
-            // Calculate "Součet pro slevu"
-            const soubetZaSlev = smrt + vyznamna + inv3;
-            summaryElements.soubetZaSlev.textContent = formatCurrency(soubetZaSlev);
-
-            // Calculate base prices
-            const smrtPrice = (smrt / 100000) * RATES.smrt;
-            const vyznamnaPrice = (vyznamna / 100000) * RATES.vyznamna;
-            const inv3Price = (inv3 / 100000) * RATES.inv3;
-            const inv12Price = (inv12 / 100000) * RATES.inv12;
-            const trvalenasledkyPrice = (trvalenasledky / 100000) * RATES.trvalenasledky;
-            const pracovniPrice = (pracovni / 100) * RATES.pracovni;
-
-            const basePrice = smrtPrice + vyznamnaPrice + inv3Price + inv12Price + trvalenasledkyPrice + pracovniPrice;
-            summaryElements.basePrice.textContent = formatCurrency(basePrice);
-
-            // Calculate discount
-            let discountPercent = 0;
-            if (soubetZaSlev >= 5000000) {
-                discountPercent = 30;
-            } else if (soubetZaSlev >= 3000000) {
-                discountPercent = 20;
-            } else if (soubetZaSlev >= 1000000) {
-                discountPercent = 10;
-            }
-
-            const discountAmount = (basePrice * discountPercent) / 100;
-            const finalPrice = basePrice - discountAmount;
-
-            // Update discount info
-            if (discountPercent > 0) {
-                summaryElements.discountInfo.textContent = `Sleva ${discountPercent}%: ${formatCurrency(-discountAmount)}`;
-                summaryElements.discountInfo.classList.add('discount-amount');
-                summaryElements.discountInfo.classList.remove('no-discount');
-            } else {
-                summaryElements.discountInfo.textContent = '0%: 0 Kč';
-                summaryElements.discountInfo.classList.remove('discount-amount');
-                summaryElements.discountInfo.classList.add('no-discount');
-            }
-
-            // Update final price
-            summaryElements.finalPrice.textContent = formatCurrency(finalPrice);
-        }
-
-        // Add event listeners
-        Object.values(inputs).forEach(input => {
-            input.addEventListener('input', updateCalculations);
+        // Store current values
+        const values = {};
+        risks.forEach(risk => {
+            values[risk.id] = 0;
         });
 
-        // Initial calculation
-        updateCalculations();
+        // Format number with spaces
+        function formatNumber(num) {
+            return Math.round(num).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+        }
+
+        // Update value display
+        function updateValueDisplay(risk) {
+            const slider = document.getElementById(risk.sliderId);
+            const displayElement = document.getElementById(risk.valueId);
+            const value = parseInt(slider.value);
+            values[risk.id] = value;
+
+            const displayValue = risk.divisor ? value / risk.divisor : value;
+            displayElement.textContent = formatNumber(displayValue) + risk.suffix;
+        }
+
+        // Calculate base price for a risk
+        function calculateRiskPrice(risk) {
+            const value = values[risk.id];
+            const divisor = risk.divisor || 100000;
+            return (value / divisor) * risk.rate;
+        }
+
+        // Update summary
+        function updateSummary() {
+            // Calculate base premium
+            let basePremium = 0;
+            risks.forEach(risk => {
+                basePremium += calculateRiskPrice(risk);
+            });
+
+            // Calculate discount sum (only Smrt, Vážná onemocnění, Invalidita 3. st.)
+            const discountSum = values['death'] + values['illness'] + values['disability3'];
+
+            // Determine discount percentage
+            let discountPercentage = 0;
+            if (discountSum >= 5000000) {
+                discountPercentage = 30;
+            } else if (discountSum >= 3000000) {
+                discountPercentage = 20;
+            } else if (discountSum >= 1000000) {
+                discountPercentage = 10;
+            }
+
+            // Calculate discount amount and final premium
+            const discountAmount = basePremium * (discountPercentage / 100);
+            const finalPremium = basePremium - discountAmount;
+
+            // Update breakdown
+            const breakdownDiv = document.getElementById('breakdown');
+            let breakdownHTML = '';
+            risks.forEach(risk => {
+                if (values[risk.id] > 0) {
+                    const riskPrice = calculateRiskPrice(risk);
+                    const displayValue = risk.divisor ? values[risk.id] / risk.divisor : values[risk.id];
+                    breakdownHTML += `<div class=\"breakdown-item\"><span>${risk.label}:</span><span>${formatNumber(displayValue)} ${risk.divisor ? 'Kč/den' : 'Kč'} → ${formatNumber(riskPrice)} Kč/měs.</span></div>`;
+                }
+            });
+            breakdownDiv.innerHTML = breakdownHTML;
+
+            // Update summary displays
+            document.getElementById('base-premium').textContent = formatNumber(basePremium) + ' Kč';
+            document.getElementById('discount-sum').textContent = formatNumber(discountSum) + ' Kč';
+
+            // Update discount row
+            const discountRow = document.getElementById('discount-row');
+            const discountLabel = document.getElementById('discount-label');
+            const discountAmountEl = document.getElementById('discount-amount');
+
+            if (discountPercentage > 0) {
+                discountRow.classList.remove('hidden');
+                discountLabel.textContent = `Sleva za komplexní rozsah (${discountPercentage}%):`;
+                discountAmountEl.textContent = `-${formatNumber(discountAmount)} Kč`;
+            } else {
+                discountRow.classList.add('hidden');
+            }
+
+            // Update final premium
+            document.getElementById('final-premium').textContent = formatNumber(finalPremium) + ' Kč';
+        }
+
+        // Initialize event listeners
+        risks.forEach(risk => {
+            const slider = document.getElementById(risk.sliderId);
+            slider.addEventListener('input', () => {
+                updateValueDisplay(risk);
+                updateSummary();
+            });
+        });
+
+        // Initial update
+        updateSummary();
     </script>
 </body>
 </html>
