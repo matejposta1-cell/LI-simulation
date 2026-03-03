@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simulátor pojistného</title>
+    <title>Modelace Životního Pojištění - George Design</title>
     <style>
         * {
             margin: 0;
@@ -12,29 +12,464 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', sans-serif;
-            background-color: #f4f7f9;
-            color: #333;
-            padding: 20px;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', Helvetica, Arial, sans-serif;
+            background-color: #f0f3f5;
+            color: #1a1a1a;
+            padding: 40px 20px;
         }
 
         .container {
-            max-width: 1400px;
+            max-width: 1200px;
             margin: 0 auto;
             display: grid;
-            grid-template-columns: 1fr 380px;
-            gap: 20px;
+            grid-template-columns: 1fr 400px;
+            gap: 30px;
         }
 
-        .header {
-            grid-column: 1 / -1;
-            text-align: center;
+        .inputs-section {
+            background-color: #ffffff;
+            border-radius: 16px;
+            padding: 32px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.06);
+        }
+
+        .inputs-section h2 {
+            font-size: 24px;
+            margin-bottom: 24px;
+            color: #1a1a1a;
+        }
+
+        .input-group {
+            margin-bottom: 24px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #f0f3f5;
+        }
+
+        .input-group:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+
+        .label-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .label {
+            font-weight: 600;
+            font-size: 15px;
+            color: #333;
+        }
+
+        .type-select {
+            padding: 6px 12px;
+            border-radius: 8px;
+            border: 1px solid #d0d7dd;
+            background-color: #f4f8fb;
+            color: #1a1a1a;
+            font-size: 13px;
+            font-weight: 500;
+            outline: none;
+            cursor: pointer;
+            transition: border-color 0.2s;
+        }
+
+        .type-select:hover {
+            border-color: #00a9e0;
+        }
+
+        /* Nový styl pro textová pole */
+        .input-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .amount-input {
+            width: 100%;
+            padding: 14px 16px;
+            font-size: 18px;
+            font-weight: 700;
+            color: #00a9e0;
+            background-color: #ffffff;
+            border: 2px solid #e0e5e9;
+            border-radius: 8px;
+            outline: none;
+            transition: all 0.2s ease;
+            text-align: right;
+            padding-right: 50px; /* Místo pro text "Kč" */
+        }
+
+        .amount-input:focus {
+            border-color: #00a9e0;
+            box-shadow: 0 0 0 4px rgba(0, 169, 224, 0.1);
+        }
+
+        .currency-suffix {
+            position: absolute;
+            right: 16px;
+            font-size: 16px;
+            font-weight: 600;
+            color: #888;
+            pointer-events: none;
+        }
+
+        .summary-panel {
+            background-color: #ffffff;
+            border-radius: 16px;
+            padding: 32px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.06);
+            position: sticky;
+            top: 40px;
+            height: fit-content;
+        }
+
+        .summary-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin-bottom: 24px;
+            border-bottom: 2px solid #f0f3f5;
+            padding-bottom: 16px;
+        }
+
+        .summary-breakdown {
+            font-size: 14px;
+            color: #555;
             margin-bottom: 20px;
         }
 
-        .header h1 {
-            font-size: 28px;
-            color: #0074e8;
+        .breakdown-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px dashed #e0e5e9;
+        }
+
+        .breakdown-item span small {
+            display: block;
+            font-size: 11px;
+            color: #888;
+            margin-top: 2px;
+        }
+
+        .breakdown-item:last-child {
+            border-bottom: none;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 14px;
+            margin-bottom: 16px;
+            color: #555;
+        }
+
+        .summary-row strong {
+            color: #1a1a1a;
+        }
+
+        .summary-row.discount {
+            color: #43b02a;
+            font-weight: 700;
+            background: #eef8eb;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 24px;
+        }
+
+        .summary-row.discount.hidden {
+            display: none;
+        }
+
+        .summary-row.final {
+            border-top: 2px solid #f0f3f5;
+            padding-top: 24px;
+            margin-top: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            color: #1a1a1a;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 8px;
+        }
+
+        .final-price-value {
+            font-size: 36px;
+            font-weight: 800;
+            color: #00a9e0;
+            align-self: flex-end;
+        }
+
+        .min-premium-note {
+            font-size: 12px;
+            color: #e67e22;
+            font-weight: normal;
+            align-self: flex-end;
+            margin-top: -5px;
+            display: none;
+        }
+
+        .progress-bar-container {
+            width: 100%;
+            height: 6px;
+            background: #e0e5e9;
+            border-radius: 3px;
+            margin-top: 8px;
+            overflow: hidden;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            background: #43b02a;
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        @media (max-width: 1024px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+            .summary-panel {
+                position: relative;
+                top: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        
+        <div class="inputs-section">
+            <h2>Nastavení pojistného krytí</h2>
+            <div id="inputs-container"></div>
+        </div>
+
+        <div class="summary-panel">
+            <div class="summary-title">Shrnutí modelace</div>
+            
+            <div class="summary-breakdown" id="breakdown"></div>
+
+            <div class="summary-row">
+                <span>Základní měsíční pojistné:</span>
+                <strong id="base-premium">0 Kč</strong>
+            </div>
+
+            <div class="summary-row" style="flex-direction: column; align-items: flex-start; gap: 4px;">
+                <div style="width: 100%; display: flex; justify-content: space-between;">
+                    <span>Součet pro slevu (Smrt, VO, Inv 3):</span>
+                    <strong id="discount-sum">0 Kč</strong>
+                </div>
+                <div class="progress-bar-container">
+                    <div class="progress-bar-fill" id="discount-progress"></div>
+                </div>
+            </div>
+
+            <div class="summary-row discount hidden" id="discount-row">
+                <span id="discount-label">Sleva za komplexní rozsah (0%):</span>
+                <span id="discount-amount">-0 Kč</span>
+            </div>
+
+            <div class="summary-row final">
+                <span>Celkové měsíční pojistné k úhradě</span>
+                <div class="final-price-value" id="final-premium">0 Kč</div>
+                <div class="min-premium-note" id="min-premium-note">*Aplikováno min. pojistné 300 Kč</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const risks = [
+            { id: 'death', label: 'Pojištění pro případ smrti', rate: 24.50, max: 20000000, suffix: 'Kč', divisor: 100000, hasDecrease: true },
+            { id: 'illness', label: 'Vážná onemocnění', rate: 48.20, max: 20000000, suffix: 'Kč', divisor: 100000, hasDecrease: true },
+            { id: 'disability3', label: 'Invalidita 3. stupně', rate: 42.10, max: 20000000, suffix: 'Kč', divisor: 100000, hasDecrease: true },
+            { id: 'disability2', label: 'Invalidita 2. stupně', rate: 30.00, max: 20000000, suffix: 'Kč', divisor: 100000, hasDecrease: true },
+            { id: 'disability1', label: 'Invalidita 1. stupně', rate: 24.30, max: 20000000, suffix: 'Kč', divisor: 100000, hasDecrease: true },
+            { id: 'injury', label: 'Trvalé následky úrazu', rate: 13.50, max: 20000000, suffix: 'Kč', divisor: 100000, hasDecrease: false },
+            { id: 'incapacity', label: 'Pracovní neschopnost', rate: 62.00, max: 5000, suffix: 'Kč/den', divisor: 100, hasDecrease: false }
+        ];
+
+        const values = {};
+        const types = {};
+
+        function formatNumber(num) {
+            if (num === 0) return "0";
+            return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+        }
+
+        const container = document.getElementById('inputs-container');
+        risks.forEach(risk => {
+            values[risk.id] = 0;
+            types[risk.id] = 'constant';
+
+            let typeSelectHTML = '';
+            if (risk.hasDecrease) {
+                typeSelectHTML = `
+                    <select class="type-select" id="${risk.id}-type">
+                        <option value="constant">Konstantní částka</option>
+                        <option value="linear">Lineárně klesající</option>
+                        <option value="annuity">Anuitně klesající</option>
+                    </select>
+                `;
+            }
+
+            const html = `
+                <div class="input-group">
+                    <div class="label-row">
+                        <label class="label">${risk.label}</label>
+                        ${typeSelectHTML}
+                    </div>
+                    <div class="input-wrapper">
+                        <input type="text" class="amount-input" id="${risk.id}-input" value="0" inputmode="numeric">
+                        <span class="currency-suffix">${risk.suffix}</span>
+                    </div>
+                </div>
+            `;
+            container.insertAdjacentHTML('beforeend', html);
+        });
+
+        function calculateRiskPrice(risk) {
+            const value = values[risk.id];
+            const type = types[risk.id];
+            let typeMultiplier = 1.0;
+
+            if (type === 'linear') typeMultiplier = 0.5;
+            if (type === 'annuity') typeMultiplier = 0.65;
+
+            return (value / risk.divisor) * risk.rate * typeMultiplier;
+        }
+
+        function calculateDiscountSumValue(riskId) {
+            const value = values[riskId];
+            const type = types[riskId];
+            if (type === 'linear' || type === 'annuity') {
+                return value * 0.5;
+            }
+            return value;
+        }
+
+        function updateUI() {
+            let basePremium = 0;
+            let breakdownHTML = '';
+            
+            risks.forEach(risk => {
+                const value = values[risk.id];
+                const riskPrice = calculateRiskPrice(risk);
+                basePremium += riskPrice;
+
+                if (value > 0) {
+                    let typeLabel = '';
+                    if (types[risk.id] === 'linear') typeLabel = ' (Lineárně klesající)';
+                    if (types[risk.id] === 'annuity') typeLabel = ' (Anuitně klesající)';
+
+                    breakdownHTML += `
+                        <div class="breakdown-item">
+                            <span>${risk.label} <small>${formatNumber(value)} ${risk.suffix}${typeLabel}</small></span>
+                            <strong>${formatNumber(riskPrice)} Kč</strong>
+                        </div>
+                    `;
+                }
+            });
+
+            const discountSum = calculateDiscountSumValue('death') + 
+                                calculateDiscountSumValue('illness') + 
+                                calculateDiscountSumValue('disability3');
+            
+            let discountPct = 0;
+            if (discountSum >= 5000000) discountPct = 30;
+            else if (discountSum >= 3000000) discountPct = 20;
+            else if (discountSum >= 1000000) discountPct = 10;
+
+            const discountAmount = basePremium * (discountPct / 100);
+            let finalPremium = basePremium - discountAmount;
+
+            document.getElementById('breakdown').innerHTML = breakdownHTML;
+            document.getElementById('base-premium').textContent = formatNumber(basePremium) + ' Kč';
+            document.getElementById('discount-sum').textContent = formatNumber(discountSum) + ' Kč';
+            
+            const progress = Math.min((discountSum / 5000000) * 100, 100);
+            document.getElementById('discount-progress').style.width = `${progress}%`;
+
+            const discountRow = document.getElementById('discount-row');
+            if (discountPct > 0) {
+                discountRow.classList.remove('hidden');
+                document.getElementById('discount-label').textContent = `Sleva za rozsah (${discountPct}%):`;
+                document.getElementById('discount-amount').textContent = `-${formatNumber(discountAmount)} Kč`;
+            } else {
+                discountRow.classList.add('hidden');
+            }
+
+            const minPremiumNote = document.getElementById('min-premium-note');
+            if (basePremium > 0 && finalPremium < 300) {
+                finalPremium = 300;
+                minPremiumNote.style.display = 'block';
+            } else {
+                minPremiumNote.style.display = 'none';
+            }
+
+            document.getElementById('final-premium').textContent = formatNumber(finalPremium) + ' Kč';
+        }
+
+        // Obsluha textových polí místo sliderů
+        risks.forEach(risk => {
+            const inputField = document.getElementById(`${risk.id}-input`);
+            
+            // Když uživatel klikne do pole a je tam nula, pole se vyprázdní, aby mohl rovnou psát
+            inputField.addEventListener('focus', (e) => {
+                if (values[risk.id] === 0) {
+                    e.target.value = '';
+                }
+            });
+
+            // Když uživatel odejde z pole a nechá ho prázdné, vrátí se tam nula
+            inputField.addEventListener('blur', (e) => {
+                if (e.target.value.trim() === '') {
+                    e.target.value = '0';
+                    values[risk.id] = 0;
+                    updateUI();
+                }
+            });
+
+            // Při každém napsaném znaku
+            inputField.addEventListener('input', (e) => {
+                // Odstraní všechno kromě čísel
+                let rawValue = e.target.value.replace(/\D/g, '');
+                
+                if (rawValue === '') {
+                    values[risk.id] = 0;
+                    e.target.value = '';
+                } else {
+                    let numValue = parseInt(rawValue, 10);
+                    
+                    // Ochrana proti přehnaně velkým číslům
+                    if (numValue > risk.max) numValue = risk.max;
+                    
+                    values[risk.id] = numValue;
+                    
+                    // Vrátí do pole naformátované číslo s mezerami
+                    e.target.value = formatNumber(numValue);
+                }
+                
+                updateUI();
+            });
+
+            if (risk.hasDecrease) {
+                const typeSelect = document.getElementById(`${risk.id}-type`);
+                typeSelect.addEventListener('change', (e) => {
+                    types[risk.id] = e.target.value;
+                    updateUI();
+                });
+            }
+        });
+
+        updateUI();
+    </script>
+</body>
+</html>            color: #0074e8;
             margin-bottom: 8px;
         }
 
