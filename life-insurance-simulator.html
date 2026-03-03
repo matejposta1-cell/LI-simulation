@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="cs">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Life Insurance Training Simulator</title>
+    <title>Modelace Životního Pojištění - George Design</title>
     <style>
         * {
             margin: 0;
@@ -12,390 +12,350 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', Helvetica, Arial, sans-serif;
+            background-color: #f0f3f5; /* George světle šedé pozadí */
+            color: #1a1a1a;
+            padding: 40px 20px;
         }
 
         .container {
-            background: white;
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 400px;
+            gap: 30px;
+        }
+
+        .inputs-section {
+            background-color: #ffffff;
             border-radius: 16px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            padding: 40px;
-            max-width: 700px;
-            width: 100%;
+            padding: 32px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.06); /* Měkké, velké stíny */
         }
 
-        .header {
-            text-align: center;
+        .inputs-section h2 {
+            font-size: 24px;
+            margin-bottom: 24px;
+            color: #1a1a1a;
+        }
+
+        .input-group {
             margin-bottom: 30px;
         }
 
-        .header h1 {
+        .input-group:last-child {
+            margin-bottom: 0;
+        }
+
+        .label {
+            display: block;
+            font-weight: 600;
+            font-size: 15px;
             color: #333;
-            font-size: 28px;
-            margin-bottom: 8px;
+            margin-bottom: 12px;
         }
 
-        .header p {
-            color: #999;
+        .input-wrapper {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .range-slider {
+            flex: 1;
+            height: 6px;
+            border-radius: 3px;
+            background: #e0e5e9;
+            outline: none;
+            -webkit-appearance: none;
+            appearance: none;
+        }
+
+        .range-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background-color: #00a9e0; /* George azurová modrá */
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(0, 169, 224, 0.4);
+            transition: transform 0.1s, box-shadow 0.2s;
+        }
+
+        .range-slider::-webkit-slider-thumb:hover {
+            transform: scale(1.1);
+            box-shadow: 0 4px 12px rgba(0, 169, 224, 0.5);
+        }
+
+        .value-display {
+            min-width: 130px;
+            text-align: right;
+            font-weight: 700;
+            font-size: 16px;
+            color: #00a9e0;
+            background: #f4f8fb;
+            padding: 8px 12px;
+            border-radius: 8px;
+            white-space: nowrap;
+        }
+
+        .summary-panel {
+            background-color: #ffffff;
+            border-radius: 16px;
+            padding: 32px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.06);
+            position: sticky;
+            top: 40px;
+            height: fit-content;
+        }
+
+        .summary-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin-bottom: 24px;
+            border-bottom: 2px solid #f0f3f5;
+            padding-bottom: 16px;
+        }
+
+        .summary-breakdown {
             font-size: 14px;
-        }
-
-        .form-section {
-            margin-bottom: 30px;
-        }
-
-        .form-group {
+            color: #555;
             margin-bottom: 20px;
         }
 
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            color: #333;
-            font-weight: 600;
-            font-size: 14px;
-        }
-
-        .form-group input,
-        .form-group input[type="range"] {
-            width: 100%;
-            padding: 12px;
-            border: 2px solid #e0e0e0;
-            border-radius: 8px;
-            font-size: 16px;
-            transition: border-color 0.3s;
-        }
-
-        .form-group input:focus {
-            outline: none;
-            border-color: #667eea;
-        }
-
-        .slider-container {
-            position: relative;
-        }
-
-        .form-group input[type="range"] {
-            padding: 0;
-            height: 8px;
-            cursor: pointer;
-            -webkit-appearance: none;
-            appearance: none;
-        }
-
-        .form-group input[type="range"]::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            appearance: none;
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            background: #667eea;
-            cursor: pointer;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-        }
-
-        .form-group input[type="range"]::-moz-range-thumb {
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            background: #667eea;
-            cursor: pointer;
-            border: none;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-        }
-
-        .slider-value {
-            display: inline-block;
-            margin-left: 10px;
-            color: #667eea;
-            font-weight: 600;
-            min-width: 120px;
-        }
-
-        .results-section {
-            background: #f8f9fa;
-            border-radius: 12px;
-            padding: 20px;
-            margin-top: 30px;
-        }
-
-        .results-section h2 {
-            color: #333;
-            font-size: 16px;
-            margin-bottom: 15px;
-            font-weight: 600;
-        }
-
-        .calculation-row {
+        .breakdown-item {
             display: flex;
             justify-content: space-between;
-            margin-bottom: 10px;
-            color: #666;
-            font-size: 14px;
+            padding: 8px 0;
+            border-bottom: 1px dashed #e0e5e9;
         }
 
-        .calculation-row.highlight {
-            color: #333;
-            font-weight: 600;
+        .breakdown-item:last-child {
+            border-bottom: none;
         }
 
-        .calculation-row span:last-child {
-            text-align: right;
-        }
-
-        .divider {
-            height: 1px;
-            background: #e0e0e0;
-            margin: 15px 0;
-        }
-
-        .final-premium {
+        .summary-row {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 20px;
+            font-size: 14px;
+            margin-bottom: 16px;
+            color: #555;
+        }
+
+        .summary-row strong {
+            color: #1a1a1a;
+        }
+
+        .summary-row.discount {
+            color: #43b02a; /* George zářivě zelená */
+            font-weight: 700;
+            background: #eef8eb;
+            padding: 12px;
             border-radius: 8px;
-            font-size: 18px;
+            margin-bottom: 24px;
+        }
+
+        .summary-row.discount.hidden {
+            display: none;
+        }
+
+        .summary-row.final {
+            border-top: 2px solid #f0f3f5;
+            padding-top: 24px;
+            margin-top: 8px;
+            font-size: 16px;
             font-weight: 600;
+            color: #1a1a1a;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 8px;
         }
 
-        .final-premium-value {
-            font-size: 24px;
+        .final-price-value {
+            font-size: 36px;
+            font-weight: 800;
+            color: #00a9e0;
+            align-self: flex-end;
         }
 
-        .badge {
-            display: inline-block;
-            background: rgba(255, 255, 255, 0.2);
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 12px;
-            margin-left: 10px;
+        .progress-bar-container {
+            width: 100%;
+            height: 6px;
+            background: #e0e5e9;
+            border-radius: 3px;
+            margin-top: 8px;
+            overflow: hidden;
         }
 
-        .badge.applied {
-            background: rgba(76, 175, 80, 0.3);
-            color: #4caf50;
+        .progress-bar-fill {
+            height: 100%;
+            background: #43b02a;
+            width: 0%;
+            transition: width 0.3s ease;
         }
 
-        .note {
-            color: #999;
-            font-size: 12px;
-            margin-top: 10px;
-            font-style: italic;
-        }
-
-        @media (max-width: 600px) {
+        @media (max-width: 1024px) {
             .container {
-                padding: 20px;
+                grid-template-columns: 1fr;
             }
-
-            .header h1 {
-                font-size: 24px;
-            }
-
-            .final-premium {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 10px;
+            .summary-panel {
+                position: relative;
+                top: auto;
             }
         }
     </style>
 </head>
 <body>
-
-<div class="container">
-    <div class="header">
-        <h1>💰 Life Insurance Simulator</h1>
-        <p>Calculate your monthly premium based on your coverage needs</p>
-    </div>
-
-    <div class="form-section">
-        <div class="form-group">
-            <label for="age">Client Age (years)</label>
-            <input type="number" id="age" min="18" max="100" value="35" placeholder="Enter your age">
+    <div class="container">
+        
+        <div class="inputs-section">
+            <h2>Nastavení pojistného krytí</h2>
+            
+            <div id="sliders-container">
+                </div>
         </div>
 
-        <div class="form-group">
-            <label for="duration">Policy Duration (years)</label>
-            <input type="number" id="duration" min="1" max="50" value="15" placeholder="Enter duration in years">
-        </div>
+        <div class="summary-panel">
+            <div class="summary-title">Shrnutí modelace</div>
+            
+            <div class="summary-breakdown" id="breakdown">
+                </div>
 
-        <div class="form-group">
-            <label for="deathRisk">
-                Death Risk Coverage Amount (CZK)
-                <span class="slider-value" id="deathRiskValue">500,000 CZK</span>
-            </label>
-            <input type="range" id="deathRisk" min="100000" max="5000000" value="500000" step="50000">
-        </div>
+            <div class="summary-row">
+                <span>Základní měsíční pojistné:</span>
+                <strong id="base-premium">0 Kč</strong>
+            </div>
 
-        <div class="form-group">
-            <label for="invalidityRisk">
-                Invalidity Risk Coverage Amount (CZK)
-                <span class="slider-value" id="invalidityRiskValue">300,000 CZK</span>
-            </label>
-            <input type="range" id="invalidityRisk" min="100000" max="5000000" value="300000" step="50000">
-        </div>
-    </div>
+            <div class="summary-row" style="flex-direction: column; align-items: flex-start; gap: 4px;">
+                <div style="width: 100%; display: flex; justify-content: space-between;">
+                    <span>Součet pro slevu (Smrt, VO, Inv 3):</span>
+                    <strong id="discount-sum">0 Kč</strong>
+                </div>
+                <div class="progress-bar-container">
+                    <div class="progress-bar-fill" id="discount-progress"></div>
+                </div>
+            </div>
 
-    <div class="results-section">
-        <h2>📊 Premium Calculation Breakdown</h2>
+            <div class="summary-row discount hidden" id="discount-row">
+                <span id="discount-label">Sleva za komplexní rozsah (0%):</span>
+                <span id="discount-amount">-0 Kč</span>
+            </div>
 
-        <div class="calculation-row">
-            <span>Base Price:</span>
-            <span id="basePrice">0 CZK</span>
-        </div>
-
-        <div class="calculation-row" id="ageSurchargeRow" style="display: none;">
-            <span>Age Surcharge (40+ years, +30%):</span>
-            <span id="ageSurcharge">0 CZK</span>
-        </div>
-
-        <div class="calculation-row" id="durationRow" style="display: none;">
-            <span id="durationLabel">Duration Surcharge/Discount:</span>
-            <span id="durationAmount">0 CZK</span>
-        </div>
-
-        <div class="calculation-row" id="comprehensiveDiscountRow" style="display: none;">
-            <span>Comprehensive Discount (Both risks >1M CZK, -15%):</span>
-            <span id="comprehensiveDiscount">0 CZK</span>
-        </div>
-
-        <div class="divider"></div>
-
-        <div class="final-premium">
-            <span>Monthly Premium:</span>
-            <span class="final-premium-value" id="finalPremium">0 CZK</span>
-        </div>
-
-        <div class="note">
-            💡 Adjust the sliders and inputs to see how your premium changes in real-time.
+            <div class="summary-row final">
+                <span>Celkové měsíční pojistné k úhradě</span>
+                <div class="final-price-value" id="final-premium">0 Kč</div>
+            </div>
         </div>
     </div>
-</div>
 
-<script>
-    const ageInput = document.getElementById('age');
-    const durationInput = document.getElementById('duration');
-    const deathRiskInput = document.getElementById('deathRisk');
-    const invalidityRiskInput = document.getElementById('invalidityRisk');
+    <script>
+        // Opravené a rozdělené definice rizik
+        const risks = [
+            { id: 'death', label: 'Pojištění pro případ smrti', rate: 24.50, max: 10000000, step: 100000, suffix: ' Kč', divisor: 100000 },
+            { id: 'illness', label: 'Vážná onemocnění', rate: 48.20, max: 10000000, step: 100000, suffix: ' Kč', divisor: 100000 },
+            { id: 'disability3', label: 'Invalidita 3. stupně', rate: 42.10, max: 10000000, step: 100000, suffix: ' Kč', divisor: 100000 },
+            { id: 'disability2', label: 'Invalidita 2. stupně', rate: 30.00, max: 10000000, step: 100000, suffix: ' Kč', divisor: 100000 },
+            { id: 'disability1', label: 'Invalidita 1. stupně', rate: 24.30, max: 10000000, step: 100000, suffix: ' Kč', divisor: 100000 },
+            { id: 'injury', label: 'Trvalé následky úrazu', rate: 13.50, max: 10000000, step: 100000, suffix: ' Kč', divisor: 100000 },
+            { id: 'incapacity', label: 'Pracovní neschopnost', rate: 62.00, max: 2000, step: 100, suffix: ' Kč/den', divisor: 100 }
+        ];
 
-    const deathRiskValue = document.getElementById('deathRiskValue');
-    const invalidityRiskValue = document.getElementById('invalidityRiskValue');
+        const values = {};
 
-    const basePriceDisplay = document.getElementById('basePrice');
-    const ageSurchargeDisplay = document.getElementById('ageSurcharge');
-    const durationAmountDisplay = document.getElementById('durationAmount');
-    const comprehensiveDiscountDisplay = document.getElementById('comprehensiveDiscount');
-    const finalPremiumDisplay = document.getElementById('finalPremium');
-
-    const ageSurchargeRow = document.getElementById('ageSurchargeRow');
-    const durationRow = document.getElementById('durationRow');
-    const comprehensiveDiscountRow = document.getElementById('comprehensiveDiscountRow');
-    const durationLabel = document.getElementById('durationLabel');
-
-    function formatCZK(value) {
-        return new Intl.NumberFormat('cs-CZ', {
-            style: 'currency',
-            currency: 'CZK',
-            minimumFractionDigits: 2,
-            maximumFractionDigits: 2
-        }).format(value);
-    }
-
-    function formatNumber(value) {
-        return new Intl.NumberFormat('cs-CZ').format(value);
-    }
-
-    function updateSliderDisplay(input, display) {
-        display.textContent = formatNumber(parseInt(input.value)) + ' CZK';
-    }
-
-    function calculatePremium() {
-        const age = parseInt(ageInput.value) || 0;
-        const duration = parseInt(durationInput.value) || 0;
-        const deathRisk = parseFloat(deathRiskInput.value) || 0;
-        const invalidityRisk = parseFloat(invalidityRiskInput.value) || 0;
-
-        // Base Price: (Death Risk / 1000) * 1.5 + (Invalidity Risk / 500) * 2.5
-        let basePrice = (deathRisk / 1000) * 1.5 + (invalidityRisk / 500) * 2.5;
-
-        let totalPrice = basePrice;
-        let ageSurcharge = 0;
-        let durationAdjustment = 0;
-        let comprehensiveDiscount = 0;
-
-        // Age Surcharge: If over 40, multiply by 1.3
-        if (age > 40) {
-            ageSurcharge = basePrice * 0.3; // 30% surcharge
-            totalPrice += ageSurcharge;
-            ageSurchargeRow.style.display = 'flex';
-            ageSurchargeDisplay.textContent = '+' + formatCZK(ageSurcharge);
-        } else {
-            ageSurchargeRow.style.display = 'none';
+        function formatNumber(num) {
+            return Math.round(num).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
         }
 
-        // Duration Penalty/Bonus
-        if (duration < 10) {
-            // 10% surcharge
-            durationAdjustment = totalPrice * 0.1;
-            totalPrice += durationAdjustment;
-            durationLabel.textContent = 'Duration Surcharge (<10 years, +10%):';
-            durationRow.style.display = 'flex';
-            durationAmountDisplay.textContent = '+' + formatCZK(durationAdjustment);
-        } else if (duration > 20) {
-            // 5% discount
-            durationAdjustment = totalPrice * 0.05;
-            totalPrice -= durationAdjustment;
-            durationLabel.textContent = 'Duration Discount (>20 years, -5%):';
-            durationRow.style.display = 'flex';
-            durationAmountDisplay.textContent = '-' + formatCZK(durationAdjustment);
-        } else {
-            durationRow.style.display = 'none';
+        // Vykreslení sliderů do HTML
+        const container = document.getElementById('sliders-container');
+        risks.forEach(risk => {
+            values[risk.id] = 0;
+            const html = `
+                <div class="input-group">
+                    <label class="label">${risk.label}</label>
+                    <div class="input-wrapper">
+                        <input type="range" class="range-slider" id="${risk.id}-slider" min="0" max="${risk.max}" step="${risk.step}" value="0">
+                        <div class="value-display" id="${risk.id}-value">0${risk.suffix}</div>
+                    </div>
+                </div>
+            `;
+            container.insertAdjacentHTML('beforeend', html);
+        });
+
+        // Výpočet ceny za jedno riziko (opravená matematika)
+        function calculateRiskPrice(risk) {
+            const value = values[risk.id];
+            return (value / risk.divisor) * risk.rate;
         }
 
-        // Comprehensive Discount: Both risks > 1M CZK = 15% discount
-        if (deathRisk > 1000000 && invalidityRisk > 1000000) {
-            comprehensiveDiscount = totalPrice * 0.15;
-            totalPrice -= comprehensiveDiscount;
-            comprehensiveDiscountRow.style.display = 'flex';
-            comprehensiveDiscountDisplay.textContent = '-' + formatCZK(comprehensiveDiscount);
-        } else {
-            comprehensiveDiscountRow.style.display = 'none';
+        function updateUI() {
+            let basePremium = 0;
+            let breakdownHTML = '';
+            
+            risks.forEach(risk => {
+                const value = values[risk.id];
+                const riskPrice = calculateRiskPrice(risk);
+                basePremium += riskPrice;
+
+                if (value > 0) {
+                    breakdownHTML += `
+                        <div class="breakdown-item">
+                            <span>${risk.label}</span>
+                            <strong>${formatNumber(riskPrice)} Kč</strong>
+                        </div>
+                    `;
+                }
+            });
+
+            // Logika slev
+            const discountSum = values['death'] + values['illness'] + values['disability3'];
+            let discountPct = 0;
+            if (discountSum >= 5000000) discountPct = 30;
+            else if (discountSum >= 3000000) discountPct = 20;
+            else if (discountSum >= 1000000) discountPct = 10;
+
+            const discountAmount = basePremium * (discountPct / 100);
+            const finalPremium = basePremium - discountAmount;
+
+            // Zápis do panelu
+            document.getElementById('breakdown').innerHTML = breakdownHTML;
+            document.getElementById('base-premium').textContent = formatNumber(basePremium) + ' Kč';
+            document.getElementById('discount-sum').textContent = formatNumber(discountSum) + ' Kč';
+            
+            // Progress bar slevy
+            const progress = Math.min((discountSum / 5000000) * 100, 100);
+            document.getElementById('discount-progress').style.width = `${progress}%`;
+
+            const discountRow = document.getElementById('discount-row');
+            if (discountPct > 0) {
+                discountRow.classList.remove('hidden');
+                document.getElementById('discount-label').textContent = `Sleva za rozsah (${discountPct}%):`;
+                document.getElementById('discount-amount').textContent = `-${formatNumber(discountAmount)} Kč`;
+            } else {
+                discountRow.classList.add('hidden');
+            }
+
+            document.getElementById('final-premium').textContent = formatNumber(finalPremium) + ' Kč';
         }
 
-        // Convert annual to monthly
-        const monthlyPremium = totalPrice / 12;
+        // Aktivace event listenerů
+        risks.forEach(risk => {
+            const slider = document.getElementById(`${risk.id}-slider`);
+            const display = document.getElementById(`${risk.id}-value`);
+            
+            slider.addEventListener('input', (e) => {
+                const val = parseInt(e.target.value);
+                values[risk.id] = val;
+                // Už žádné dělení pro zobrazení! Píše přesně to, co je na slideru.
+                display.textContent = formatNumber(val) + risk.suffix;
+                updateUI();
+            });
+        });
 
-        // Update displays
-        basePriceDisplay.textContent = formatCZK(basePrice);
-        finalPremiumDisplay.textContent = formatCZK(monthlyPremium);
-    }
-
-    // Event listeners
-    ageInput.addEventListener('input', calculatePremium);
-    durationInput.addEventListener('input', calculatePremium);
-    deathRiskInput.addEventListener('input', () => {
-        updateSliderDisplay(deathRiskInput, deathRiskValue);
-        calculatePremium();
-    });
-    invalidityRiskInput.addEventListener('input', () => {
-        updateSliderDisplay(invalidityRiskInput, invalidityRiskValue);
-        calculatePremium();
-    });
-
-    // Initial calculation and display
-    updateSliderDisplay(deathRiskInput, deathRiskValue);
-    updateSliderDisplay(invalidityRiskInput, invalidityRiskValue);
-    calculatePremium();
-</script>
-
+        updateUI();
+    </script>
 </body>
 </html>
