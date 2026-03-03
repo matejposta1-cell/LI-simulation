@@ -51,12 +51,11 @@
             border-bottom: none;
         }
 
-        /* Oprava zalamování na menších obrazovkách */
         .label-row {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            flex-wrap: wrap; /* Dovolí roletce odskočit na další řádek, pokud není místo */
+            flex-wrap: wrap;
             gap: 10px;
             margin-bottom: 10px;
         }
@@ -299,9 +298,10 @@
         const values = {};
         const types = {};
 
+        // Opravená funkce pro formátování (odstraní desetinná místa)
         function formatNumber(num) {
             if (num === 0) return "0";
-            return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+            return Math.round(num).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
         }
 
         const container = document.getElementById('inputs-container');
