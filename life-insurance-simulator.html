@@ -13,7 +13,7 @@
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', Helvetica, Arial, sans-serif;
-            background-color: #f0f3f5; /* George světle šedé pozadí */
+            background-color: #f0f3f5;
             color: #1a1a1a;
             padding: 40px 20px;
         }
@@ -30,7 +30,7 @@
             background-color: #ffffff;
             border-radius: 16px;
             padding: 32px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.06); /* Měkké, velké stíny */
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.06);
         }
 
         .inputs-section h2 {
@@ -41,18 +41,44 @@
 
         .input-group {
             margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #f0f3f5;
         }
 
         .input-group:last-child {
             margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+
+        .label-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
         }
 
         .label {
-            display: block;
             font-weight: 600;
             font-size: 15px;
             color: #333;
-            margin-bottom: 12px;
+        }
+
+        .type-select {
+            padding: 6px 12px;
+            border-radius: 8px;
+            border: 1px solid #d0d7dd;
+            background-color: #f4f8fb;
+            color: #1a1a1a;
+            font-size: 13px;
+            font-weight: 500;
+            outline: none;
+            cursor: pointer;
+            transition: border-color 0.2s;
+        }
+
+        .type-select:hover {
+            border-color: #00a9e0;
         }
 
         .input-wrapper {
@@ -77,7 +103,7 @@
             width: 24px;
             height: 24px;
             border-radius: 50%;
-            background-color: #00a9e0; /* George azurová modrá */
+            background-color: #00a9e0;
             cursor: pointer;
             box-shadow: 0 2px 8px rgba(0, 169, 224, 0.4);
             transition: transform 0.1s, box-shadow 0.2s;
@@ -132,6 +158,13 @@
             border-bottom: 1px dashed #e0e5e9;
         }
 
+        .breakdown-item span small {
+            display: block;
+            font-size: 11px;
+            color: #888;
+            margin-top: 2px;
+        }
+
         .breakdown-item:last-child {
             border-bottom: none;
         }
@@ -150,7 +183,7 @@
         }
 
         .summary-row.discount {
-            color: #43b02a; /* George zářivě zelená */
+            color: #43b02a;
             font-weight: 700;
             background: #eef8eb;
             padding: 12px;
@@ -179,6 +212,15 @@
             font-weight: 800;
             color: #00a9e0;
             align-self: flex-end;
+        }
+
+        .min-premium-note {
+            font-size: 12px;
+            color: #e67e22;
+            font-weight: normal;
+            align-self: flex-end;
+            margin-top: -5px;
+            display: none;
         }
 
         .progress-bar-container {
@@ -213,16 +255,13 @@
         
         <div class="inputs-section">
             <h2>Nastavení pojistného krytí</h2>
-            
-            <div id="sliders-container">
-                </div>
+            <div id="sliders-container"></div>
         </div>
 
         <div class="summary-panel">
             <div class="summary-title">Shrnutí modelace</div>
             
-            <div class="summary-breakdown" id="breakdown">
-                </div>
+            <div class="summary-breakdown" id="breakdown"></div>
 
             <div class="summary-row">
                 <span>Základní měsíční pojistné:</span>
@@ -247,35 +286,51 @@
             <div class="summary-row final">
                 <span>Celkové měsíční pojistné k úhradě</span>
                 <div class="final-price-value" id="final-premium">0 Kč</div>
+                <div class="min-premium-note" id="min-premium-note">*Aplikováno min. pojistné 300 Kč</div>
             </div>
         </div>
     </div>
 
     <script>
-        // Opravené a rozdělené definice rizik
         const risks = [
-            { id: 'death', label: 'Pojištění pro případ smrti', rate: 24.50, max: 10000000, step: 100000, suffix: ' Kč', divisor: 100000 },
-            { id: 'illness', label: 'Vážná onemocnění', rate: 48.20, max: 10000000, step: 100000, suffix: ' Kč', divisor: 100000 },
-            { id: 'disability3', label: 'Invalidita 3. stupně', rate: 42.10, max: 10000000, step: 100000, suffix: ' Kč', divisor: 100000 },
-            { id: 'disability2', label: 'Invalidita 2. stupně', rate: 30.00, max: 10000000, step: 100000, suffix: ' Kč', divisor: 100000 },
-            { id: 'disability1', label: 'Invalidita 1. stupně', rate: 24.30, max: 10000000, step: 100000, suffix: ' Kč', divisor: 100000 },
-            { id: 'injury', label: 'Trvalé následky úrazu', rate: 13.50, max: 10000000, step: 100000, suffix: ' Kč', divisor: 100000 },
-            { id: 'incapacity', label: 'Pracovní neschopnost', rate: 62.00, max: 2000, step: 100, suffix: ' Kč/den', divisor: 100 }
+            { id: 'death', label: 'Pojištění pro případ smrti', rate: 24.50, max: 10000000, step: 100000, suffix: ' Kč', divisor: 100000, hasDecrease: true },
+            { id: 'illness', label: 'Vážná onemocnění', rate: 48.20, max: 10000000, step: 100000, suffix: ' Kč', divisor: 100000, hasDecrease: true },
+            { id: 'disability3', label: 'Invalidita 3. stupně', rate: 42.10, max: 10000000, step: 100000, suffix: ' Kč', divisor: 100000, hasDecrease: true },
+            { id: 'disability2', label: 'Invalidita 2. stupně', rate: 30.00, max: 10000000, step: 100000, suffix: ' Kč', divisor: 100000, hasDecrease: true },
+            { id: 'disability1', label: 'Invalidita 1. stupně', rate: 24.30, max: 10000000, step: 100000, suffix: ' Kč', divisor: 100000, hasDecrease: true },
+            { id: 'injury', label: 'Trvalé následky úrazu', rate: 13.50, max: 10000000, step: 100000, suffix: ' Kč', divisor: 100000, hasDecrease: false },
+            { id: 'incapacity', label: 'Pracovní neschopnost', rate: 62.00, max: 2000, step: 100, suffix: ' Kč/den', divisor: 100, hasDecrease: false }
         ];
 
         const values = {};
+        const types = {}; // Ukládá vybraný typ (konstantní, lineární, anuitní)
 
         function formatNumber(num) {
             return Math.round(num).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
         }
 
-        // Vykreslení sliderů do HTML
         const container = document.getElementById('sliders-container');
         risks.forEach(risk => {
             values[risk.id] = 0;
+            types[risk.id] = 'constant';
+
+            let typeSelectHTML = '';
+            if (risk.hasDecrease) {
+                typeSelectHTML = `
+                    <select class="type-select" id="${risk.id}-type">
+                        <option value="constant">Konstantní částka</option>
+                        <option value="linear">Lineárně klesající</option>
+                        <option value="annuity">Anuitně klesající</option>
+                    </select>
+                `;
+            }
+
             const html = `
                 <div class="input-group">
-                    <label class="label">${risk.label}</label>
+                    <div class="label-row">
+                        <label class="label">${risk.label}</label>
+                        ${typeSelectHTML}
+                    </div>
                     <div class="input-wrapper">
                         <input type="range" class="range-slider" id="${risk.id}-slider" min="0" max="${risk.max}" step="${risk.step}" value="0">
                         <div class="value-display" id="${risk.id}-value">0${risk.suffix}</div>
@@ -285,10 +340,26 @@
             container.insertAdjacentHTML('beforeend', html);
         });
 
-        // Výpočet ceny za jedno riziko (opravená matematika)
+        // Výpočet ceny za riziko s ohledem na klesající částky
         function calculateRiskPrice(risk) {
             const value = values[risk.id];
-            return (value / risk.divisor) * risk.rate;
+            const type = types[risk.id];
+            let typeMultiplier = 1.0;
+
+            if (type === 'linear') typeMultiplier = 0.5; // Cca 50% sleva na pojistném u lineární
+            if (type === 'annuity') typeMultiplier = 0.65; // Cca 35% sleva na pojistném u anuitní
+
+            return (value / risk.divisor) * risk.rate * typeMultiplier;
+        }
+
+        // Výpočet částky, která se počítá do komplexní slevy (klesající se počítají jen z 50 %)
+        function calculateDiscountSumValue(riskId) {
+            const value = values[riskId];
+            const type = types[riskId];
+            if (type === 'linear' || type === 'annuity') {
+                return value * 0.5;
+            }
+            return value;
         }
 
         function updateUI() {
@@ -301,9 +372,13 @@
                 basePremium += riskPrice;
 
                 if (value > 0) {
+                    let typeLabel = '';
+                    if (types[risk.id] === 'linear') typeLabel = ' (Lineárně klesající)';
+                    if (types[risk.id] === 'annuity') typeLabel = ' (Anuitně klesající)';
+
                     breakdownHTML += `
                         <div class="breakdown-item">
-                            <span>${risk.label}</span>
+                            <span>${risk.label} <small>${formatNumber(value)}${risk.suffix}${typeLabel}</small></span>
                             <strong>${formatNumber(riskPrice)} Kč</strong>
                         </div>
                     `;
@@ -311,14 +386,17 @@
             });
 
             // Logika slev
-            const discountSum = values['death'] + values['illness'] + values['disability3'];
+            const discountSum = calculateDiscountSumValue('death') + 
+                                calculateDiscountSumValue('illness') + 
+                                calculateDiscountSumValue('disability3');
+            
             let discountPct = 0;
             if (discountSum >= 5000000) discountPct = 30;
             else if (discountSum >= 3000000) discountPct = 20;
             else if (discountSum >= 1000000) discountPct = 10;
 
             const discountAmount = basePremium * (discountPct / 100);
-            const finalPremium = basePremium - discountAmount;
+            let finalPremium = basePremium - discountAmount;
 
             // Zápis do panelu
             document.getElementById('breakdown').innerHTML = breakdownHTML;
@@ -338,10 +416,18 @@
                 discountRow.classList.add('hidden');
             }
 
+            // Aplikace pravidla minimálního pojistného (300 Kč)
+            const minPremiumNote = document.getElementById('min-premium-note');
+            if (basePremium > 0 && finalPremium < 300) {
+                finalPremium = 300;
+                minPremiumNote.style.display = 'block';
+            } else {
+                minPremiumNote.style.display = 'none';
+            }
+
             document.getElementById('final-premium').textContent = formatNumber(finalPremium) + ' Kč';
         }
 
-        // Aktivace event listenerů
         risks.forEach(risk => {
             const slider = document.getElementById(`${risk.id}-slider`);
             const display = document.getElementById(`${risk.id}-value`);
@@ -349,10 +435,17 @@
             slider.addEventListener('input', (e) => {
                 const val = parseInt(e.target.value);
                 values[risk.id] = val;
-                // Už žádné dělení pro zobrazení! Píše přesně to, co je na slideru.
                 display.textContent = formatNumber(val) + risk.suffix;
                 updateUI();
             });
+
+            if (risk.hasDecrease) {
+                const typeSelect = document.getElementById(`${risk.id}-type`);
+                typeSelect.addEventListener('change', (e) => {
+                    types[risk.id] = e.target.value;
+                    updateUI();
+                });
+            }
         });
 
         updateUI();
