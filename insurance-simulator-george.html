@@ -149,7 +149,6 @@
             color: var(--text-main);
         }
 
-        /* Nové přepínací tlačítka (Toggle Group) */
         .toggle-group {
             display: flex;
             background-color: #f4f8fb;
@@ -213,6 +212,102 @@
             font-weight: 600;
             color: var(--text-muted);
             pointer-events: none;
+        }
+
+        /* Nastavení individuálního konce (Toggle a Věk) */
+        .individual-end-container {
+            margin-top: 12px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .switch-container {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            color: var(--text-muted);
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 36px;
+            height: 20px;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: var(--border-color);
+            transition: .3s;
+            border-radius: 20px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 14px;
+            width: 14px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: .3s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider {
+            background-color: var(--george-blue);
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(16px);
+        }
+
+        .end-age-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        .end-age-wrapper.visible {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .end-age-input {
+            width: 60px;
+            padding: 4px 8px;
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--text-main);
+            border: 2px solid var(--border-color);
+            border-radius: 6px;
+            outline: none;
+            text-align: center;
+            transition: border-color 0.2s;
+        }
+
+        .end-age-input:focus {
+            border-color: var(--george-blue);
         }
 
         /* Pravý panel (Shrnutí) */
@@ -384,7 +479,7 @@
             <div class="client-card">
                 <div class="client-info">
                     <h1>Klient: Modelový Příklad</h1>
-                    <p>Věk při vstupu: 30 let | Povolání: Administrativa (1. RS)</p>
+                    <p>Věk při vstupu: 30 let | Standardní konec smlouvy: v 65 letech (pojistná doba 35 let)</p>
                 </div>
             </div>
 
@@ -443,6 +538,11 @@
     </div>
 
     <script>
+        // Modelový klient: 30 let. Standardní konec smlouvy: 65 let. Doba trvání 35 let.
+        const CLIENT_AGE = 30;
+        const STANDARD_END_AGE = 65;
+        const STANDARD_DURATION = STANDARD_END_AGE - CLIENT_AGE;
+
         const risks = [
             { id: 'death', label: 'Pojištění pro případ smrti', rate: 24.50, max: 20000000, suffix: 'Kč', divisor: 100000, hasDecrease: true },
             { id: 'illness', label: 'Vážná onemocnění', rate: 48.20, max: 20000000, suffix: 'Kč', divisor: 100000, hasDecrease: true },
@@ -455,6 +555,8 @@
 
         const values = {};
         const types = {};
+        const indivEndEnabled = {};
+        const indivEndAges = {};
 
         function formatNumber(num) {
             if (num === 0) return "0";
@@ -465,8 +567,9 @@
         risks.forEach(risk => {
             values[risk.id] = 0;
             types[risk.id] = 'constant';
+            indivEndEnabled[risk.id] = false;
+            indivEndAges[risk.id] = STANDARD_END_AGE; // Default je do 65 let
 
-            // Nahrazení selectu za toggle tlačítka
             let toggleHTML = '';
             if (risk.hasDecrease) {
                 toggleHTML = `
@@ -487,19 +590,47 @@
                         <input type="text" class="amount-input" id="${risk.id}-input" value="" placeholder="0" inputmode="numeric">
                         <span class="currency-suffix">${risk.suffix}</span>
                     </div>
+                    
+                    <div class="individual-end-container">
+                        <label class="switch-container">
+                            <div class="switch">
+                                <input type="checkbox" class="indiv-end-toggle" data-risk="${risk.id}">
+                                <span class="slider"></span>
+                            </div>
+                            Individuální konec pojištění
+                        </label>
+                        <div class="end-age-wrapper" id="${risk.id}-age-wrapper">
+                            <span>Konec ve věku:</span>
+                            <input type="number" class="end-age-input" id="${risk.id}-age-input" min="${CLIENT_AGE + 1}" max="${STANDARD_END_AGE}" value="${STANDARD_END_AGE}">
+                        </div>
+                    </div>
                 </div>
             `;
             container.insertAdjacentHTML('beforeend', html);
         });
 
+        // Výpočet zlevnění při zkrácení doby
+        function getDurationDiscountFactor(riskId) {
+            if (!indivEndEnabled[riskId]) return 1.0;
+            
+            let endAge = indivEndAges[riskId];
+            if (endAge <= CLIENT_AGE) endAge = CLIENT_AGE + 1; // Minimálně na 1 rok
+            if (endAge > STANDARD_END_AGE) endAge = STANDARD_END_AGE;
+
+            const customDuration = endAge - CLIENT_AGE;
+            return customDuration / STANDARD_DURATION;
+        }
+
         function calculateRiskPrice(risk) {
             const value = values[risk.id];
             const type = types[risk.id];
+            
             let typeMultiplier = 1.0;
-
             if (type === 'linear') typeMultiplier = 0.5;
 
-            return (value / risk.divisor) * risk.rate * typeMultiplier;
+            const durationFactor = getDurationDiscountFactor(risk.id);
+
+            return (value / risk.divisor) * risk.rate * typeMultiplier * durationFactor;
         }
 
         function calculateDiscountSumValue(riskId) {
@@ -523,10 +654,15 @@
                 if (value > 0) {
                     let typeLabel = '';
                     if (types[risk.id] === 'linear') typeLabel = ' (Klesající)';
+                    
+                    let ageLabel = '';
+                    if (indivEndEnabled[risk.id]) {
+                        ageLabel = ` • do ${indivEndAges[risk.id]} let`;
+                    }
 
                     breakdownHTML += `
                         <div class="breakdown-item">
-                            <span>${risk.label} <small>${formatNumber(value)} ${risk.suffix}${typeLabel}</small></span>
+                            <span>${risk.label} <small>${formatNumber(value)} ${risk.suffix}${typeLabel}${ageLabel}</small></span>
                             <strong>${formatNumber(riskPrice)} Kč</strong>
                         </div>
                     `;
@@ -589,36 +725,67 @@
 
             inputField.addEventListener('input', (e) => {
                 let rawValue = e.target.value.replace(/\D/g, '');
-                
                 if (rawValue === '') {
                     values[risk.id] = 0;
                     e.target.value = '';
                 } else {
                     let numValue = parseInt(rawValue, 10);
                     if (numValue > risk.max) numValue = risk.max;
-                    
                     values[risk.id] = numValue;
                     e.target.value = formatNumber(numValue);
                 }
-                
                 updateUI();
             });
 
-            // Logika pro nová toggle tlačítka
+            // Přepínání Konstantní/Klesající
             if (risk.hasDecrease) {
                 const buttons = document.querySelectorAll(`#${risk.id}-toggle-group .toggle-btn`);
                 buttons.forEach(btn => {
                     btn.addEventListener('click', (e) => {
-                        // Odebrat třídu active ze všech tlačítek v dané skupině
                         buttons.forEach(b => b.classList.remove('active'));
-                        // Přidat třídu active na kliknuté tlačítko
                         e.target.classList.add('active');
-                        // Uložit vybraný typ do stavu
                         types[risk.id] = e.target.dataset.type;
                         updateUI();
                     });
                 });
             }
+
+            // Obsluha pro Individuální konec pojištění
+            const toggleCheckbox = document.querySelector(`.indiv-end-toggle[data-risk="${risk.id}"]`);
+            const ageWrapper = document.getElementById(`${risk.id}-age-wrapper`);
+            const ageInput = document.getElementById(`${risk.id}-age-input`);
+
+            toggleCheckbox.addEventListener('change', (e) => {
+                indivEndEnabled[risk.id] = e.target.checked;
+                if (e.target.checked) {
+                    ageWrapper.classList.add('visible');
+                    // Pokud uživatel zapne toggle, rovnou označíme číslo, aby ho mohl přepsat
+                    ageInput.focus();
+                    ageInput.select();
+                } else {
+                    ageWrapper.classList.remove('visible');
+                    indivEndAges[risk.id] = STANDARD_END_AGE;
+                    ageInput.value = STANDARD_END_AGE;
+                }
+                updateUI();
+            });
+
+            ageInput.addEventListener('input', (e) => {
+                let age = parseInt(e.target.value, 10);
+                if (isNaN(age)) age = STANDARD_END_AGE;
+                indivEndAges[risk.id] = age;
+                updateUI();
+            });
+            
+            // Ochrana při opuštění pole, pokud by někdo zadal nesmysl
+            ageInput.addEventListener('blur', (e) => {
+                let age = parseInt(e.target.value, 10);
+                if (isNaN(age) || age <= CLIENT_AGE) age = CLIENT_AGE + 1;
+                if (age > STANDARD_END_AGE) age = STANDARD_END_AGE;
+                e.target.value = age;
+                indivEndAges[risk.id] = age;
+                updateUI();
+            });
         });
 
         updateUI();
