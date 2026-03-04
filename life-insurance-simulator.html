@@ -75,10 +75,13 @@
         .toggle-group { display: flex; background-color: var(--bg-light); border-radius: 8px; border: 1px solid var(--border-color); overflow: hidden; }
         .toggle-btn { padding: 8px 16px; border: none; background: transparent; font-size: 13px; font-weight: 600; color: var(--text-muted); cursor: pointer; transition: all 0.2s; }
         .toggle-btn.active { background-color: var(--cs-header-blue); color: #ffffff; }
-        .input-wrapper { position: relative; display: flex; align-items: center; width: 100%; }
+        
+        /* ZDE JE OPRAVA ŠÍŘKY POLÍČKA NA 280px */
+        .input-wrapper { position: relative; display: flex; align-items: center; width: 280px; }
         .amount-input { width: 100%; padding: 16px 20px; font-size: 20px; font-weight: 700; color: var(--cs-header-blue); background-color: var(--card-bg); border: 2px solid var(--border-color); border-radius: 12px; outline: none; text-align: right; padding-right: 60px; transition: all 0.2s; }
         .amount-input:focus { border-color: var(--cs-header-blue); box-shadow: 0 0 0 4px rgba(0, 116, 232, 0.1); }
         .currency-suffix { position: absolute; right: 20px; font-size: 16px; font-weight: 600; color: var(--text-muted); pointer-events: none; }
+        
         .individual-end-container { margin-top: 12px; display: flex; align-items: center; gap: 16px; }
         .switch-container { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--text-muted); font-weight: 600; cursor: pointer; }
         .switch { position: relative; display: inline-block; width: 36px; height: 20px; }
@@ -237,7 +240,6 @@
             'life': { title: 'V případě mé smrti potřebuji zajistit svou rodinu a blízké', icon: '<path d="M12 13s-4-2.5-4-5a2.5 2.5 0 0 1 5-1.5 2.5 2.5 0 0 1 5 1.5c0 2.5-4 5-4 5z"/><path d="M5 16h10l4.5 2.5c1 .5 1 2 0 2.5H4c-1 0-2-.5-2-1.5v-3.5h3z"/>' }
         };
 
-        // ZDE JE NASAZENÁ PŘESNÁ MATEMATIKA Z TESTOVÁNÍ (Sazby na 100 tis / 100 Kč/den)
         const risks = [
             { id: 'incapacity', category: 'accident', label: 'Pracovní neschopnost', rate: 79.50, max: 5000, suffix: 'Kč/den', divisor: 100, hasDecrease: false,
               description: "Pomůže vám dorovnat příjem, když kvůli nemoci nebo úrazu nemůžete pracovat.", tooltip: "Vyplácíme sjednanou částku za každý den dlouhodobé nemoci." },
@@ -307,7 +309,6 @@
 
         function calculateRiskPrice(risk) {
             const value = values[risk.id];
-            // Přesný koeficient pro klesající pojištění odvozený z tvých dat (121 / 415.5)
             let typeMultiplier = types[risk.id] === 'linear' ? 0.2912 : 1.0;
             const durationFactor = getDurationDiscountFactor(risk.id);
             return (value / risk.divisor) * risk.rate * typeMultiplier * durationFactor;
@@ -334,7 +335,6 @@
 
             if (baseRiskPremium === 0) breakdownHTML = `<div style="text-align: center; color: #888; font-style: italic; padding: 20px 0;">Zadejte pojistné částky.</div>`;
 
-            // Výpočet koše pro slevu
             const discountSum = calculateDiscountSumValue('death') + calculateDiscountSumValue('illness') + calculateDiscountSumValue('disability3');
             
             let discountPct = 0;
@@ -345,7 +345,6 @@
             const discountAmount = baseRiskPremium * (discountPct / 100);
             let finalRiskPremium = baseRiskPremium - discountAmount;
 
-            // Správcovský poplatek (odpuštění 50 Kč při pojistném nad 1000 Kč)
             let adminFee = (finalRiskPremium >= 1000) ? 10 : 60;
             let finalPremium = finalRiskPremium + adminFee;
 
@@ -353,7 +352,6 @@
             document.getElementById('base-premium').textContent = formatNumber(baseRiskPremium) + ' Kč';
             document.getElementById('admin-fee').textContent = adminFee + ' Kč';
             
-            // Progres slevy
             document.getElementById('discount-sum').textContent = formatNumber(discountSum) + ' Kč';
             const progress = Math.min((discountSum / 5000000) * 100, 100);
             document.getElementById('discount-progress').style.width = `${progress}%`;
