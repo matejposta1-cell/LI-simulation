@@ -8,7 +8,7 @@
         :root {
             --george-blue: #00a9e0;
             --george-blue-hover: #008ebd;
-            --cs-header-blue: #0074e8; /* Přesná modrá barva Spořitelny pro hlavičku */
+            --cs-header-blue: #0074e8;
             --george-dark-blue: #003a70;
             --george-green: #43b02a;
             --george-green-bg: #eef8eb;
@@ -23,175 +23,62 @@
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
-
         html { scroll-behavior: smooth; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background-color: var(--bg-light); color: var(--text-main); overflow-x: hidden; }
+        .svg-icon { fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
 
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            background-color: var(--bg-light);
-            color: var(--text-main);
-            overflow-x: hidden;
-        }
-
-        .svg-icon {
-            fill: none;
-            stroke: currentColor;
-            stroke-width: 1.5;
-            stroke-linecap: round;
-            stroke-linejoin: round;
-        }
-
-        /* Top Navbar - ZMĚNA NA MODROU */
-        .top-navbar {
-            background-color: var(--cs-header-blue); /* Modré pozadí */
-            height: 64px;
-            box-shadow: var(--shadow-sm);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 32px;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-
-        .navbar-logo {
-            font-size: 20px; font-weight: 800; 
-            color: #ffffff; /* Bílý text a logo */
-            display: flex; align-items: center; gap: 12px;
-        }
-
-        .navbar-user {
-            font-size: 14px; font-weight: 600; 
-            color: rgba(255, 255, 255, 0.9); /* Lehce průhledný bílý text */
-            display: flex; align-items: center; gap: 12px;
-        }
-
-        .user-avatar {
-            width: 36px; height: 36px; 
-            background-color: #ffffff; /* Bílé kolečko */
-            border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 13px; color: var(--cs-header-blue); font-weight: bold; /* Modré iniciály */
-        }
+        /* Top Navbar */
+        .top-navbar { background-color: var(--cs-header-blue); height: 64px; box-shadow: var(--shadow-sm); display: flex; justify-content: space-between; align-items: center; padding: 0 32px; position: sticky; top: 0; z-index: 100; }
+        .navbar-logo { font-size: 20px; font-weight: 800; color: #ffffff; display: flex; align-items: center; gap: 12px; }
+        .navbar-user { font-size: 14px; font-weight: 600; color: rgba(255, 255, 255, 0.9); display: flex; align-items: center; gap: 12px; }
+        .user-avatar { width: 36px; height: 36px; background-color: #ffffff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 13px; color: var(--cs-header-blue); font-weight: bold; }
 
         /* Main Layout */
-        .app-layout {
-            display: grid; grid-template-columns: 260px 1fr 380px; gap: 24px;
-            max-width: 1600px; margin: 0 auto; padding: 24px 32px; align-items: start;
-        }
+        .app-layout { display: grid; grid-template-columns: 260px 1fr 380px; gap: 24px; max-width: 1600px; margin: 0 auto; padding: 24px 32px; align-items: start; }
 
         /* Left Sidebar */
-        .sidebar {
-            background-color: var(--card-bg); border-radius: 16px;
-            padding: 24px 16px; box-shadow: var(--shadow-md); position: sticky; top: 88px;
-        }
-
-        .menu-item {
-            display: flex; align-items: center; gap: 14px; padding: 16px 16px;
-            border-radius: 12px; color: var(--text-muted); font-weight: 600;
-            font-size: 14px; transition: all 0.2s; margin-bottom: 4px; cursor: pointer;
-        }
-
+        .sidebar { background-color: var(--card-bg); border-radius: 16px; padding: 24px 16px; box-shadow: var(--shadow-md); position: sticky; top: 88px; }
+        .menu-item { display: flex; align-items: center; gap: 14px; padding: 16px 16px; border-radius: 12px; color: var(--text-muted); font-weight: 600; font-size: 14px; transition: all 0.2s; margin-bottom: 4px; cursor: pointer; }
         .menu-item svg { width: 22px; height: 22px; }
         .menu-item:hover { background-color: var(--bg-light); color: var(--text-main); }
         .menu-item.active { background-color: #eaf6fc; color: var(--cs-header-blue); }
 
         /* Center Column */
         .main-content { display: flex; flex-direction: column; gap: 24px; }
-
-        .client-card {
-            background-color: var(--card-bg); border-radius: 16px; padding: 24px 32px;
-            box-shadow: var(--shadow-md); border-left: 6px solid var(--cs-header-blue);
-            display: flex; justify-content: space-between; align-items: center;
-        }
+        .client-card { background-color: var(--card-bg); border-radius: 16px; padding: 24px 32px; box-shadow: var(--shadow-md); border-left: 6px solid var(--cs-header-blue); display: flex; justify-content: space-between; align-items: center; }
         .client-info h1 { font-size: 22px; margin-bottom: 6px; }
         .client-info p { font-size: 14px; color: var(--text-muted); }
 
         /* Accordions */
-        .accordion-item {
-            background-color: var(--card-bg); border-radius: 16px; box-shadow: var(--shadow-md);
-            overflow: hidden; margin-bottom: 24px; border: 1px solid transparent;
-            transition: border-color 0.3s; scroll-margin-top: 88px;
-        }
+        .accordion-item { background-color: var(--card-bg); border-radius: 16px; box-shadow: var(--shadow-md); overflow: hidden; margin-bottom: 24px; border: 1px solid transparent; transition: border-color 0.3s; scroll-margin-top: 88px; }
         .accordion-item.active { border-color: var(--george-dark-blue); }
-
-        .accordion-header {
-            padding: 24px 32px; display: flex; align-items: center; justify-content: space-between;
-            cursor: pointer; user-select: none; background-color: var(--george-dark-blue);
-            color: #ffffff; transition: background-color 0.2s;
-        }
+        .accordion-header { padding: 24px 32px; display: flex; align-items: center; justify-content: space-between; cursor: pointer; user-select: none; background-color: var(--george-dark-blue); color: #ffffff; transition: background-color 0.2s; }
         .accordion-header:hover { background-color: #002c56; }
-
         .accordion-title-wrapper { display: flex; align-items: center; gap: 20px; }
-        .accordion-icon {
-            width: 44px; height: 44px; background-color: rgba(255, 255, 255, 0.15);
-            border-radius: 12px; display: flex; align-items: center; justify-content: center;
-            color: #ffffff; flex-shrink: 0;
-        }
+        .accordion-icon { width: 44px; height: 44px; background-color: rgba(255, 255, 255, 0.15); border-radius: 12px; display: flex; align-items: center; justify-content: center; color: #ffffff; flex-shrink: 0; }
         .accordion-icon svg { width: 24px; height: 24px; }
         .accordion-title { font-size: 17px; font-weight: 700; line-height: 1.3; }
-
         .chevron { width: 24px; height: 24px; stroke: #ffffff; transition: transform 0.3s ease; }
         .accordion-item.active .chevron { transform: rotate(180deg); }
-
-        .accordion-content {
-            display: none; padding: 0 32px 32px 32px;
-            border-top: 1px solid var(--border-color); background-color: var(--card-bg);
-        }
+        .accordion-content { display: none; padding: 0 32px 32px 32px; border-top: 1px solid var(--border-color); background-color: var(--card-bg); }
         .accordion-item.active .accordion-content { display: block; }
 
-        /* Inputs & Risks */
+        /* Inputs */
         .input-group { padding: 24px 0; border-bottom: 1px dashed var(--border-color); }
         .input-group:last-child { border-bottom: none; padding-bottom: 0; }
-
         .label-row { display: flex; justify-content: space-between; align-items: center; }
-        
-        .label-title-wrapper {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
+        .label-title-wrapper { display: flex; align-items: center; gap: 10px; }
         .label { font-weight: 700; font-size: 16px; color: var(--text-main); }
-
-        /* Info Ikona (íčko) */
-        .info-icon {
-            display: inline-flex; align-items: center; justify-content: center;
-            width: 22px; height: 22px; border-radius: 50%;
-            background-color: var(--george-blue); color: #ffffff;
-            font-size: 14px; font-weight: 800; font-family: serif; font-style: italic;
-            cursor: pointer; transition: background-color 0.2s;
-        }
+        .info-icon { display: inline-flex; align-items: center; justify-content: center; width: 22px; height: 22px; border-radius: 50%; background-color: var(--george-blue); color: #ffffff; font-size: 14px; font-weight: 800; font-family: serif; font-style: italic; cursor: pointer; transition: background-color 0.2s; }
         .info-icon:hover { background-color: var(--george-dark-blue); }
-
-        /* Popisek pod rizikem */
-        .risk-description {
-            font-size: 13px; color: var(--text-muted);
-            margin-top: 4px; margin-bottom: 16px; max-width: 80%;
-            line-height: 1.4;
-        }
-
-        .toggle-group {
-            display: flex; background-color: var(--bg-light); border-radius: 8px;
-            border: 1px solid var(--border-color); overflow: hidden;
-        }
-        .toggle-btn {
-            padding: 8px 16px; border: none; background: transparent; font-size: 13px;
-            font-weight: 600; color: var(--text-muted); cursor: pointer; transition: all 0.2s;
-        }
+        .risk-description { font-size: 13px; color: var(--text-muted); margin-top: 4px; margin-bottom: 16px; max-width: 80%; line-height: 1.4; }
+        .toggle-group { display: flex; background-color: var(--bg-light); border-radius: 8px; border: 1px solid var(--border-color); overflow: hidden; }
+        .toggle-btn { padding: 8px 16px; border: none; background: transparent; font-size: 13px; font-weight: 600; color: var(--text-muted); cursor: pointer; transition: all 0.2s; }
         .toggle-btn.active { background-color: var(--cs-header-blue); color: #ffffff; }
-
         .input-wrapper { position: relative; display: flex; align-items: center; width: 100%; }
-        .amount-input {
-            width: 100%; padding: 16px 20px; font-size: 20px; font-weight: 700;
-            color: var(--cs-header-blue); background-color: var(--card-bg);
-            border: 2px solid var(--border-color); border-radius: 12px; outline: none;
-            text-align: right; padding-right: 60px; transition: all 0.2s;
-        }
+        .amount-input { width: 100%; padding: 16px 20px; font-size: 20px; font-weight: 700; color: var(--cs-header-blue); background-color: var(--card-bg); border: 2px solid var(--border-color); border-radius: 12px; outline: none; text-align: right; padding-right: 60px; transition: all 0.2s; }
         .amount-input:focus { border-color: var(--cs-header-blue); box-shadow: 0 0 0 4px rgba(0, 116, 232, 0.1); }
         .currency-suffix { position: absolute; right: 20px; font-size: 16px; font-weight: 600; color: var(--text-muted); pointer-events: none; }
-
         .individual-end-container { margin-top: 12px; display: flex; align-items: center; gap: 16px; }
         .switch-container { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--text-muted); font-weight: 600; cursor: pointer; }
         .switch { position: relative; display: inline-block; width: 36px; height: 20px; }
@@ -200,156 +87,78 @@
         .slider:before { position: absolute; content: ""; height: 14px; width: 14px; left: 3px; bottom: 3px; background-color: white; transition: .3s; border-radius: 50%; }
         input:checked + .slider { background-color: var(--cs-header-blue); }
         input:checked + .slider:before { transform: translateX(16px); }
-
         .end-age-wrapper { display: flex; align-items: center; gap: 8px; opacity: 0; pointer-events: none; font-size: 13px; color: var(--text-muted); transition: opacity 0.3s; }
         .end-age-wrapper.visible { opacity: 1; pointer-events: all; }
         .end-age-input { width: 60px; padding: 4px 8px; font-size: 14px; font-weight: 700; border: 2px solid var(--border-color); border-radius: 6px; outline: none; text-align: center; }
 
         /* Right Summary Panel */
-        .summary-panel {
-            background-color: var(--card-bg); border-radius: 16px; box-shadow: var(--shadow-md);
-            position: sticky; top: 88px; overflow: hidden;
-        }
-        .summary-header {
-            padding: 20px 24px; display: flex; align-items: center;
-            background-color: var(--george-dark-blue); color: #ffffff;
-        }
-        .summary-icon {
-            width: 36px; height: 36px; background-color: rgba(255, 255, 255, 0.15);
-            border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-right: 16px;
-        }
+        .summary-panel { background-color: var(--card-bg); border-radius: 16px; box-shadow: var(--shadow-md); position: sticky; top: 88px; overflow: hidden; }
+        .summary-header { padding: 20px 24px; display: flex; align-items: center; background-color: var(--george-dark-blue); color: #ffffff; }
+        .summary-icon { width: 36px; height: 36px; background-color: rgba(255, 255, 255, 0.15); border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-right: 16px; }
         .summary-icon svg { width: 22px; height: 22px; }
         .summary-title { font-size: 17px; font-weight: 700; }
         .summary-body { padding: 24px 32px; }
-
         .summary-breakdown { font-size: 14px; color: var(--text-muted); margin-bottom: 24px; }
         .breakdown-item { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px dashed var(--border-color); }
         .breakdown-item span small { display: block; font-size: 11px; color: #888; margin-top: 4px; }
         .breakdown-item:last-child { border-bottom: none; }
-
         .summary-row { display: flex; justify-content: space-between; align-items: center; font-size: 15px; margin-bottom: 16px; color: var(--text-muted); }
         .summary-row strong { color: var(--text-main); font-size: 16px; }
-
         .summary-row.discount { color: var(--george-green); font-weight: 700; background: var(--george-green-bg); padding: 16px; border-radius: 12px; margin-bottom: 24px; margin-top: 10px; }
         .summary-row.discount.hidden { display: none; }
-
         .summary-row.final { border-top: 2px solid var(--bg-light); padding-top: 24px; margin-top: 16px; font-size: 16px; font-weight: 600; color: var(--text-main); flex-direction: column; align-items: flex-start; gap: 10px; }
         .final-price-value { font-size: 42px; font-weight: 800; color: var(--cs-header-blue); align-self: flex-end; line-height: 1; }
-        .min-premium-note { font-size: 13px; color: #e67e22; font-weight: 600; align-self: flex-end; margin-top: 4px; display: none; }
-
+        
         .progress-container { width: 100%; margin-top: 8px; }
         .progress-labels { display: flex; justify-content: space-between; font-size: 11px; color: #888; font-weight: 600; margin-bottom: 4px;}
         .progress-bar-bg { width: 100%; height: 8px; background: var(--border-color); border-radius: 4px; position: relative; overflow: hidden;}
         .progress-bar-fill { height: 100%; background: var(--george-green); width: 0%; transition: width 0.4s; }
         .progress-marker { position: absolute; top: 0; height: 100%; width: 2px; background: rgba(255,255,255,0.7); }
 
-        /* Vyskakovací okno (Modal) */
-        .modal-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background-color: rgba(0, 0, 0, 0.6); z-index: 1000;
-            display: flex; align-items: center; justify-content: center;
-            opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
-        }
-        .modal-overlay.active {
-            opacity: 1; pointer-events: all;
-        }
-        .modal-content {
-            background-color: var(--card-bg); width: 90%; max-width: 500px;
-            border-radius: 16px; box-shadow: var(--shadow-lg);
-            transform: translateY(20px); transition: transform 0.3s ease;
-            overflow: hidden;
-        }
+        /* Modální okno */
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.6); z-index: 1000; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; }
+        .modal-overlay.active { opacity: 1; pointer-events: all; }
+        .modal-content { background-color: var(--card-bg); width: 90%; max-width: 500px; border-radius: 16px; box-shadow: var(--shadow-lg); transform: translateY(20px); transition: transform 0.3s ease; overflow: hidden; }
         .modal-overlay.active .modal-content { transform: translateY(0); }
-        
-        .modal-header {
-            background-color: var(--cs-header-blue); color: white;
-            padding: 20px 24px; font-size: 18px; font-weight: 700;
-            display: flex; align-items: center; gap: 12px;
-        }
-        .modal-header .info-icon {
-            background-color: white; color: var(--cs-header-blue);
-        }
-        .modal-body {
-            padding: 24px; font-size: 15px; color: var(--text-main); line-height: 1.6;
-        }
-        .modal-footer {
-            padding: 16px 24px; border-top: 1px solid var(--border-color);
-            display: flex; justify-content: flex-end; background-color: #fafbfc;
-        }
-        .modal-btn {
-            background-color: var(--cs-header-blue); color: white;
-            border: none; padding: 10px 24px; font-size: 14px; font-weight: 600;
-            border-radius: 8px; cursor: pointer; transition: background-color 0.2s;
-        }
+        .modal-header { background-color: var(--cs-header-blue); color: white; padding: 20px 24px; font-size: 18px; font-weight: 700; display: flex; align-items: center; gap: 12px; }
+        .modal-header .info-icon { background-color: white; color: var(--cs-header-blue); }
+        .modal-body { padding: 24px; font-size: 15px; color: var(--text-main); line-height: 1.6; }
+        .modal-footer { padding: 16px 24px; border-top: 1px solid var(--border-color); display: flex; justify-content: flex-end; background-color: #fafbfc; }
+        .modal-btn { background-color: var(--cs-header-blue); color: white; border: none; padding: 10px 24px; font-size: 14px; font-weight: 600; border-radius: 8px; cursor: pointer; transition: background-color 0.2s; }
         .modal-btn:hover { background-color: #005bb5; }
 
-        @media (max-width: 1200px) {
-            .app-layout { grid-template-columns: 1fr 350px; }
-            .sidebar { display: none; }
-        }
-        @media (max-width: 900px) {
-            .app-layout { grid-template-columns: 1fr; }
-            .summary-panel { position: relative; top: auto; }
-        }
+        @media (max-width: 1200px) { .app-layout { grid-template-columns: 1fr 350px; } .sidebar { display: none; } }
+        @media (max-width: 900px) { .app-layout { grid-template-columns: 1fr; } .summary-panel { position: relative; top: auto; } }
     </style>
 </head>
 <body>
 
     <header class="top-navbar">
         <div class="navbar-logo">
-            <svg class="svg-icon" width="28" height="28" viewBox="0 0 24 24">
-                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-            </svg>
+            <svg class="svg-icon" width="28" height="28" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
             Prodejní portál ŽP
         </div>
-        <div class="navbar-user">
-            <span>Poradce: Petr Novák</span>
-            <div class="user-avatar">PN</div>
-        </div>
+        <div class="navbar-user"><span>Poradce: Petr Novák</span><div class="user-avatar">PN</div></div>
     </header>
 
     <div class="app-layout">
         
         <aside class="sidebar">
             <div class="menu-item active" onclick="scrollToCategory('accident', this)">
-                <svg class="svg-icon" viewBox="0 0 24 24">
-                    <rect x="2" y="9" width="20" height="6" rx="2" transform="rotate(-45 12 12)"/>
-                    <line x1="9" y1="10" x2="10" y2="11"/>
-                    <line x1="14" y1="13" x2="15" y2="14"/>
-                </svg>
+                <svg class="svg-icon" viewBox="0 0 24 24"><rect x="2" y="9" width="20" height="6" rx="2" transform="rotate(-45 12 12)"/><line x1="9" y1="10" x2="10" y2="11"/><line x1="14" y1="13" x2="15" y2="14"/></svg>
                 Úraz nebo nemoc
             </div>
-            
             <div class="menu-item" onclick="scrollToCategory('disability', this)">
-                <svg class="svg-icon" viewBox="0 0 24 24">
-                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-                    <line x1="9" y1="12" x2="15" y2="12"/>
-                    <line x1="12" y1="9" x2="12" y2="15"/>
-                </svg>
+                <svg class="svg-icon" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><line x1="9" y1="12" x2="15" y2="12"/><line x1="12" y1="9" x2="12" y2="15"/></svg>
                 Vážné obtíže
             </div>
-
             <div class="menu-item" onclick="scrollToCategory('life', this)">
-                <svg class="svg-icon" viewBox="0 0 24 24">
-                    <path d="M12 13s-4-2.5-4-5a2.5 2.5 0 0 1 5-1.5 2.5 2.5 0 0 1 5 1.5c0 2.5-4 5-4 5z"/>
-                    <path d="M5 16h10l4.5 2.5c1 .5 1 2 0 2.5H4c-1 0-2-.5-2-1.5v-3.5h3z"/>
-                </svg>
+                <svg class="svg-icon" viewBox="0 0 24 24"><path d="M12 13s-4-2.5-4-5a2.5 2.5 0 0 1 5-1.5 2.5 2.5 0 0 1 5 1.5c0 2.5-4 5-4 5z"/><path d="M5 16h10l4.5 2.5c1 .5 1 2 0 2.5H4c-1 0-2-.5-2-1.5v-3.5h3z"/></svg>
                 Zajištění blízkých
             </div>
-
             <div style="border-top: 1px solid var(--border-color); margin: 16px 0 8px 0;"></div>
-
             <div class="menu-item" onclick="scrollToCategory('summary', this)">
-                <svg class="svg-icon" viewBox="0 0 24 24">
-                    <rect x="5" y="2" width="14" height="20" rx="2" ry="2"/>
-                    <rect x="8" y="6" width="8" height="4" rx="1" ry="1"/>
-                    <circle cx="8" cy="14" r="1"/>
-                    <circle cx="12" cy="14" r="1"/>
-                    <circle cx="16" cy="14" r="1"/>
-                    <circle cx="8" cy="18" r="1"/>
-                    <circle cx="12" cy="18" r="1"/>
-                    <circle cx="16" cy="18" r="1"/>
-                </svg>
+                <svg class="svg-icon" viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><rect x="8" y="6" width="8" height="4" rx="1" ry="1"/><circle cx="8" cy="14" r="1"/><circle cx="12" cy="14" r="1"/><circle cx="16" cy="14" r="1"/><circle cx="8" cy="18" r="1"/><circle cx="12" cy="18" r="1"/><circle cx="16" cy="18" r="1"/></svg>
                 Celková cena pojištění
             </div>
         </aside>
@@ -361,25 +170,12 @@
                     <p>Věk při vstupu: 30 let | Konec pojištění: v 65 letech | Riziková skupina: 1 (Administrativa)</p>
                 </div>
             </div>
-
-            <div id="accordions-container">
-                </div>
+            <div id="accordions-container"></div>
         </main>
 
         <aside class="summary-panel" id="summary">
             <div class="summary-header">
-                <div class="summary-icon">
-                    <svg class="svg-icon" viewBox="0 0 24 24">
-                        <rect x="5" y="2" width="14" height="20" rx="2" ry="2"/>
-                        <rect x="8" y="6" width="8" height="4" rx="1" ry="1"/>
-                        <circle cx="8" cy="14" r="1"/>
-                        <circle cx="12" cy="14" r="1"/>
-                        <circle cx="16" cy="14" r="1"/>
-                        <circle cx="8" cy="18" r="1"/>
-                        <circle cx="12" cy="18" r="1"/>
-                        <circle cx="16" cy="18" r="1"/>
-                    </svg>
-                </div>
+                <div class="summary-icon"><svg class="svg-icon" viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><rect x="8" y="6" width="8" height="4" rx="1" ry="1"/><circle cx="8" cy="14" r="1"/><circle cx="12" cy="14" r="1"/><circle cx="16" cy="14" r="1"/><circle cx="8" cy="18" r="1"/><circle cx="12" cy="18" r="1"/><circle cx="16" cy="18" r="1"/></svg></div>
                 <span class="summary-title">Celková cena pojištění</span>
             </div>
             
@@ -387,27 +183,26 @@
                 <div class="summary-breakdown" id="breakdown"></div>
 
                 <div class="summary-row">
-                    <span>Základní měsíční pojistné:</span>
+                    <span>Pojistné za rizika (před slevou):</span>
                     <strong id="base-premium">0 Kč</strong>
                 </div>
 
-                <div class="summary-row" style="flex-direction: column; align-items: flex-start; gap: 4px;">
+                <div class="summary-row">
+                    <span>Poplatek za správu smlouvy:</span>
+                    <strong id="admin-fee">60 Kč</strong>
+                </div>
+
+                <div class="summary-row" style="flex-direction: column; align-items: flex-start; gap: 4px; border-top: 1px dashed var(--border-color); padding-top: 16px; margin-top: 16px;">
                     <div style="width: 100%; display: flex; justify-content: space-between;">
                         <span>Započteno do slevy (Smrt, VO, Inv 3):</span>
                         <strong id="discount-sum">0 Kč</strong>
                     </div>
                     
                     <div class="progress-container">
-                        <div class="progress-labels">
-                            <span>0</span>
-                            <span>1M (10%)</span>
-                            <span>3M (20%)</span>
-                            <span>5M (30%)</span>
-                        </div>
+                        <div class="progress-labels"><span>0</span><span>1M (10%)</span><span>3M (20%)</span><span>5M (30%)</span></div>
                         <div class="progress-bar-bg">
                             <div class="progress-bar-fill" id="discount-progress"></div>
-                            <div class="progress-marker" style="left: 20%;"></div>
-                            <div class="progress-marker" style="left: 60%;"></div>
+                            <div class="progress-marker" style="left: 20%;"></div><div class="progress-marker" style="left: 60%;"></div>
                         </div>
                     </div>
                 </div>
@@ -419,8 +214,7 @@
 
                 <div class="summary-row final">
                     <span>Předpis pojistného k úhradě</span>
-                    <div class="final-price-value" id="final-premium">0 Kč</div>
-                    <div class="min-premium-note" id="min-premium-note">Zvýšeno na min. pojistné 300 Kč</div>
+                    <div class="final-price-value" id="final-premium">60 Kč</div>
                 </div>
             </div>
         </aside>
@@ -428,182 +222,81 @@
 
     <div class="modal-overlay" id="info-modal" onclick="closeModal(event)">
         <div class="modal-content" onclick="event.stopPropagation()">
-            <div class="modal-header">
-                <span class="info-icon">i</span>
-                <span id="modal-title">Název rizika</span>
-            </div>
-            <div class="modal-body" id="modal-body">
-                Lidový popis rizika se načte sem.
-            </div>
-            <div class="modal-footer">
-                <button class="modal-btn" onclick="closeModal(event, true)">Rozumím</button>
-            </div>
+            <div class="modal-header"><span class="info-icon">i</span><span id="modal-title">Název rizika</span></div>
+            <div class="modal-body" id="modal-body">Text</div>
+            <div class="modal-footer"><button class="modal-btn" onclick="closeModal(event, true)">Rozumím</button></div>
         </div>
     </div>
 
     <script>
-        const CLIENT_AGE = 30;
-        const STANDARD_END_AGE = 65;
-        const STANDARD_DURATION = STANDARD_END_AGE - CLIENT_AGE;
+        const CLIENT_AGE = 30; const STANDARD_END_AGE = 65; const STANDARD_DURATION = STANDARD_END_AGE - CLIENT_AGE;
 
         const categories = {
-            'accident': {
-                title: 'Úraz nebo nemoc mě na pár měsíců vyřadí z provozu',
-                icon: '<rect x="2" y="9" width="20" height="6" rx="2" transform="rotate(-45 12 12)"/><line x1="9" y1="10" x2="10" y2="11"/><line x1="14" y1="13" x2="15" y2="14"/>'
-            },
-            'disability': {
-                title: 'Vážně se zraním nebo dlouhodobě onemocním',
-                icon: '<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><line x1="9" y1="12" x2="15" y2="12"/><line x1="12" y1="9" x2="12" y2="15"/>'
-            },
-            'life': {
-                title: 'V případě mé smrti potřebuji zajistit svou rodinu a blízké',
-                icon: '<path d="M12 13s-4-2.5-4-5a2.5 2.5 0 0 1 5-1.5 2.5 2.5 0 0 1 5 1.5c0 2.5-4 5-4 5z"/><path d="M5 16h10l4.5 2.5c1 .5 1 2 0 2.5H4c-1 0-2-.5-2-1.5v-3.5h3z"/>'
-            }
+            'accident': { title: 'Úraz nebo nemoc mě na pár měsíců vyřadí z provozu', icon: '<rect x="2" y="9" width="20" height="6" rx="2" transform="rotate(-45 12 12)"/><line x1="9" y1="10" x2="10" y2="11"/><line x1="14" y1="13" x2="15" y2="14"/>' },
+            'disability': { title: 'Vážně se zraním nebo dlouhodobě onemocním', icon: '<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><line x1="9" y1="12" x2="15" y2="12"/><line x1="12" y1="9" x2="12" y2="15"/>' },
+            'life': { title: 'V případě mé smrti potřebuji zajistit svou rodinu a blízké', icon: '<path d="M12 13s-4-2.5-4-5a2.5 2.5 0 0 1 5-1.5 2.5 2.5 0 0 1 5 1.5c0 2.5-4 5-4 5z"/><path d="M5 16h10l4.5 2.5c1 .5 1 2 0 2.5H4c-1 0-2-.5-2-1.5v-3.5h3z"/>' }
         };
 
+        // ZDE JE NASAZENÁ PŘESNÁ MATEMATIKA Z TESTOVÁNÍ (Sazby na 100 tis / 100 Kč/den)
         const risks = [
-            { id: 'incapacity', category: 'accident', label: 'Pracovní neschopnost', rate: 62.00, max: 5000, suffix: 'Kč/den', divisor: 100, hasDecrease: false,
-              description: "Pomůže vám dorovnat příjem, když kvůli nemoci nebo úrazu nemůžete pracovat.",
-              tooltip: "Když dlouhodobě omarodíte (třeba i s obyčejnou chřipkou nebo zablokovanými zády), pošleme vám za každý den marodění sjednanou částku. Nepřijdete tak o svůj standard, i když vám zaměstnavatel nebo stát na nemocenské platí podstatně méně." },
-            
-            { id: 'disability3', category: 'disability', label: 'Invalidita 3. stupně', rate: 42.10, max: 20000000, suffix: 'Kč', divisor: 100000, hasDecrease: true,
-              description: "Zajistí vám peníze na život, když ze zdravotních důvodů nebudete moct vůbec pracovat.",
-              tooltip: "Tohle je ten nejtěžší stupeň invalidity. Znamená to, že vaše pracovní schopnost klesla o více než 70 %. Jde o následky těžkých úrazů nebo vážných nemocí (např. roztroušená skleróza). Vyplacené peníze vám pomohou předělat byt na bezbariérový, pořídit si speciální auto nebo zaplatit potřebnou péči." },
-            
-            { id: 'disability2', category: 'disability', label: 'Invalidita 2. stupně', rate: 30.00, max: 20000000, suffix: 'Kč', divisor: 100000, hasDecrease: true,
-              description: "Dorovná váš příjem při částečném, ale výrazném omezení schopnosti pracovat.",
-              tooltip: "Při 2. stupni vaše schopnost pracovat klesla o 50 až 69 %. Můžete sice dělat nějakou jednodušší práci na zkrácený úvazek, ale už nikdy nevyděláte tolik co dřív. Pojistka tento dlouhodobý propad v příjmech pomůže dorovnat, abyste nemuseli slevovat ze svého životního standardu." },
-            
-            { id: 'disability1', category: 'disability', label: 'Invalidita 1. stupně', rate: 24.30, max: 20000000, suffix: 'Kč', divisor: 100000, hasDecrease: true,
-              description: "Finanční polštář při mírnějším omezení vaší pracovní schopnosti.",
-              tooltip: "Pracovní schopnost klesla o 35 až 49 %. Stále můžete pracovat, ale třeba už nezvládnete takovou zátěž jako dřív. Pojistka vám usnadní přechod na méně placenou pozici nebo vám dá čas se v klidu rekvalifikovat." },
-            
-            { id: 'illness', category: 'disability', label: 'Velmi vážná onemocnění', rate: 48.20, max: 20000000, suffix: 'Kč', divisor: 100000, hasDecrease: true,
-              description: "Peníze na nákladnou léčbu a rekonvalescenci při vážné diagnóze.",
-              tooltip: "Kryje desítky vážných diagnóz, jako je rakovina, infarkt, mrtvice nebo selhání orgánů. Peníze dostanete prakticky hned po potvrzení diagnózy lékařem. Můžete je využít na nadstandardní či zahraniční léčbu, drahé léky, nebo prostě na to, abyste se mohli v klidu a bez finančního stresu uzdravovat." },
-            
-            { id: 'injury', category: 'disability', label: 'Trvalé následky úrazu s progresí', rate: 13.50, max: 20000000, suffix: 'Kč', divisor: 100000, hasDecrease: false,
-              description: "Odškodnění, pokud ve vás úraz zanechá nevratné tělesné poškození.",
-              tooltip: "Vyplatíme vám peníze, když po úrazu zůstane trvalé poškození (např. omezená hybnost kloubu, ztráta zraku nebo i ošklivé jizvy). 'S progresí' znamená, že čím vážnější následek to je, tím více peněz dostanete – u těch opravdu těžkých případů to může být až několikrát více, než je sjednaná částka." },
-            
-            { id: 'death', category: 'life', label: 'Pojištění pro případ smrti', rate: 24.50, max: 20000000, suffix: 'Kč', divisor: 100000, hasDecrease: true,
-              description: "Pomůže vašim blízkým zvládnout finanční situaci a splatit případné dluhy.",
-              tooltip: "Pokud se stane to nejhorší, vaši nejbližší nezůstanou bez prostředků. Vyplacené peníze jim pomohou zaplatit hypotéku, udržet si bydlení a zajistit děti, když v rodině náhle vypadne váš hlavní příjem." }
+            { id: 'incapacity', category: 'accident', label: 'Pracovní neschopnost', rate: 79.50, max: 5000, suffix: 'Kč/den', divisor: 100, hasDecrease: false,
+              description: "Pomůže vám dorovnat příjem, když kvůli nemoci nebo úrazu nemůžete pracovat.", tooltip: "Vyplácíme sjednanou částku za každý den dlouhodobé nemoci." },
+            { id: 'disability3', category: 'disability', label: 'Invalidita 3. stupně', rate: 85.00, max: 20000000, suffix: 'Kč', divisor: 100000, hasDecrease: true,
+              description: "Zajistí vám peníze na život, když ze zdravotních důvodů nebudete moct vůbec pracovat.", tooltip: "Nejtěžší stupeň invalidity (nad 70 %)." },
+            { id: 'disability2', category: 'disability', label: 'Invalidita 2. stupně', rate: 60.00, max: 20000000, suffix: 'Kč', divisor: 100000, hasDecrease: true,
+              description: "Dorovná váš příjem při částečném, ale výrazném omezení schopnosti pracovat.", tooltip: "Pokles pracovní schopnosti o 50 až 69 %." },
+            { id: 'disability1', category: 'disability', label: 'Invalidita 1. stupně', rate: 50.00, max: 20000000, suffix: 'Kč', divisor: 100000, hasDecrease: true,
+              description: "Finanční polštář při mírnějším omezení vaší pracovní schopnosti.", tooltip: "Pokles schopnosti pracovat o 35 až 49 %." },
+            { id: 'illness', category: 'disability', label: 'Velmi vážná onemocnění', rate: 104.00, max: 20000000, suffix: 'Kč', divisor: 100000, hasDecrease: true,
+              description: "Peníze na nákladnou léčbu a rekonvalescenci při vážné diagnóze.", tooltip: "Kryje rakovinu, infarkt, mrtvici atd." },
+            { id: 'injury', category: 'disability', label: 'Trvalé následky úrazu s progresí', rate: 25.60, max: 20000000, suffix: 'Kč', divisor: 100000, hasDecrease: false,
+              description: "Odškodnění, pokud ve vás úraz zanechá nevratné tělesné poškození.", tooltip: "Vyplacení peněz při trvalých následcích, při vážných násobíme." },
+            { id: 'death', category: 'life', label: 'Pojištění pro případ smrti', rate: 41.55, max: 20000000, suffix: 'Kč', divisor: 100000, hasDecrease: true,
+              description: "Pomůže vašim blízkým zvládnout finanční situaci a splatit případné dluhy.", tooltip: "Rodina nezůstane bez prostředků." }
         ];
 
         const values = {}; const types = {}; const indivEndEnabled = {}; const indivEndAges = {};
 
-        function formatNumber(num) {
-            if (num === 0) return "0";
-            return Math.round(num).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
-        }
+        function formatNumber(num) { if (num === 0) return "0"; return Math.round(num).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' '); }
 
-        // Generování akordeonů
         const accContainer = document.getElementById('accordions-container');
         Object.keys(categories).forEach((catKey, index) => {
-            const cat = categories[catKey];
-            const isActive = index === 0 ? 'active' : '';
-            
-            let accHTML = `
+            const cat = categories[catKey]; const isActive = index === 0 ? 'active' : '';
+            accContainer.insertAdjacentHTML('beforeend', `
                 <div class="accordion-item ${isActive}" id="${catKey}">
                     <div class="accordion-header" onclick="toggleAccordion(this)">
-                        <div class="accordion-title-wrapper">
-                            <div class="accordion-icon">
-                                <svg class="svg-icon" viewBox="0 0 24 24">${cat.icon}</svg>
-                            </div>
-                            <span class="accordion-title">${cat.title}</span>
-                        </div>
+                        <div class="accordion-title-wrapper"><div class="accordion-icon"><svg class="svg-icon" viewBox="0 0 24 24">${cat.icon}</svg></div><span class="accordion-title">${cat.title}</span></div>
                         <svg class="svg-icon chevron" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
-                    </div>
-                    <div class="accordion-content">
-                        <div id="cat-content-${catKey}"></div>
-                    </div>
-                </div>
-            `;
-            accContainer.insertAdjacentHTML('beforeend', accHTML);
+                    </div><div class="accordion-content"><div id="cat-content-${catKey}"></div></div>
+                </div>`);
         });
 
-        // Vložení rizik
         risks.forEach(risk => {
-            values[risk.id] = 0; types[risk.id] = 'constant';
-            indivEndEnabled[risk.id] = false; indivEndAges[risk.id] = STANDARD_END_AGE;
-
+            values[risk.id] = 0; types[risk.id] = 'constant'; indivEndEnabled[risk.id] = false; indivEndAges[risk.id] = STANDARD_END_AGE;
             let toggleHTML = '';
-            if (risk.hasDecrease) {
-                toggleHTML = `
-                    <div class="toggle-group" id="${risk.id}-toggle-group">
-                        <button type="button" class="toggle-btn active" data-type="constant" data-risk="${risk.id}">Konstantní</button>
-                        <button type="button" class="toggle-btn" data-type="linear" data-risk="${risk.id}">Klesající</button>
-                    </div>
-                `;
-            }
-
-            const html = `
+            if (risk.hasDecrease) toggleHTML = `<div class="toggle-group" id="${risk.id}-toggle-group"><button type="button" class="toggle-btn active" data-type="constant" data-risk="${risk.id}">Konstantní</button><button type="button" class="toggle-btn" data-type="linear" data-risk="${risk.id}">Klesající</button></div>`;
+            document.getElementById(`cat-content-${risk.category}`).insertAdjacentHTML('beforeend', `
                 <div class="input-group">
-                    <div class="label-row">
-                        <div class="label-title-wrapper">
-                            <label class="label">${risk.label}</label>
-                            <span class="info-icon" onclick="openModal('${risk.id}')" title="Více informací">i</span>
-                        </div>
-                        ${toggleHTML}
-                    </div>
+                    <div class="label-row"><div class="label-title-wrapper"><label class="label">${risk.label}</label><span class="info-icon" onclick="openModal('${risk.id}')" title="Více informací">i</span></div>${toggleHTML}</div>
                     <div class="risk-description">${risk.description}</div>
-                    <div class="input-wrapper">
-                        <input type="text" class="amount-input" id="${risk.id}-input" value="" placeholder="0" inputmode="numeric">
-                        <span class="currency-suffix">${risk.suffix}</span>
-                    </div>
-                    
+                    <div class="input-wrapper"><input type="text" class="amount-input" id="${risk.id}-input" value="" placeholder="0" inputmode="numeric"><span class="currency-suffix">${risk.suffix}</span></div>
                     <div class="individual-end-container">
-                        <label class="switch-container">
-                            <div class="switch">
-                                <input type="checkbox" class="indiv-end-toggle" data-risk="${risk.id}">
-                                <span class="slider"></span>
-                            </div>
-                            Individuální konec pojištění
-                        </label>
-                        <div class="end-age-wrapper" id="${risk.id}-age-wrapper">
-                            <span>Konec ve věku:</span>
-                            <input type="number" class="end-age-input" id="${risk.id}-age-input" min="${CLIENT_AGE + 1}" max="${STANDARD_END_AGE}" value="${STANDARD_END_AGE}">
-                        </div>
+                        <label class="switch-container"><div class="switch"><input type="checkbox" class="indiv-end-toggle" data-risk="${risk.id}"><span class="slider"></span></div>Individuální konec pojištění</label>
+                        <div class="end-age-wrapper" id="${risk.id}-age-wrapper"><span>Konec ve věku:</span><input type="number" class="end-age-input" id="${risk.id}-age-input" min="${CLIENT_AGE + 1}" max="${STANDARD_END_AGE}" value="${STANDARD_END_AGE}"></div>
                     </div>
-                </div>
-            `;
-            
-            document.getElementById(`cat-content-${risk.category}`).insertAdjacentHTML('beforeend', html);
+                </div>`);
         });
 
-        function toggleAccordion(headerElement) {
-            headerElement.parentElement.classList.toggle('active');
-        }
-
+        function toggleAccordion(headerElement) { headerElement.parentElement.classList.toggle('active'); }
         function scrollToCategory(catId, menuElement) {
-            document.querySelectorAll('.sidebar .menu-item').forEach(el => el.classList.remove('active'));
-            menuElement.classList.add('active');
+            document.querySelectorAll('.sidebar .menu-item').forEach(el => el.classList.remove('active')); menuElement.classList.add('active');
             const targetElement = document.getElementById(catId);
-            if (targetElement) {
-                if(targetElement.classList.contains('accordion-item')) targetElement.classList.add('active');
-                targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }
+            if (targetElement) { if(targetElement.classList.contains('accordion-item')) targetElement.classList.add('active'); targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
         }
 
-        // Modální okno
-        function openModal(riskId) {
-            const risk = risks.find(r => r.id === riskId);
-            if (!risk) return;
-            document.getElementById('modal-title').textContent = risk.label;
-            document.getElementById('modal-body').textContent = risk.tooltip;
-            document.getElementById('info-modal').classList.add('active');
-            document.body.style.overflow = 'hidden';
-        }
+        function openModal(riskId) { const risk = risks.find(r => r.id === riskId); if (!risk) return; document.getElementById('modal-title').textContent = risk.label; document.getElementById('modal-body').textContent = risk.tooltip; document.getElementById('info-modal').classList.add('active'); document.body.style.overflow = 'hidden'; }
+        function closeModal(event, force = false) { if (force || event.target.id === 'info-modal') { document.getElementById('info-modal').classList.remove('active'); document.body.style.overflow = ''; } }
 
-        function closeModal(event, force = false) {
-            if (force || event.target.id === 'info-modal') {
-                document.getElementById('info-modal').classList.remove('active');
-                document.body.style.overflow = '';
-            }
-        }
-
-        // Výpočty
         function getDurationDiscountFactor(riskId) {
             if (!indivEndEnabled[riskId]) return 1.0;
             let endAge = indivEndAges[riskId];
@@ -614,7 +307,8 @@
 
         function calculateRiskPrice(risk) {
             const value = values[risk.id];
-            let typeMultiplier = types[risk.id] === 'linear' ? 0.5 : 1.0;
+            // Přesný koeficient pro klesající pojištění odvozený z tvých dat (121 / 415.5)
+            let typeMultiplier = types[risk.id] === 'linear' ? 0.2912 : 1.0;
             const durationFactor = getDurationDiscountFactor(risk.id);
             return (value / risk.divisor) * risk.rate * typeMultiplier * durationFactor;
         }
@@ -624,12 +318,12 @@
         }
 
         function updateUI() {
-            let basePremium = 0; let breakdownHTML = '';
+            let baseRiskPremium = 0; let breakdownHTML = '';
             
             risks.forEach(risk => {
                 const value = values[risk.id];
                 const riskPrice = calculateRiskPrice(risk);
-                basePremium += riskPrice;
+                baseRiskPremium += riskPrice;
 
                 if (value > 0) {
                     let typeLabel = types[risk.id] === 'linear' ? ' (Klesající)' : '';
@@ -638,8 +332,9 @@
                 }
             });
 
-            if (basePremium === 0) breakdownHTML = `<div style="text-align: center; color: #888; font-style: italic; padding: 20px 0;">Zadejte pojistné částky.</div>`;
+            if (baseRiskPremium === 0) breakdownHTML = `<div style="text-align: center; color: #888; font-style: italic; padding: 20px 0;">Zadejte pojistné částky.</div>`;
 
+            // Výpočet koše pro slevu
             const discountSum = calculateDiscountSumValue('death') + calculateDiscountSumValue('illness') + calculateDiscountSumValue('disability3');
             
             let discountPct = 0;
@@ -647,13 +342,19 @@
             else if (discountSum >= 3000000) discountPct = 20;
             else if (discountSum >= 1000000) discountPct = 10;
 
-            const discountAmount = basePremium * (discountPct / 100);
-            let finalPremium = basePremium - discountAmount;
+            const discountAmount = baseRiskPremium * (discountPct / 100);
+            let finalRiskPremium = baseRiskPremium - discountAmount;
+
+            // Správcovský poplatek (odpuštění 50 Kč při pojistném nad 1000 Kč)
+            let adminFee = (finalRiskPremium >= 1000) ? 10 : 60;
+            let finalPremium = finalRiskPremium + adminFee;
 
             document.getElementById('breakdown').innerHTML = breakdownHTML;
-            document.getElementById('base-premium').textContent = formatNumber(basePremium) + ' Kč';
-            document.getElementById('discount-sum').textContent = formatNumber(discountSum) + ' Kč';
+            document.getElementById('base-premium').textContent = formatNumber(baseRiskPremium) + ' Kč';
+            document.getElementById('admin-fee').textContent = adminFee + ' Kč';
             
+            // Progres slevy
+            document.getElementById('discount-sum').textContent = formatNumber(discountSum) + ' Kč';
             const progress = Math.min((discountSum / 5000000) * 100, 100);
             document.getElementById('discount-progress').style.width = `${progress}%`;
 
@@ -664,22 +365,12 @@
                 document.getElementById('discount-amount').textContent = `-${formatNumber(discountAmount)} Kč`;
             } else { discountRow.classList.add('hidden'); }
 
-            const minPremiumNote = document.getElementById('min-premium-note');
-            if (basePremium > 0 && finalPremium < 300) {
-                finalPremium = 300; minPremiumNote.style.display = 'block';
-            } else { minPremiumNote.style.display = 'none'; }
-
             document.getElementById('final-premium').textContent = formatNumber(finalPremium) + ' Kč';
         }
 
-        // Event listenery
         risks.forEach(risk => {
             const inputField = document.getElementById(`${risk.id}-input`);
-            
-            inputField.addEventListener('blur', (e) => {
-                if (e.target.value.trim() === '') { e.target.value = ''; values[risk.id] = 0; updateUI(); }
-            });
-
+            inputField.addEventListener('blur', (e) => { if (e.target.value.trim() === '') { e.target.value = ''; values[risk.id] = 0; updateUI(); }});
             inputField.addEventListener('input', (e) => {
                 let rawValue = e.target.value.replace(/\D/g, '');
                 if (rawValue === '') { values[risk.id] = 0; e.target.value = ''; }
@@ -707,26 +398,13 @@
 
             toggleCheckbox.addEventListener('change', (e) => {
                 indivEndEnabled[risk.id] = e.target.checked;
-                if (e.target.checked) {
-                    ageWrapper.classList.add('visible'); ageInput.focus(); ageInput.select();
-                } else {
-                    ageWrapper.classList.remove('visible'); indivEndAges[risk.id] = STANDARD_END_AGE; ageInput.value = STANDARD_END_AGE;
-                }
+                if (e.target.checked) { ageWrapper.classList.add('visible'); ageInput.focus(); ageInput.select(); } 
+                else { ageWrapper.classList.remove('visible'); indivEndAges[risk.id] = STANDARD_END_AGE; ageInput.value = STANDARD_END_AGE; }
                 updateUI();
             });
 
-            ageInput.addEventListener('input', (e) => {
-                let age = parseInt(e.target.value, 10);
-                if (isNaN(age)) age = STANDARD_END_AGE;
-                indivEndAges[risk.id] = age; updateUI();
-            });
-            
-            ageInput.addEventListener('blur', (e) => {
-                let age = parseInt(e.target.value, 10);
-                if (isNaN(age) || age <= CLIENT_AGE) age = CLIENT_AGE + 1;
-                if (age > STANDARD_END_AGE) age = STANDARD_END_AGE;
-                e.target.value = age; indivEndAges[risk.id] = age; updateUI();
-            });
+            ageInput.addEventListener('input', (e) => { let age = parseInt(e.target.value, 10); if (isNaN(age)) age = STANDARD_END_AGE; indivEndAges[risk.id] = age; updateUI(); });
+            ageInput.addEventListener('blur', (e) => { let age = parseInt(e.target.value, 10); if (isNaN(age) || age <= CLIENT_AGE) age = CLIENT_AGE + 1; if (age > STANDARD_END_AGE) age = STANDARD_END_AGE; e.target.value = age; indivEndAges[risk.id] = age; updateUI(); });
         });
 
         updateUI();
