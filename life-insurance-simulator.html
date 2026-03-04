@@ -4,6 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Modelace ŽP FLEXI - George Prostředí</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    
     <style>
         :root {
             --george-blue: #00a9e0;
@@ -12,10 +17,10 @@
             --george-dark-blue: #003a70;
             --george-green: #43b02a;
             --george-green-bg: #eef8eb;
-            --bg-light: #f0f4f7;
+            --bg-light: #f4f6f8; /* Mírně světlejší šedá pro modernější vzhled */
             --card-bg: #ffffff;
             --text-main: #1a1a1a;
-            --text-muted: #666666;
+            --text-muted: #555555;
             --border-color: #e4e9ee;
             --shadow-sm: 0 2px 8px rgba(0,0,0,0.04);
             --shadow-md: 0 8px 24px rgba(0,0,0,0.06);
@@ -24,7 +29,9 @@
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
         html { scroll-behavior: smooth; }
-        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background-color: var(--bg-light); color: var(--text-main); overflow-x: hidden; }
+        
+        /* Aplikace nového fontu Inter */
+        body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background-color: var(--bg-light); color: var(--text-main); overflow-x: hidden; }
         .svg-icon { fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
 
         /* Top Navbar */
@@ -49,17 +56,21 @@
         .client-info h1 { font-size: 22px; margin-bottom: 6px; }
         .client-info p { font-size: 14px; color: var(--text-muted); }
 
-        /* Accordions */
-        .accordion-item { background-color: var(--card-bg); border-radius: 16px; box-shadow: var(--shadow-md); overflow: hidden; margin-bottom: 24px; border: 1px solid transparent; transition: border-color 0.3s; scroll-margin-top: 88px; }
-        .accordion-item.active { border-color: var(--george-dark-blue); }
-        .accordion-header { padding: 24px 32px; display: flex; align-items: center; justify-content: space-between; cursor: pointer; user-select: none; background-color: var(--george-dark-blue); color: #ffffff; transition: background-color 0.2s; }
-        .accordion-header:hover { background-color: #002c56; }
+        /* Accordions - NOVÝ SVĚTLÝ DESIGN */
+        .accordion-item { background-color: var(--card-bg); border-radius: 16px; box-shadow: var(--shadow-md); overflow: hidden; margin-bottom: 24px; border: 1px solid var(--border-color); transition: border-color 0.3s, box-shadow 0.3s; scroll-margin-top: 88px; }
+        .accordion-item.active { border-color: var(--cs-header-blue); box-shadow: 0 4px 20px rgba(0, 116, 232, 0.1); }
+        
+        .accordion-header { padding: 24px 32px; display: flex; align-items: center; justify-content: space-between; cursor: pointer; user-select: none; background-color: var(--card-bg); color: var(--george-dark-blue); transition: background-color 0.2s; }
+        .accordion-header:hover { background-color: var(--bg-light); }
+        
         .accordion-title-wrapper { display: flex; align-items: center; gap: 20px; }
-        .accordion-icon { width: 44px; height: 44px; background-color: rgba(255, 255, 255, 0.15); border-radius: 12px; display: flex; align-items: center; justify-content: center; color: #ffffff; flex-shrink: 0; }
+        .accordion-icon { width: 44px; height: 44px; background-color: #eaf6fc; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: var(--cs-header-blue); flex-shrink: 0; }
         .accordion-icon svg { width: 24px; height: 24px; }
         .accordion-title { font-size: 17px; font-weight: 700; line-height: 1.3; }
-        .chevron { width: 24px; height: 24px; stroke: #ffffff; transition: transform 0.3s ease; }
-        .accordion-item.active .chevron { transform: rotate(180deg); }
+        
+        .chevron { width: 24px; height: 24px; stroke: var(--george-dark-blue); transition: transform 0.3s ease; }
+        .accordion-item.active .chevron { transform: rotate(180deg); stroke: var(--cs-header-blue); }
+        
         .accordion-content { display: none; padding: 0 32px 32px 32px; border-top: 1px solid var(--border-color); background-color: var(--card-bg); }
         .accordion-item.active .accordion-content { display: block; }
 
@@ -73,7 +84,6 @@
         .info-icon:hover { background-color: var(--george-dark-blue); }
         .risk-description { font-size: 13px; color: var(--text-muted); margin-top: 4px; margin-bottom: 16px; max-width: 80%; line-height: 1.4; }
         
-        /* Ovládací řádek pro přepínátko a políčko vedle sebe */
         .controls-row { display: flex; align-items: center; justify-content: flex-end; width: 100%; margin-bottom: 12px; }
         .controls-row.has-toggle { justify-content: space-between; }
 
@@ -82,7 +92,7 @@
         .toggle-btn.active { background-color: var(--cs-header-blue); color: #ffffff; }
         
         .input-wrapper { position: relative; display: flex; align-items: center; width: 280px; }
-        .amount-input { width: 100%; padding: 16px 20px; font-size: 20px; font-weight: 700; color: var(--cs-header-blue); background-color: var(--card-bg); border: 2px solid var(--border-color); border-radius: 12px; outline: none; text-align: right; padding-right: 60px; transition: all 0.2s; }
+        .amount-input { width: 100%; padding: 16px 20px; font-size: 20px; font-weight: 700; color: var(--cs-header-blue); background-color: var(--card-bg); border: 2px solid var(--border-color); border-radius: 12px; outline: none; text-align: right; padding-right: 60px; transition: all 0.2s; font-family: 'Inter', sans-serif; }
         .amount-input:focus { border-color: var(--cs-header-blue); box-shadow: 0 0 0 4px rgba(0, 116, 232, 0.1); }
         .currency-suffix { position: absolute; right: 20px; font-size: 16px; font-weight: 600; color: var(--text-muted); pointer-events: none; }
         
@@ -96,7 +106,7 @@
         input:checked + .slider:before { transform: translateX(16px); }
         .end-age-wrapper { display: flex; align-items: center; gap: 8px; opacity: 0; pointer-events: none; font-size: 13px; color: var(--text-muted); transition: opacity 0.3s; }
         .end-age-wrapper.visible { opacity: 1; pointer-events: all; }
-        .end-age-input { width: 60px; padding: 4px 8px; font-size: 14px; font-weight: 700; border: 2px solid var(--border-color); border-radius: 6px; outline: none; text-align: center; }
+        .end-age-input { width: 60px; padding: 4px 8px; font-size: 14px; font-weight: 700; border: 2px solid var(--border-color); border-radius: 6px; outline: none; text-align: center; font-family: 'Inter', sans-serif;}
 
         /* Right Summary Panel */
         .summary-panel { background-color: var(--card-bg); border-radius: 16px; box-shadow: var(--shadow-md); position: sticky; top: 88px; overflow: hidden; }
@@ -130,12 +140,20 @@
         .modal-header { background-color: var(--cs-header-blue); color: white; padding: 20px 24px; font-size: 18px; font-weight: 700; display: flex; align-items: center; gap: 12px; }
         .modal-header .info-icon { background-color: white; color: var(--cs-header-blue); }
         .modal-body { padding: 24px; font-size: 15px; color: var(--text-main); line-height: 1.6; }
-        .modal-footer { padding: 16px 24px; border-top: 1px solid var(--border-color); display: flex; justify-content: flex-end; background-color: #fafbfc; }
-        .modal-btn { background-color: var(--cs-header-blue); color: white; border: none; padding: 10px 24px; font-size: 14px; font-weight: 600; border-radius: 8px; cursor: pointer; transition: background-color 0.2s; }
+        .modal-footer { padding: 16px 24px; border-top: 1px solid var(--border-color); display: flex; justify-content: flex-end; background-color: var(--bg-light); }
+        .modal-btn { background-color: var(--cs-header-blue); color: white; border: none; padding: 10px 24px; font-size: 14px; font-weight: 600; border-radius: 8px; cursor: pointer; transition: background-color 0.2s; font-family: 'Inter', sans-serif; }
         .modal-btn:hover { background-color: #005bb5; }
 
-        @media (max-width: 1200px) { .app-layout { grid-template-columns: 1fr 350px; } .sidebar { display: none; } }
-        @media (max-width: 900px) { .app-layout { grid-template-columns: 1fr; } .summary-panel { position: relative; top: auto; } }
+        /* NOVÉ: Vyladěná responzivita pro iPad a mobily */
+        @media (max-width: 1200px) { 
+            .app-layout { grid-template-columns: 260px 1fr; } 
+            .summary-panel { display: none; } /* Na iPadu na šířku/výšku skryjeme pravý panel, cena je vlevo */
+        }
+        @media (max-width: 900px) { 
+            .app-layout { grid-template-columns: 1fr; } 
+            .sidebar { display: none; } /* Na mobilu skryjeme levé menu */
+            .summary-panel { display: block; position: relative; top: auto; } /* A vrátíme dolů pravý panel */
+        }
     </style>
 </head>
 <body>
@@ -169,7 +187,7 @@
                 <svg class="svg-icon" viewBox="0 0 24 24" style="margin-top: 2px;"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><rect x="8" y="6" width="8" height="4" rx="1" ry="1"/><circle cx="8" cy="14" r="1"/><circle cx="12" cy="14" r="1"/><circle cx="16" cy="14" r="1"/><circle cx="8" cy="18" r="1"/><circle cx="12" cy="18" r="1"/><circle cx="16" cy="18" r="1"/></svg>
                 <div style="display: flex; flex-direction: column; gap: 6px;">
                     <span>Celková cena pojištění</span>
-                    <strong id="sidebar-total-price" style="font-size: 22px; color: var(--cs-header-blue); font-weight: 800;">60 Kč</strong>
+                    <strong id="sidebar-total-price" style="font-size: 22px; color: var(--cs-header-blue); font-weight: 800;">60&nbsp;Kč</strong>
                 </div>
             </div>
         </aside>
@@ -195,18 +213,18 @@
 
                 <div class="summary-row">
                     <span>Pojistné za rizika (před slevou):</span>
-                    <strong id="base-premium">0 Kč</strong>
+                    <strong id="base-premium">0&nbsp;Kč</strong>
                 </div>
 
                 <div class="summary-row">
                     <span>Poplatek za správu smlouvy:</span>
-                    <strong id="admin-fee">60 Kč</strong>
+                    <strong id="admin-fee">60&nbsp;Kč</strong>
                 </div>
 
                 <div class="summary-row" style="flex-direction: column; align-items: flex-start; gap: 4px; border-top: 1px dashed var(--border-color); padding-top: 16px; margin-top: 16px;">
                     <div style="width: 100%; display: flex; justify-content: space-between;">
                         <span>Započteno do slevy (Smrt, VO, Inv 3):</span>
-                        <strong id="discount-sum">0 Kč</strong>
+                        <strong id="discount-sum">0&nbsp;Kč</strong>
                     </div>
                     
                     <div class="progress-container">
@@ -220,12 +238,12 @@
 
                 <div class="summary-row discount hidden" id="discount-row">
                     <span id="discount-label">Sleva za komplexnost (0%):</span>
-                    <span id="discount-amount">-0 Kč</span>
+                    <span id="discount-amount">-0&nbsp;Kč</span>
                 </div>
 
                 <div class="summary-row final">
                     <span>Předpis pojistného k úhradě</span>
-                    <div class="final-price-value" id="final-premium">60 Kč</div>
+                    <div class="final-price-value" id="final-premium">60&nbsp;Kč</div>
                 </div>
             </div>
         </aside>
@@ -267,7 +285,8 @@
 
         const values = {}; const types = {}; const indivEndEnabled = {}; const indivEndAges = {};
 
-        function formatNumber(num) { if (num === 0) return "0"; return Math.round(num).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' '); }
+        // NOVÉ: Použití pevné mezery \u00A0 místo obyčejné mezery, aby se "Kč" nezalomilo
+        function formatNumber(num) { if (num === 0) return "0"; return Math.round(num).toString().replace(/\B(?=(\d{3})+(?!\d))/g, '\u00A0'); }
 
         const accContainer = document.getElementById('accordions-container');
         Object.keys(categories).forEach((catKey, index) => {
@@ -356,7 +375,7 @@
                 if (value > 0) {
                     let typeLabel = types[risk.id] === 'linear' ? ' (Klesající)' : '';
                     let ageLabel = indivEndEnabled[risk.id] ? ` • do ${indivEndAges[risk.id]} let` : '';
-                    breakdownHTML += `<div class="breakdown-item"><span>${risk.label} <small>${formatNumber(value)} ${risk.suffix}${typeLabel}${ageLabel}</small></span><strong>${formatNumber(riskPrice)} Kč</strong></div>`;
+                    breakdownHTML += `<div class="breakdown-item"><span>${risk.label} <small>${formatNumber(value)}\u00A0${risk.suffix}${typeLabel}${ageLabel}</small></span><strong>${formatNumber(riskPrice)}\u00A0Kč</strong></div>`;
                 }
             });
 
@@ -376,10 +395,10 @@
             let finalPremium = finalRiskPremium + adminFee;
 
             document.getElementById('breakdown').innerHTML = breakdownHTML;
-            document.getElementById('base-premium').textContent = formatNumber(baseRiskPremium) + ' Kč';
-            document.getElementById('admin-fee').textContent = adminFee + ' Kč';
+            document.getElementById('base-premium').textContent = formatNumber(baseRiskPremium) + '\u00A0Kč';
+            document.getElementById('admin-fee').textContent = adminFee + '\u00A0Kč';
             
-            document.getElementById('discount-sum').textContent = formatNumber(discountSum) + ' Kč';
+            document.getElementById('discount-sum').textContent = formatNumber(discountSum) + '\u00A0Kč';
             const progress = Math.min((discountSum / 5000000) * 100, 100);
             document.getElementById('discount-progress').style.width = `${progress}%`;
 
@@ -387,13 +406,11 @@
             if (discountPct > 0) {
                 discountRow.classList.remove('hidden');
                 document.getElementById('discount-label').textContent = `Sleva za rozsah (${discountPct}%):`;
-                document.getElementById('discount-amount').textContent = `-${formatNumber(discountAmount)} Kč`;
+                document.getElementById('discount-amount').textContent = `-${formatNumber(discountAmount)}\u00A0Kč`;
             } else { discountRow.classList.add('hidden'); }
 
-            document.getElementById('final-premium').textContent = formatNumber(finalPremium) + ' Kč';
-            
-            // AKTUALIZACE CENY V LEVÉM MENU
-            document.getElementById('sidebar-total-price').textContent = formatNumber(finalPremium) + ' Kč';
+            document.getElementById('final-premium').textContent = formatNumber(finalPremium) + '\u00A0Kč';
+            document.getElementById('sidebar-total-price').textContent = formatNumber(finalPremium) + '\u00A0Kč';
         }
 
         risks.forEach(risk => {
