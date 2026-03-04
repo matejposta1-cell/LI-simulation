@@ -3,52 +3,248 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Modelace Životního Pojištění - George Design</title>
+    <title>Modelace ŽP FLEXI - George Prostředí</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        :root {
+            --george-blue: #00a9e0;
+            --george-blue-hover: #008ebd;
+            --george-green: #43b02a;
+            --george-green-bg: #eef8eb;
+            --bg-light: #f0f4f7;
+            --card-bg: #ffffff;
+            --text-main: #1a1a1a;
+            --text-muted: #666666;
+            --border-color: #e4e9ee;
+            --shadow-sm: 0 2px 8px rgba(0,0,0,0.04);
+            --shadow-md: 0 8px 24px rgba(0,0,0,0.06);
         }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', Helvetica, Arial, sans-serif;
-            background-color: #f0f3f5;
-            color: #1a1a1a;
-            padding: 40px 20px;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-main);
+            overflow-x: hidden;
         }
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
+        /* Top Navbar */
+        .top-navbar {
+            background-color: var(--card-bg);
+            height: 64px;
+            box-shadow: var(--shadow-sm);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 32px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .navbar-logo {
+            font-size: 20px;
+            font-weight: 800;
+            color: var(--george-blue);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .navbar-user {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .user-avatar {
+            width: 36px;
+            height: 36px;
+            background-color: var(--bg-light);
+            border: 1px solid var(--border-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 13px;
+            color: var(--george-blue);
+            font-weight: bold;
+        }
+
+        /* Main Layout */
+        .app-layout {
             display: grid;
-            grid-template-columns: 1fr 400px;
-            gap: 30px;
+            grid-template-columns: 240px 1fr 380px;
+            gap: 24px;
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 24px 32px;
+            align-items: start;
         }
 
-        .inputs-section {
-            background-color: #ffffff;
+        /* Left Sidebar */
+        .sidebar {
+            background-color: var(--card-bg);
             border-radius: 16px;
-            padding: 32px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.06);
+            padding: 24px 16px;
+            box-shadow: var(--shadow-md);
+            position: sticky;
+            top: 88px;
         }
 
-        .inputs-section h2 {
-            font-size: 24px;
-            margin-bottom: 24px;
-            color: #1a1a1a;
+        .menu-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 14px 16px;
+            border-radius: 12px;
+            color: var(--text-muted);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 15px;
+            transition: all 0.2s;
+            margin-bottom: 4px;
+            cursor: pointer;
         }
 
+        .menu-item svg {
+            width: 20px;
+            height: 20px;
+            fill: currentColor;
+        }
+
+        .menu-item:hover {
+            background-color: var(--bg-light);
+            color: var(--text-main);
+        }
+
+        .menu-item.active {
+            background-color: #eaf6fc;
+            color: var(--george-blue);
+        }
+
+        /* Center Column */
+        .main-content {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .client-card {
+            background-color: var(--card-bg);
+            border-radius: 16px;
+            padding: 24px 32px;
+            box-shadow: var(--shadow-md);
+            border-left: 6px solid var(--george-blue);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .client-info h1 {
+            font-size: 22px;
+            margin-bottom: 6px;
+        }
+
+        .client-info p {
+            font-size: 14px;
+            color: var(--text-muted);
+        }
+
+        /* Accordions */
+        .accordion-item {
+            background-color: var(--card-bg);
+            border-radius: 16px;
+            box-shadow: var(--shadow-md);
+            overflow: hidden;
+            margin-bottom: 16px;
+            border: 1px solid transparent;
+            transition: border-color 0.3s;
+        }
+
+        .accordion-item.active {
+            border-color: var(--border-color);
+        }
+
+        .accordion-header {
+            padding: 24px 32px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            user-select: none;
+            background-color: var(--card-bg);
+            transition: background-color 0.2s;
+        }
+
+        .accordion-header:hover {
+            background-color: #fafbfc;
+        }
+
+        .accordion-title-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .accordion-icon {
+            width: 40px;
+            height: 40px;
+            background-color: #eaf6fc;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--george-blue);
+        }
+
+        .accordion-icon svg {
+            width: 24px;
+            height: 24px;
+            fill: currentColor;
+        }
+
+        .accordion-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        .chevron {
+            width: 20px;
+            height: 20px;
+            fill: var(--text-muted);
+            transition: transform 0.3s ease;
+        }
+
+        .accordion-item.active .chevron {
+            transform: rotate(180deg);
+            fill: var(--george-blue);
+        }
+
+        .accordion-content {
+            display: none;
+            padding: 0 32px 32px 32px;
+            border-top: 1px solid var(--border-color);
+            background-color: #fafbfc;
+        }
+
+        .accordion-item.active .accordion-content {
+            display: block;
+        }
+
+        /* Inputs inside Accordion */
         .input-group {
-            margin-bottom: 30px;
-            padding-bottom: 20px;
-            border-bottom: 1px solid #f0f3f5;
+            padding: 24px 0;
+            border-bottom: 1px dashed var(--border-color);
         }
 
         .input-group:last-child {
-            margin-bottom: 0;
-            padding-bottom: 0;
             border-bottom: none;
+            padding-bottom: 0;
         }
 
         .label-row {
@@ -61,207 +257,258 @@
         .label {
             font-weight: 600;
             font-size: 15px;
-            color: #333;
         }
 
-        .type-select {
-            padding: 6px 12px;
-            border-radius: 8px;
-            border: 1px solid #d0d7dd;
-            background-color: #f4f8fb;
-            color: #1a1a1a;
-            font-size: 13px;
-            font-weight: 500;
-            outline: none;
-            cursor: pointer;
-            transition: border-color 0.2s;
-        }
-
-        .type-select:hover {
-            border-color: #00a9e0;
-        }
-
-        .input-wrapper {
+        .toggle-group {
             display: flex;
-            gap: 20px;
-            align-items: center;
-        }
-
-        .range-slider {
-            flex: 1;
-            height: 6px;
-            border-radius: 3px;
-            background: #e0e5e9;
-            outline: none;
-            -webkit-appearance: none;
-            appearance: none;
-        }
-
-        .range-slider::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            appearance: none;
-            width: 24px;
-            height: 24px;
-            border-radius: 50%;
-            background-color: #00a9e0;
-            cursor: pointer;
-            box-shadow: 0 2px 8px rgba(0, 169, 224, 0.4);
-            transition: transform 0.1s, box-shadow 0.2s;
-        }
-
-        .range-slider::-webkit-slider-thumb:hover {
-            transform: scale(1.1);
-            box-shadow: 0 4px 12px rgba(0, 169, 224, 0.5);
-        }
-
-        .value-display {
-            min-width: 130px;
-            text-align: right;
-            font-weight: 700;
-            font-size: 16px;
-            color: #00a9e0;
-            background: #f4f8fb;
-            padding: 8px 12px;
+            background-color: #fff;
             border-radius: 8px;
-            white-space: nowrap;
-        }
-
-        .summary-panel {
-            background-color: #ffffff;
-            border-radius: 16px;
-            padding: 32px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.06);
-            position: sticky;
-            top: 40px;
-            height: fit-content;
-        }
-
-        .summary-title {
-            font-size: 20px;
-            font-weight: 700;
-            color: #1a1a1a;
-            margin-bottom: 24px;
-            border-bottom: 2px solid #f0f3f5;
-            padding-bottom: 16px;
-        }
-
-        .summary-breakdown {
-            font-size: 14px;
-            color: #555;
-            margin-bottom: 20px;
-        }
-
-        .breakdown-item {
-            display: flex;
-            justify-content: space-between;
-            padding: 8px 0;
-            border-bottom: 1px dashed #e0e5e9;
-        }
-
-        .breakdown-item span small {
-            display: block;
-            font-size: 11px;
-            color: #888;
-            margin-top: 2px;
-        }
-
-        .breakdown-item:last-child {
-            border-bottom: none;
-        }
-
-        .summary-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 14px;
-            margin-bottom: 16px;
-            color: #555;
-        }
-
-        .summary-row strong {
-            color: #1a1a1a;
-        }
-
-        .summary-row.discount {
-            color: #43b02a;
-            font-weight: 700;
-            background: #eef8eb;
-            padding: 12px;
-            border-radius: 8px;
-            margin-bottom: 24px;
-        }
-
-        .summary-row.discount.hidden {
-            display: none;
-        }
-
-        .summary-row.final {
-            border-top: 2px solid #f0f3f5;
-            padding-top: 24px;
-            margin-top: 8px;
-            font-size: 16px;
-            font-weight: 600;
-            color: #1a1a1a;
-            flex-direction: column;
-            align-items: flex-start;
-            gap: 8px;
-        }
-
-        .final-price-value {
-            font-size: 36px;
-            font-weight: 800;
-            color: #00a9e0;
-            align-self: flex-end;
-        }
-
-        .min-premium-note {
-            font-size: 12px;
-            color: #e67e22;
-            font-weight: normal;
-            align-self: flex-end;
-            margin-top: -5px;
-            display: none;
-        }
-
-        .progress-bar-container {
-            width: 100%;
-            height: 6px;
-            background: #e0e5e9;
-            border-radius: 3px;
-            margin-top: 8px;
+            border: 1px solid var(--border-color);
             overflow: hidden;
         }
 
-        .progress-bar-fill {
-            height: 100%;
-            background: #43b02a;
-            width: 0%;
-            transition: width 0.3s ease;
+        .toggle-btn {
+            padding: 8px 16px;
+            border: none;
+            background: transparent;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: all 0.2s;
         }
 
-        @media (max-width: 1024px) {
-            .container {
-                grid-template-columns: 1fr;
-            }
-            .summary-panel {
-                position: relative;
-                top: auto;
-            }
+        .toggle-btn.active {
+            background-color: var(--george-blue);
+            color: #ffffff;
+        }
+
+        .input-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+            width: 100%;
+        }
+
+        .amount-input {
+            width: 100%;
+            padding: 16px 20px;
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--george-blue);
+            background-color: var(--card-bg);
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            outline: none;
+            text-align: right;
+            padding-right: 60px;
+            transition: all 0.2s;
+        }
+
+        .amount-input:focus {
+            border-color: var(--george-blue);
+            box-shadow: 0 0 0 4px rgba(0, 169, 224, 0.1);
+        }
+
+        .currency-suffix {
+            position: absolute;
+            right: 20px;
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text-muted);
+            pointer-events: none;
+        }
+
+        .individual-end-container {
+            margin-top: 12px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .switch-container {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            color: var(--text-muted);
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 36px;
+            height: 20px;
+        }
+
+        .switch input { opacity: 0; width: 0; height: 0; }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-color: var(--border-color);
+            transition: .3s;
+            border-radius: 20px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 14px; width: 14px;
+            left: 3px; bottom: 3px;
+            background-color: white;
+            transition: .3s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider { background-color: var(--george-blue); }
+        input:checked + .slider:before { transform: translateX(16px); }
+
+        .end-age-wrapper {
+            display: flex; align-items: center; gap: 8px;
+            opacity: 0; pointer-events: none;
+            font-size: 13px; color: var(--text-muted);
+            transition: opacity 0.3s;
+        }
+        .end-age-wrapper.visible { opacity: 1; pointer-events: all; }
+
+        .end-age-input {
+            width: 60px; padding: 4px 8px;
+            font-size: 14px; font-weight: 700;
+            border: 2px solid var(--border-color);
+            border-radius: 6px; outline: none; text-align: center;
+        }
+
+        /* Right Summary Panel */
+        .summary-panel {
+            background-color: var(--card-bg);
+            border-radius: 16px;
+            padding: 32px;
+            box-shadow: var(--shadow-md);
+            position: sticky;
+            top: 88px;
+        }
+
+        .summary-title {
+            font-size: 20px; font-weight: 700;
+            margin-bottom: 24px; border-bottom: 2px solid var(--bg-light);
+            padding-bottom: 16px;
+        }
+
+        .summary-breakdown { font-size: 14px; color: var(--text-muted); margin-bottom: 24px; }
+        
+        .breakdown-item {
+            display: flex; justify-content: space-between;
+            padding: 10px 0; border-bottom: 1px dashed var(--border-color);
+        }
+        .breakdown-item span small { display: block; font-size: 11px; color: #888; margin-top: 4px; }
+        .breakdown-item:last-child { border-bottom: none; }
+
+        .summary-row {
+            display: flex; justify-content: space-between; align-items: center;
+            font-size: 15px; margin-bottom: 16px; color: var(--text-muted);
+        }
+        .summary-row strong { color: var(--text-main); font-size: 16px; }
+
+        .summary-row.discount {
+            color: var(--george-green); font-weight: 700; background: var(--george-green-bg);
+            padding: 16px; border-radius: 12px; margin-bottom: 24px; margin-top: 10px;
+        }
+        .summary-row.discount.hidden { display: none; }
+
+        .summary-row.final {
+            border-top: 2px solid var(--bg-light); padding-top: 24px; margin-top: 16px;
+            font-size: 16px; font-weight: 600; color: var(--text-main);
+            flex-direction: column; align-items: flex-start; gap: 10px;
+        }
+
+        .final-price-value {
+            font-size: 42px; font-weight: 800; color: var(--george-blue);
+            align-self: flex-end; line-height: 1;
+        }
+
+        .min-premium-note {
+            font-size: 13px; color: #e67e22; font-weight: 600; align-self: flex-end;
+            margin-top: 4px; display: none;
+        }
+
+        .progress-container { width: 100%; margin-top: 8px; }
+        .progress-labels { display: flex; justify-content: space-between; font-size: 11px; color: #888; font-weight: 600; margin-bottom: 4px;}
+        .progress-bar-bg { width: 100%; height: 8px; background: var(--border-color); border-radius: 4px; position: relative; overflow: hidden;}
+        .progress-bar-fill { height: 100%; background: var(--george-green); width: 0%; transition: width 0.4s; }
+        .progress-marker { position: absolute; top: 0; height: 100%; width: 2px; background: rgba(255,255,255,0.7); }
+
+        @media (max-width: 1200px) {
+            .app-layout { grid-template-columns: 1fr 350px; }
+            .sidebar { display: none; } /* Na menším monitoru schováme boční panel */
+        }
+        @media (max-width: 900px) {
+            .app-layout { grid-template-columns: 1fr; }
+            .summary-panel { position: relative; top: auto; }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        
-        <div class="inputs-section">
-            <h2>Nastavení pojistného krytí</h2>
-            <div id="sliders-container"></div>
-        </div>
 
-        <div class="summary-panel">
+    <header class="top-navbar">
+        <div class="navbar-logo">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+            </svg>
+            Prodejní portál ŽP
+        </div>
+        <div class="navbar-user">
+            <span>Poradce: Petr Novák</span>
+            <div class="user-avatar">PN</div>
+        </div>
+    </header>
+
+    <div class="app-layout">
+        
+        <aside class="sidebar">
+            <div class="menu-item">
+                <svg viewBox="0 0 24 24"><path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/></svg>
+                Nástěnka
+            </div>
+            <div class="menu-item">
+                <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+                Klienti
+            </div>
+            <div class="menu-item active">
+                <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 9h-2V7h-2v5H6v2h2v5h2v-5h2v-2z"/></svg>
+                Nová modelace
+            </div>
+            <div class="menu-item">
+                <svg viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
+                Rozpracované smlouvy
+            </div>
+        </aside>
+
+        <main class="main-content">
+            
+            <div class="client-card">
+                <div class="client-info">
+                    <h1>Jan Novák (Modelový klient)</h1>
+                    <p>Věk při vstupu: 30 let | Konec pojištění: v 65 letech | Riziková skupina: 1 (Administrativa)</p>
+                </div>
+            </div>
+
+            <div id="accordions-container">
+                </div>
+
+        </main>
+
+        <aside class="summary-panel">
             <div class="summary-title">Shrnutí modelace</div>
             
-            <div class="summary-breakdown" id="breakdown"></div>
+            <div class="summary-breakdown" id="breakdown">
+                <div style="text-align: center; color: #888; font-style: italic; padding: 20px 0;">
+                    Zadejte pojistné částky.
+                </div>
+            </div>
 
             <div class="summary-row">
                 <span>Základní měsíční pojistné:</span>
@@ -270,58 +517,120 @@
 
             <div class="summary-row" style="flex-direction: column; align-items: flex-start; gap: 4px;">
                 <div style="width: 100%; display: flex; justify-content: space-between;">
-                    <span>Součet pro slevu (Smrt, VO, Inv 3):</span>
+                    <span>Započteno do slevy (Smrt, VO, Inv 3):</span>
                     <strong id="discount-sum">0 Kč</strong>
                 </div>
-                <div class="progress-bar-container">
-                    <div class="progress-bar-fill" id="discount-progress"></div>
+                
+                <div class="progress-container">
+                    <div class="progress-labels">
+                        <span>0</span>
+                        <span>1M (10%)</span>
+                        <span>3M (20%)</span>
+                        <span>5M (30%)</span>
+                    </div>
+                    <div class="progress-bar-bg">
+                        <div class="progress-bar-fill" id="discount-progress"></div>
+                        <div class="progress-marker" style="left: 20%;"></div>
+                        <div class="progress-marker" style="left: 60%;"></div>
+                    </div>
                 </div>
             </div>
 
             <div class="summary-row discount hidden" id="discount-row">
-                <span id="discount-label">Sleva za komplexní rozsah (0%):</span>
+                <span id="discount-label">Sleva za komplexnost (0%):</span>
                 <span id="discount-amount">-0 Kč</span>
             </div>
 
             <div class="summary-row final">
-                <span>Celkové měsíční pojistné k úhradě</span>
+                <span>Předpis pojistného k úhradě</span>
                 <div class="final-price-value" id="final-premium">0 Kč</div>
-                <div class="min-premium-note" id="min-premium-note">*Aplikováno min. pojistné 300 Kč</div>
+                <div class="min-premium-note" id="min-premium-note">Zvýšeno na min. pojistné 300 Kč</div>
             </div>
-        </div>
+        </aside>
     </div>
 
     <script>
+        const CLIENT_AGE = 30;
+        const STANDARD_END_AGE = 65;
+        const STANDARD_DURATION = STANDARD_END_AGE - CLIENT_AGE;
+
+        // Rozdělení rizik do kategorií pro akordeony
+        const categories = {
+            'life': {
+                title: 'Základní životní rizika',
+                icon: '<path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>'
+            },
+            'disability': {
+                title: 'Invalidita a závažná onemocnění',
+                icon: '<path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 9h-2V7h-2v5H6v2h2v5h2v-5h2v-2z"/>' // Kříž/Zdraví ikona
+            },
+            'accident': {
+                title: 'Úraz a pracovní neschopnost',
+                icon: '<path d="M11.99 2L2 6v5.05c0 5.05 3.41 9.76 9.99 11.95 6.58-2.19 9.99-6.9 9.99-11.95V6l-9.99-4zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.65 0-3 1.35-3 3s1.35 3 3 3 3-1.35 3-3-1.35-3-3-3z"/>' // Štít ikona
+            }
+        };
+
         const risks = [
-            { id: 'death', label: 'Pojištění pro případ smrti', rate: 24.50, max: 10000000, step: 100000, suffix: ' Kč', divisor: 100000, hasDecrease: true },
-            { id: 'illness', label: 'Vážná onemocnění', rate: 48.20, max: 10000000, step: 100000, suffix: ' Kč', divisor: 100000, hasDecrease: true },
-            { id: 'disability3', label: 'Invalidita 3. stupně', rate: 42.10, max: 10000000, step: 100000, suffix: ' Kč', divisor: 100000, hasDecrease: true },
-            { id: 'disability2', label: 'Invalidita 2. stupně', rate: 30.00, max: 10000000, step: 100000, suffix: ' Kč', divisor: 100000, hasDecrease: true },
-            { id: 'disability1', label: 'Invalidita 1. stupně', rate: 24.30, max: 10000000, step: 100000, suffix: ' Kč', divisor: 100000, hasDecrease: true },
-            { id: 'injury', label: 'Trvalé následky úrazu', rate: 13.50, max: 10000000, step: 100000, suffix: ' Kč', divisor: 100000, hasDecrease: false },
-            { id: 'incapacity', label: 'Pracovní neschopnost', rate: 62.00, max: 2000, step: 100, suffix: ' Kč/den', divisor: 100, hasDecrease: false }
+            { id: 'death', category: 'life', label: 'Pojištění pro případ smrti', rate: 24.50, max: 20000000, suffix: 'Kč', divisor: 100000, hasDecrease: true },
+            { id: 'illness', category: 'disability', label: 'Vážná onemocnění', rate: 48.20, max: 20000000, suffix: 'Kč', divisor: 100000, hasDecrease: true },
+            { id: 'disability3', category: 'disability', label: 'Invalidita 3. stupně', rate: 42.10, max: 20000000, suffix: 'Kč', divisor: 100000, hasDecrease: true },
+            { id: 'disability2', category: 'disability', label: 'Invalidita 2. stupně', rate: 30.00, max: 20000000, suffix: 'Kč', divisor: 100000, hasDecrease: true },
+            { id: 'disability1', category: 'disability', label: 'Invalidita 1. stupně', rate: 24.30, max: 20000000, suffix: 'Kč', divisor: 100000, hasDecrease: true },
+            { id: 'injury', category: 'accident', label: 'Trvalé následky úrazu', rate: 13.50, max: 20000000, suffix: 'Kč', divisor: 100000, hasDecrease: false },
+            { id: 'incapacity', category: 'accident', label: 'Pracovní neschopnost', rate: 62.00, max: 5000, suffix: 'Kč/den', divisor: 100, hasDecrease: false }
         ];
 
         const values = {};
-        const types = {}; // Ukládá vybraný typ (konstantní, lineární, anuitní)
+        const types = {};
+        const indivEndEnabled = {};
+        const indivEndAges = {};
 
         function formatNumber(num) {
+            if (num === 0) return "0";
             return Math.round(num).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
         }
 
-        const container = document.getElementById('sliders-container');
+        // Generování akordeonů a obsahu
+        const accContainer = document.getElementById('accordions-container');
+        
+        Object.keys(categories).forEach((catKey, index) => {
+            const cat = categories[catKey];
+            // První akordeon necháme rovnou otevřený
+            const isActive = index === 0 ? 'active' : '';
+            
+            let accHTML = `
+                <div class="accordion-item ${isActive}">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <div class="accordion-title-wrapper">
+                            <div class="accordion-icon">
+                                <svg viewBox="0 0 24 24">${cat.icon}</svg>
+                            </div>
+                            <span class="accordion-title">${cat.title}</span>
+                        </div>
+                        <svg class="chevron" viewBox="0 0 24 24"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/></svg>
+                    </div>
+                    <div class="accordion-content">
+                        <div id="cat-content-${catKey}"></div>
+                    </div>
+                </div>
+            `;
+            accContainer.insertAdjacentHTML('beforeend', accHTML);
+        });
+
+        // Vložení rizik do příslušných akordeonů
         risks.forEach(risk => {
             values[risk.id] = 0;
             types[risk.id] = 'constant';
+            indivEndEnabled[risk.id] = false;
+            indivEndAges[risk.id] = STANDARD_END_AGE;
 
-            let typeSelectHTML = '';
+            let toggleHTML = '';
             if (risk.hasDecrease) {
-                typeSelectHTML = `
-                    <select class="type-select" id="${risk.id}-type">
-                        <option value="constant">Konstantní částka</option>
-                        <option value="linear">Lineárně klesající</option>
-                        <option value="annuity">Anuitně klesající</option>
-                    </select>
+                toggleHTML = `
+                    <div class="toggle-group" id="${risk.id}-toggle-group">
+                        <button type="button" class="toggle-btn active" data-type="constant" data-risk="${risk.id}">Konstantní</button>
+                        <button type="button" class="toggle-btn" data-type="linear" data-risk="${risk.id}">Klesající</button>
+                    </div>
                 `;
             }
 
@@ -329,37 +638,57 @@
                 <div class="input-group">
                     <div class="label-row">
                         <label class="label">${risk.label}</label>
-                        ${typeSelectHTML}
+                        ${toggleHTML}
                     </div>
                     <div class="input-wrapper">
-                        <input type="range" class="range-slider" id="${risk.id}-slider" min="0" max="${risk.max}" step="${risk.step}" value="0">
-                        <div class="value-display" id="${risk.id}-value">0${risk.suffix}</div>
+                        <input type="text" class="amount-input" id="${risk.id}-input" value="" placeholder="0" inputmode="numeric">
+                        <span class="currency-suffix">${risk.suffix}</span>
+                    </div>
+                    
+                    <div class="individual-end-container">
+                        <label class="switch-container">
+                            <div class="switch">
+                                <input type="checkbox" class="indiv-end-toggle" data-risk="${risk.id}">
+                                <span class="slider"></span>
+                            </div>
+                            Individuální konec pojištění
+                        </label>
+                        <div class="end-age-wrapper" id="${risk.id}-age-wrapper">
+                            <span>Konec ve věku:</span>
+                            <input type="number" class="end-age-input" id="${risk.id}-age-input" min="${CLIENT_AGE + 1}" max="${STANDARD_END_AGE}" value="${STANDARD_END_AGE}">
+                        </div>
                     </div>
                 </div>
             `;
-            container.insertAdjacentHTML('beforeend', html);
+            
+            document.getElementById(`cat-content-${risk.category}`).insertAdjacentHTML('beforeend', html);
         });
 
-        // Výpočet ceny za riziko s ohledem na klesající částky
-        function calculateRiskPrice(risk) {
-            const value = values[risk.id];
-            const type = types[risk.id];
-            let typeMultiplier = 1.0;
-
-            if (type === 'linear') typeMultiplier = 0.5; // Cca 50% sleva na pojistném u lineární
-            if (type === 'annuity') typeMultiplier = 0.65; // Cca 35% sleva na pojistném u anuitní
-
-            return (value / risk.divisor) * risk.rate * typeMultiplier;
+        // Funkce pro otevírání/zavírání akordeonů
+        function toggleAccordion(headerElement) {
+            const item = headerElement.parentElement;
+            item.classList.toggle('active');
         }
 
-        // Výpočet částky, která se počítá do komplexní slevy (klesající se počítají jen z 50 %)
+        // Výpočet zlevnění při zkrácení doby
+        function getDurationDiscountFactor(riskId) {
+            if (!indivEndEnabled[riskId]) return 1.0;
+            let endAge = indivEndAges[riskId];
+            if (endAge <= CLIENT_AGE) endAge = CLIENT_AGE + 1;
+            if (endAge > STANDARD_END_AGE) endAge = STANDARD_END_AGE;
+            return (endAge - CLIENT_AGE) / STANDARD_DURATION;
+        }
+
+        function calculateRiskPrice(risk) {
+            const value = values[risk.id];
+            let typeMultiplier = types[risk.id] === 'linear' ? 0.5 : 1.0;
+            const durationFactor = getDurationDiscountFactor(risk.id);
+            return (value / risk.divisor) * risk.rate * typeMultiplier * durationFactor;
+        }
+
         function calculateDiscountSumValue(riskId) {
             const value = values[riskId];
-            const type = types[riskId];
-            if (type === 'linear' || type === 'annuity') {
-                return value * 0.5;
-            }
-            return value;
+            return types[riskId] === 'linear' ? value * 0.5 : value;
         }
 
         function updateUI() {
@@ -372,20 +701,22 @@
                 basePremium += riskPrice;
 
                 if (value > 0) {
-                    let typeLabel = '';
-                    if (types[risk.id] === 'linear') typeLabel = ' (Lineárně klesající)';
-                    if (types[risk.id] === 'annuity') typeLabel = ' (Anuitně klesající)';
+                    let typeLabel = types[risk.id] === 'linear' ? ' (Klesající)' : '';
+                    let ageLabel = indivEndEnabled[risk.id] ? ` • do ${indivEndAges[risk.id]} let` : '';
 
                     breakdownHTML += `
                         <div class="breakdown-item">
-                            <span>${risk.label} <small>${formatNumber(value)}${risk.suffix}${typeLabel}</small></span>
+                            <span>${risk.label} <small>${formatNumber(value)} ${risk.suffix}${typeLabel}${ageLabel}</small></span>
                             <strong>${formatNumber(riskPrice)} Kč</strong>
                         </div>
                     `;
                 }
             });
 
-            // Logika slev
+            if (basePremium === 0) {
+                breakdownHTML = `<div style="text-align: center; color: #888; font-style: italic; padding: 20px 0;">Zadejte pojistné částky.</div>`;
+            }
+
             const discountSum = calculateDiscountSumValue('death') + 
                                 calculateDiscountSumValue('illness') + 
                                 calculateDiscountSumValue('disability3');
@@ -398,12 +729,10 @@
             const discountAmount = basePremium * (discountPct / 100);
             let finalPremium = basePremium - discountAmount;
 
-            // Zápis do panelu
             document.getElementById('breakdown').innerHTML = breakdownHTML;
             document.getElementById('base-premium').textContent = formatNumber(basePremium) + ' Kč';
             document.getElementById('discount-sum').textContent = formatNumber(discountSum) + ' Kč';
             
-            // Progress bar slevy
             const progress = Math.min((discountSum / 5000000) * 100, 100);
             document.getElementById('discount-progress').style.width = `${progress}%`;
 
@@ -416,7 +745,6 @@
                 discountRow.classList.add('hidden');
             }
 
-            // Aplikace pravidla minimálního pojistného (300 Kč)
             const minPremiumNote = document.getElementById('min-premium-note');
             if (basePremium > 0 && finalPremium < 300) {
                 finalPremium = 300;
@@ -428,24 +756,77 @@
             document.getElementById('final-premium').textContent = formatNumber(finalPremium) + ' Kč';
         }
 
+        // Obsluha eventů
         risks.forEach(risk => {
-            const slider = document.getElementById(`${risk.id}-slider`);
-            const display = document.getElementById(`${risk.id}-value`);
+            const inputField = document.getElementById(`${risk.id}-input`);
             
-            slider.addEventListener('input', (e) => {
-                const val = parseInt(e.target.value);
-                values[risk.id] = val;
-                display.textContent = formatNumber(val) + risk.suffix;
+            inputField.addEventListener('blur', (e) => {
+                if (e.target.value.trim() === '') {
+                    e.target.value = '';
+                    values[risk.id] = 0;
+                    updateUI();
+                }
+            });
+
+            inputField.addEventListener('input', (e) => {
+                let rawValue = e.target.value.replace(/\D/g, '');
+                if (rawValue === '') {
+                    values[risk.id] = 0;
+                    e.target.value = '';
+                } else {
+                    let numValue = parseInt(rawValue, 10);
+                    if (numValue > risk.max) numValue = risk.max;
+                    values[risk.id] = numValue;
+                    e.target.value = formatNumber(numValue);
+                }
                 updateUI();
             });
 
             if (risk.hasDecrease) {
-                const typeSelect = document.getElementById(`${risk.id}-type`);
-                typeSelect.addEventListener('change', (e) => {
-                    types[risk.id] = e.target.value;
-                    updateUI();
+                const buttons = document.querySelectorAll(`#${risk.id}-toggle-group .toggle-btn`);
+                buttons.forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        buttons.forEach(b => b.classList.remove('active'));
+                        e.target.classList.add('active');
+                        types[risk.id] = e.target.dataset.type;
+                        updateUI();
+                    });
                 });
             }
+
+            const toggleCheckbox = document.querySelector(`.indiv-end-toggle[data-risk="${risk.id}"]`);
+            const ageWrapper = document.getElementById(`${risk.id}-age-wrapper`);
+            const ageInput = document.getElementById(`${risk.id}-age-input`);
+
+            toggleCheckbox.addEventListener('change', (e) => {
+                indivEndEnabled[risk.id] = e.target.checked;
+                if (e.target.checked) {
+                    ageWrapper.classList.add('visible');
+                    ageInput.focus();
+                    ageInput.select();
+                } else {
+                    ageWrapper.classList.remove('visible');
+                    indivEndAges[risk.id] = STANDARD_END_AGE;
+                    ageInput.value = STANDARD_END_AGE;
+                }
+                updateUI();
+            });
+
+            ageInput.addEventListener('input', (e) => {
+                let age = parseInt(e.target.value, 10);
+                if (isNaN(age)) age = STANDARD_END_AGE;
+                indivEndAges[risk.id] = age;
+                updateUI();
+            });
+            
+            ageInput.addEventListener('blur', (e) => {
+                let age = parseInt(e.target.value, 10);
+                if (isNaN(age) || age <= CLIENT_AGE) age = CLIENT_AGE + 1;
+                if (age > STANDARD_END_AGE) age = STANDARD_END_AGE;
+                e.target.value = age;
+                indivEndAges[risk.id] = age;
+                updateUI();
+            });
         });
 
         updateUI();
