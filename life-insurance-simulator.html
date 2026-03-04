@@ -8,6 +8,7 @@
         :root {
             --george-blue: #00a9e0;
             --george-blue-hover: #008ebd;
+            --george-dark-blue: #003a70; /* Přidaná tmavě modrá pro akordeony */
             --george-green: #43b02a;
             --george-green-bg: #eef8eb;
             --bg-light: #f0f4f7;
@@ -20,6 +21,10 @@
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html {
+            scroll-behavior: smooth; /* Plynulé rolování stránky */
+        }
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
@@ -85,7 +90,7 @@
             align-items: start;
         }
 
-        /* Left Sidebar */
+        /* Left Sidebar (Rychlá navigace) */
         .sidebar {
             background-color: var(--card-bg);
             border-radius: 16px;
@@ -93,6 +98,16 @@
             box-shadow: var(--shadow-md);
             position: sticky;
             top: 88px;
+        }
+        
+        .sidebar-title {
+            font-size: 12px;
+            text-transform: uppercase;
+            font-weight: 700;
+            color: #888;
+            margin-bottom: 16px;
+            padding-left: 16px;
+            letter-spacing: 0.5px;
         }
 
         .menu-item {
@@ -104,7 +119,7 @@
             color: var(--text-muted);
             text-decoration: none;
             font-weight: 600;
-            font-size: 15px;
+            font-size: 14px;
             transition: all 0.2s;
             margin-bottom: 4px;
             cursor: pointer;
@@ -154,19 +169,20 @@
             color: var(--text-muted);
         }
 
-        /* Accordions */
+        /* Accordions - Tmavě modré */
         .accordion-item {
             background-color: var(--card-bg);
             border-radius: 16px;
             box-shadow: var(--shadow-md);
             overflow: hidden;
-            margin-bottom: 16px;
+            margin-bottom: 24px;
             border: 1px solid transparent;
             transition: border-color 0.3s;
+            scroll-margin-top: 88px; /* Aby při scrollování nezajel pod horní lištu */
         }
 
         .accordion-item.active {
-            border-color: var(--border-color);
+            border-color: var(--george-dark-blue);
         }
 
         .accordion-header {
@@ -176,12 +192,13 @@
             justify-content: space-between;
             cursor: pointer;
             user-select: none;
-            background-color: var(--card-bg);
+            background-color: var(--george-dark-blue); /* Tmavě modrá barva */
+            color: #ffffff;
             transition: background-color 0.2s;
         }
 
         .accordion-header:hover {
-            background-color: #fafbfc;
+            background-color: #002c56; /* Ještě tmavší při najetí */
         }
 
         .accordion-title-wrapper {
@@ -193,12 +210,12 @@
         .accordion-icon {
             width: 40px;
             height: 40px;
-            background-color: #eaf6fc;
+            background-color: rgba(255, 255, 255, 0.15); /* Světlejší podklad pro ikonu */
             border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: var(--george-blue);
+            color: #ffffff;
         }
 
         .accordion-icon svg {
@@ -210,26 +227,25 @@
         .accordion-title {
             font-size: 18px;
             font-weight: 700;
-            color: var(--text-main);
+            color: #ffffff;
         }
 
         .chevron {
-            width: 20px;
-            height: 20px;
-            fill: var(--text-muted);
+            width: 24px;
+            height: 24px;
+            fill: #ffffff;
             transition: transform 0.3s ease;
         }
 
         .accordion-item.active .chevron {
             transform: rotate(180deg);
-            fill: var(--george-blue);
         }
 
         .accordion-content {
             display: none;
             padding: 0 32px 32px 32px;
             border-top: 1px solid var(--border-color);
-            background-color: #fafbfc;
+            background-color: var(--card-bg);
         }
 
         .accordion-item.active .accordion-content {
@@ -261,7 +277,7 @@
 
         .toggle-group {
             display: flex;
-            background-color: #fff;
+            background-color: var(--bg-light);
             border-radius: 8px;
             border: 1px solid var(--border-color);
             overflow: hidden;
@@ -443,7 +459,7 @@
 
         @media (max-width: 1200px) {
             .app-layout { grid-template-columns: 1fr 350px; }
-            .sidebar { display: none; } /* Na menším monitoru schováme boční panel */
+            .sidebar { display: none; }
         }
         @media (max-width: 900px) {
             .app-layout { grid-template-columns: 1fr; }
@@ -469,21 +485,21 @@
     <div class="app-layout">
         
         <aside class="sidebar">
-            <div class="menu-item">
-                <svg viewBox="0 0 24 24"><path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/></svg>
-                Nástěnka
+            <div class="sidebar-title">Rychlá navigace k rizikům</div>
+            
+            <div class="menu-item active" onclick="scrollToCategory('life', this)">
+                <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                Základní rizika
             </div>
-            <div class="menu-item">
-                <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
-                Klienti
-            </div>
-            <div class="menu-item active">
+            
+            <div class="menu-item" onclick="scrollToCategory('disability', this)">
                 <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 9h-2V7h-2v5H6v2h2v5h2v-5h2v-2z"/></svg>
-                Nová modelace
+                Vážné obtíže
             </div>
-            <div class="menu-item">
-                <svg viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
-                Rozpracované smlouvy
+            
+            <div class="menu-item" onclick="scrollToCategory('accident', this)">
+                <svg viewBox="0 0 24 24"><path d="M11.99 2L2 6v5.05c0 5.05 3.41 9.76 9.99 11.95 6.58-2.19 9.99-6.9 9.99-11.95V6l-9.99-4zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.65 0-3 1.35-3 3s1.35 3 3 3 3-1.35 3-3-1.35-3-3-3z"/></svg>
+                Úraz nebo nemoc
             </div>
         </aside>
 
@@ -504,11 +520,7 @@
         <aside class="summary-panel">
             <div class="summary-title">Shrnutí modelace</div>
             
-            <div class="summary-breakdown" id="breakdown">
-                <div style="text-align: center; color: #888; font-style: italic; padding: 20px 0;">
-                    Zadejte pojistné částky.
-                </div>
-            </div>
+            <div class="summary-breakdown" id="breakdown"></div>
 
             <div class="summary-row">
                 <span>Základní měsíční pojistné:</span>
@@ -554,19 +566,19 @@
         const STANDARD_END_AGE = 65;
         const STANDARD_DURATION = STANDARD_END_AGE - CLIENT_AGE;
 
-        // Rozdělení rizik do kategorií pro akordeony
+        // Kategorie přejmenované přesně podle levého panelu
         const categories = {
             'life': {
-                title: 'Základní životní rizika',
+                title: 'Základní rizika',
                 icon: '<path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>'
             },
             'disability': {
-                title: 'Invalidita a závažná onemocnění',
-                icon: '<path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 9h-2V7h-2v5H6v2h2v5h2v-5h2v-2z"/>' // Kříž/Zdraví ikona
+                title: 'Vážné obtíže',
+                icon: '<path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 9h-2V7h-2v5H6v2h2v5h2v-5h2v-2z"/>'
             },
             'accident': {
-                title: 'Úraz a pracovní neschopnost',
-                icon: '<path d="M11.99 2L2 6v5.05c0 5.05 3.41 9.76 9.99 11.95 6.58-2.19 9.99-6.9 9.99-11.95V6l-9.99-4zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.65 0-3 1.35-3 3s1.35 3 3 3 3-1.35 3-3-1.35-3-3-3z"/>' // Štít ikona
+                title: 'Úraz nebo nemoc',
+                icon: '<path d="M11.99 2L2 6v5.05c0 5.05 3.41 9.76 9.99 11.95 6.58-2.19 9.99-6.9 9.99-11.95V6l-9.99-4zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.65 0-3 1.35-3 3s1.35 3 3 3 3-1.35 3-3-1.35-3-3-3z"/>'
             }
         };
 
@@ -590,16 +602,14 @@
             return Math.round(num).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
         }
 
-        // Generování akordeonů a obsahu
+        // Generování akordeonů
         const accContainer = document.getElementById('accordions-container');
-        
         Object.keys(categories).forEach((catKey, index) => {
             const cat = categories[catKey];
-            // První akordeon necháme rovnou otevřený
             const isActive = index === 0 ? 'active' : '';
             
             let accHTML = `
-                <div class="accordion-item ${isActive}">
+                <div class="accordion-item ${isActive}" id="accordion-${catKey}">
                     <div class="accordion-header" onclick="toggleAccordion(this)">
                         <div class="accordion-title-wrapper">
                             <div class="accordion-icon">
@@ -617,7 +627,7 @@
             accContainer.insertAdjacentHTML('beforeend', accHTML);
         });
 
-        // Vložení rizik do příslušných akordeonů
+        // Vložení rizik
         risks.forEach(risk => {
             values[risk.id] = 0;
             types[risk.id] = 'constant';
@@ -664,13 +674,31 @@
             document.getElementById(`cat-content-${risk.category}`).insertAdjacentHTML('beforeend', html);
         });
 
-        // Funkce pro otevírání/zavírání akordeonů
+        // Funkce pro ruční kliknutí na hlavičku akordeonu
         function toggleAccordion(headerElement) {
             const item = headerElement.parentElement;
             item.classList.toggle('active');
         }
 
-        // Výpočet zlevnění při zkrácení doby
+        // FUNKCE PRO LEVÉ MENU (Scroll & Otevření)
+        function scrollToCategory(catId, menuElement) {
+            // Zvýraznění aktivní položky v menu
+            document.querySelectorAll('.sidebar .menu-item').forEach(el => el.classList.remove('active'));
+            menuElement.classList.add('active');
+
+            // Najdi cílový akordeon
+            const targetAccordion = document.getElementById(`accordion-${catId}`);
+            
+            if (targetAccordion) {
+                // Ujistíme se, že je akordeon rozbalený
+                targetAccordion.classList.add('active');
+                
+                // Plynulé odrolování tak, aby akordeon začínal kousek pod horní lištou
+                targetAccordion.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }
+
+        // Výpočet zlevnění
         function getDurationDiscountFactor(riskId) {
             if (!indivEndEnabled[riskId]) return 1.0;
             let endAge = indivEndAges[riskId];
@@ -756,7 +784,7 @@
             document.getElementById('final-premium').textContent = formatNumber(finalPremium) + ' Kč';
         }
 
-        // Obsluha eventů
+        // Event listenery pro inputy
         risks.forEach(risk => {
             const inputField = document.getElementById(`${risk.id}-input`);
             
