@@ -18,6 +18,7 @@
             --border-color: #e4e9ee;
             --shadow-sm: 0 2px 8px rgba(0,0,0,0.04);
             --shadow-md: 0 8px 24px rgba(0,0,0,0.06);
+            --shadow-lg: 0 16px 40px rgba(0,0,0,0.12);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -31,7 +32,6 @@
             overflow-x: hidden;
         }
 
-        /* Globální styly pro linkové Line-Art ikony */
         .svg-icon {
             fill: none;
             stroke: currentColor;
@@ -55,433 +55,229 @@
         }
 
         .navbar-logo {
-            font-size: 20px;
-            font-weight: 800;
-            color: var(--george-blue);
-            display: flex;
-            align-items: center;
-            gap: 12px;
+            font-size: 20px; font-weight: 800; color: var(--george-blue);
+            display: flex; align-items: center; gap: 12px;
         }
 
         .navbar-user {
-            font-size: 14px;
-            font-weight: 600;
-            color: var(--text-muted);
-            display: flex;
-            align-items: center;
-            gap: 12px;
+            font-size: 14px; font-weight: 600; color: var(--text-muted);
+            display: flex; align-items: center; gap: 12px;
         }
 
         .user-avatar {
-            width: 36px;
-            height: 36px;
-            background-color: var(--bg-light);
-            border: 1px solid var(--border-color);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 13px;
-            color: var(--george-blue);
-            font-weight: bold;
+            width: 36px; height: 36px; background-color: var(--bg-light);
+            border: 1px solid var(--border-color); border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 13px; color: var(--george-blue); font-weight: bold;
         }
 
         /* Main Layout */
         .app-layout {
-            display: grid;
-            grid-template-columns: 260px 1fr 380px;
-            gap: 24px;
-            max-width: 1600px;
-            margin: 0 auto;
-            padding: 24px 32px;
-            align-items: start;
+            display: grid; grid-template-columns: 260px 1fr 380px; gap: 24px;
+            max-width: 1600px; margin: 0 auto; padding: 24px 32px; align-items: start;
         }
 
-        /* Left Sidebar (Rychlá navigace) */
+        /* Left Sidebar */
         .sidebar {
-            background-color: var(--card-bg);
-            border-radius: 16px;
-            padding: 24px 16px;
-            box-shadow: var(--shadow-md);
-            position: sticky;
-            top: 88px;
+            background-color: var(--card-bg); border-radius: 16px;
+            padding: 24px 16px; box-shadow: var(--shadow-md); position: sticky; top: 88px;
         }
 
         .menu-item {
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            padding: 16px 16px;
-            border-radius: 12px;
-            color: var(--text-muted);
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 14px;
-            transition: all 0.2s;
-            margin-bottom: 4px;
-            cursor: pointer;
+            display: flex; align-items: center; gap: 14px; padding: 16px 16px;
+            border-radius: 12px; color: var(--text-muted); font-weight: 600;
+            font-size: 14px; transition: all 0.2s; margin-bottom: 4px; cursor: pointer;
         }
 
-        .menu-item svg {
-            width: 22px;
-            height: 22px;
-        }
-
-        .menu-item:hover {
-            background-color: var(--bg-light);
-            color: var(--text-main);
-        }
-
-        .menu-item.active {
-            background-color: #eaf6fc;
-            color: var(--george-blue);
-        }
+        .menu-item svg { width: 22px; height: 22px; }
+        .menu-item:hover { background-color: var(--bg-light); color: var(--text-main); }
+        .menu-item.active { background-color: #eaf6fc; color: var(--george-blue); }
 
         /* Center Column */
-        .main-content {
-            display: flex;
-            flex-direction: column;
-            gap: 24px;
-        }
+        .main-content { display: flex; flex-direction: column; gap: 24px; }
 
         .client-card {
-            background-color: var(--card-bg);
-            border-radius: 16px;
-            padding: 24px 32px;
-            box-shadow: var(--shadow-md);
-            border-left: 6px solid var(--george-blue);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            background-color: var(--card-bg); border-radius: 16px; padding: 24px 32px;
+            box-shadow: var(--shadow-md); border-left: 6px solid var(--george-blue);
+            display: flex; justify-content: space-between; align-items: center;
         }
+        .client-info h1 { font-size: 22px; margin-bottom: 6px; }
+        .client-info p { font-size: 14px; color: var(--text-muted); }
 
-        .client-info h1 {
-            font-size: 22px;
-            margin-bottom: 6px;
-        }
-
-        .client-info p {
-            font-size: 14px;
-            color: var(--text-muted);
-        }
-
-        /* Accordions - Tmavě modré */
+        /* Accordions */
         .accordion-item {
-            background-color: var(--card-bg);
-            border-radius: 16px;
-            box-shadow: var(--shadow-md);
-            overflow: hidden;
-            margin-bottom: 24px;
-            border: 1px solid transparent;
-            transition: border-color 0.3s;
-            scroll-margin-top: 88px;
+            background-color: var(--card-bg); border-radius: 16px; box-shadow: var(--shadow-md);
+            overflow: hidden; margin-bottom: 24px; border: 1px solid transparent;
+            transition: border-color 0.3s; scroll-margin-top: 88px;
         }
-
-        .accordion-item.active {
-            border-color: var(--george-dark-blue);
-        }
+        .accordion-item.active { border-color: var(--george-dark-blue); }
 
         .accordion-header {
-            padding: 24px 32px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            cursor: pointer;
-            user-select: none;
-            background-color: var(--george-dark-blue);
-            color: #ffffff;
-            transition: background-color 0.2s;
+            padding: 24px 32px; display: flex; align-items: center; justify-content: space-between;
+            cursor: pointer; user-select: none; background-color: var(--george-dark-blue);
+            color: #ffffff; transition: background-color 0.2s;
         }
+        .accordion-header:hover { background-color: #002c56; }
 
-        .accordion-header:hover {
-            background-color: #002c56;
-        }
-
-        .accordion-title-wrapper {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-        }
-
+        .accordion-title-wrapper { display: flex; align-items: center; gap: 20px; }
         .accordion-icon {
-            width: 44px;
-            height: 44px;
-            background-color: rgba(255, 255, 255, 0.15);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #ffffff;
-            flex-shrink: 0;
+            width: 44px; height: 44px; background-color: rgba(255, 255, 255, 0.15);
+            border-radius: 12px; display: flex; align-items: center; justify-content: center;
+            color: #ffffff; flex-shrink: 0;
         }
+        .accordion-icon svg { width: 24px; height: 24px; }
+        .accordion-title { font-size: 17px; font-weight: 700; line-height: 1.3; }
 
-        .accordion-icon svg {
-            width: 24px;
-            height: 24px;
-        }
-
-        .accordion-title {
-            font-size: 17px;
-            font-weight: 700;
-            color: #ffffff;
-            line-height: 1.3;
-        }
-
-        .chevron {
-            width: 24px;
-            height: 24px;
-            stroke: #ffffff;
-            transition: transform 0.3s ease;
-        }
-
-        .accordion-item.active .chevron {
-            transform: rotate(180deg);
-        }
+        .chevron { width: 24px; height: 24px; stroke: #ffffff; transition: transform 0.3s ease; }
+        .accordion-item.active .chevron { transform: rotate(180deg); }
 
         .accordion-content {
-            display: none;
-            padding: 0 32px 32px 32px;
-            border-top: 1px solid var(--border-color);
-            background-color: var(--card-bg);
+            display: none; padding: 0 32px 32px 32px;
+            border-top: 1px solid var(--border-color); background-color: var(--card-bg);
         }
+        .accordion-item.active .accordion-content { display: block; }
 
-        .accordion-item.active .accordion-content {
-            display: block;
-        }
+        /* Inputs & Risks */
+        .input-group { padding: 24px 0; border-bottom: 1px dashed var(--border-color); }
+        .input-group:last-child { border-bottom: none; padding-bottom: 0; }
 
-        /* Inputs inside Accordion */
-        .input-group {
-            padding: 24px 0;
-            border-bottom: 1px dashed var(--border-color);
-        }
-
-        .input-group:last-child {
-            border-bottom: none;
-            padding-bottom: 0;
-        }
-
-        .label-row {
+        .label-row { display: flex; justify-content: space-between; align-items: center; }
+        
+        .label-title-wrapper {
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            margin-bottom: 12px;
+            gap: 10px;
         }
 
-        .label {
-            font-weight: 600;
-            font-size: 15px;
+        .label { font-weight: 700; font-size: 16px; color: var(--text-main); }
+
+        /* Info Ikona (íčko) */
+        .info-icon {
+            display: inline-flex; align-items: center; justify-content: center;
+            width: 22px; height: 22px; border-radius: 50%;
+            background-color: var(--george-blue); color: #ffffff;
+            font-size: 14px; font-weight: 800; font-family: serif; font-style: italic;
+            cursor: pointer; transition: background-color 0.2s;
+        }
+        .info-icon:hover { background-color: var(--george-dark-blue); }
+
+        /* Popisek pod rizikem */
+        .risk-description {
+            font-size: 13px; color: var(--text-muted);
+            margin-top: 4px; margin-bottom: 16px; max-width: 80%;
+            line-height: 1.4;
         }
 
         .toggle-group {
-            display: flex;
-            background-color: var(--bg-light);
-            border-radius: 8px;
-            border: 1px solid var(--border-color);
-            overflow: hidden;
+            display: flex; background-color: var(--bg-light); border-radius: 8px;
+            border: 1px solid var(--border-color); overflow: hidden;
         }
-
         .toggle-btn {
-            padding: 8px 16px;
-            border: none;
-            background: transparent;
-            font-size: 13px;
-            font-weight: 600;
-            color: var(--text-muted);
-            cursor: pointer;
-            transition: all 0.2s;
+            padding: 8px 16px; border: none; background: transparent; font-size: 13px;
+            font-weight: 600; color: var(--text-muted); cursor: pointer; transition: all 0.2s;
         }
+        .toggle-btn.active { background-color: var(--george-blue); color: #ffffff; }
 
-        .toggle-btn.active {
-            background-color: var(--george-blue);
-            color: #ffffff;
-        }
-
-        .input-wrapper {
-            position: relative;
-            display: flex;
-            align-items: center;
-            width: 100%;
-        }
-
+        .input-wrapper { position: relative; display: flex; align-items: center; width: 100%; }
         .amount-input {
-            width: 100%;
-            padding: 16px 20px;
-            font-size: 20px;
-            font-weight: 700;
-            color: var(--george-blue);
-            background-color: var(--card-bg);
-            border: 2px solid var(--border-color);
-            border-radius: 12px;
-            outline: none;
-            text-align: right;
-            padding-right: 60px;
-            transition: all 0.2s;
+            width: 100%; padding: 16px 20px; font-size: 20px; font-weight: 700;
+            color: var(--george-blue); background-color: var(--card-bg);
+            border: 2px solid var(--border-color); border-radius: 12px; outline: none;
+            text-align: right; padding-right: 60px; transition: all 0.2s;
         }
+        .amount-input:focus { border-color: var(--george-blue); box-shadow: 0 0 0 4px rgba(0, 169, 224, 0.1); }
+        .currency-suffix { position: absolute; right: 20px; font-size: 16px; font-weight: 600; color: var(--text-muted); pointer-events: none; }
 
-        .amount-input:focus {
-            border-color: var(--george-blue);
-            box-shadow: 0 0 0 4px rgba(0, 169, 224, 0.1);
-        }
-
-        .currency-suffix {
-            position: absolute;
-            right: 20px;
-            font-size: 16px;
-            font-weight: 600;
-            color: var(--text-muted);
-            pointer-events: none;
-        }
-
-        .individual-end-container {
-            margin-top: 12px;
-            display: flex;
-            align-items: center;
-            gap: 16px;
-        }
-
-        .switch-container {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 13px;
-            color: var(--text-muted);
-            font-weight: 600;
-            cursor: pointer;
-        }
-
-        .switch {
-            position: relative;
-            display: inline-block;
-            width: 36px;
-            height: 20px;
-        }
-
+        .individual-end-container { margin-top: 12px; display: flex; align-items: center; gap: 16px; }
+        .switch-container { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--text-muted); font-weight: 600; cursor: pointer; }
+        .switch { position: relative; display: inline-block; width: 36px; height: 20px; }
         .switch input { opacity: 0; width: 0; height: 0; }
-
-        .slider {
-            position: absolute;
-            cursor: pointer;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background-color: var(--border-color);
-            transition: .3s;
-            border-radius: 20px;
-        }
-
-        .slider:before {
-            position: absolute;
-            content: "";
-            height: 14px; width: 14px;
-            left: 3px; bottom: 3px;
-            background-color: white;
-            transition: .3s;
-            border-radius: 50%;
-        }
-
+        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: var(--border-color); transition: .3s; border-radius: 20px; }
+        .slider:before { position: absolute; content: ""; height: 14px; width: 14px; left: 3px; bottom: 3px; background-color: white; transition: .3s; border-radius: 50%; }
         input:checked + .slider { background-color: var(--george-blue); }
         input:checked + .slider:before { transform: translateX(16px); }
 
-        .end-age-wrapper {
-            display: flex; align-items: center; gap: 8px;
-            opacity: 0; pointer-events: none;
-            font-size: 13px; color: var(--text-muted);
-            transition: opacity 0.3s;
-        }
+        .end-age-wrapper { display: flex; align-items: center; gap: 8px; opacity: 0; pointer-events: none; font-size: 13px; color: var(--text-muted); transition: opacity 0.3s; }
         .end-age-wrapper.visible { opacity: 1; pointer-events: all; }
-
-        .end-age-input {
-            width: 60px; padding: 4px 8px;
-            font-size: 14px; font-weight: 700;
-            border: 2px solid var(--border-color);
-            border-radius: 6px; outline: none; text-align: center;
-        }
+        .end-age-input { width: 60px; padding: 4px 8px; font-size: 14px; font-weight: 700; border: 2px solid var(--border-color); border-radius: 6px; outline: none; text-align: center; }
 
         /* Right Summary Panel */
         .summary-panel {
-            background-color: var(--card-bg);
-            border-radius: 16px;
-            box-shadow: var(--shadow-md);
-            position: sticky;
-            top: 88px;
-            overflow: hidden;
+            background-color: var(--card-bg); border-radius: 16px; box-shadow: var(--shadow-md);
+            position: sticky; top: 88px; overflow: hidden;
         }
-
         .summary-header {
-            padding: 20px 24px;
-            display: flex;
-            align-items: center;
-            background-color: var(--george-dark-blue);
-            color: #ffffff;
+            padding: 20px 24px; display: flex; align-items: center;
+            background-color: var(--george-dark-blue); color: #ffffff;
         }
-
         .summary-icon {
-            width: 36px;
-            height: 36px;
-            background-color: rgba(255, 255, 255, 0.15);
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #ffffff;
-            margin-right: 16px;
+            width: 36px; height: 36px; background-color: rgba(255, 255, 255, 0.15);
+            border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-right: 16px;
         }
-
-        .summary-icon svg {
-            width: 22px;
-            height: 22px;
-        }
-
-        .summary-title {
-            font-size: 17px;
-            font-weight: 700;
-            color: #ffffff;
-        }
-
-        .summary-body {
-            padding: 24px 32px;
-        }
+        .summary-icon svg { width: 22px; height: 22px; }
+        .summary-title { font-size: 17px; font-weight: 700; }
+        .summary-body { padding: 24px 32px; }
 
         .summary-breakdown { font-size: 14px; color: var(--text-muted); margin-bottom: 24px; }
-        
-        .breakdown-item {
-            display: flex; justify-content: space-between;
-            padding: 10px 0; border-bottom: 1px dashed var(--border-color);
-        }
+        .breakdown-item { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px dashed var(--border-color); }
         .breakdown-item span small { display: block; font-size: 11px; color: #888; margin-top: 4px; }
         .breakdown-item:last-child { border-bottom: none; }
 
-        .summary-row {
-            display: flex; justify-content: space-between; align-items: center;
-            font-size: 15px; margin-bottom: 16px; color: var(--text-muted);
-        }
+        .summary-row { display: flex; justify-content: space-between; align-items: center; font-size: 15px; margin-bottom: 16px; color: var(--text-muted); }
         .summary-row strong { color: var(--text-main); font-size: 16px; }
 
-        .summary-row.discount {
-            color: var(--george-green); font-weight: 700; background: var(--george-green-bg);
-            padding: 16px; border-radius: 12px; margin-bottom: 24px; margin-top: 10px;
-        }
+        .summary-row.discount { color: var(--george-green); font-weight: 700; background: var(--george-green-bg); padding: 16px; border-radius: 12px; margin-bottom: 24px; margin-top: 10px; }
         .summary-row.discount.hidden { display: none; }
 
-        .summary-row.final {
-            border-top: 2px solid var(--bg-light); padding-top: 24px; margin-top: 16px;
-            font-size: 16px; font-weight: 600; color: var(--text-main);
-            flex-direction: column; align-items: flex-start; gap: 10px;
-        }
-
-        .final-price-value {
-            font-size: 42px; font-weight: 800; color: var(--george-blue);
-            align-self: flex-end; line-height: 1;
-        }
-
-        .min-premium-note {
-            font-size: 13px; color: #e67e22; font-weight: 600; align-self: flex-end;
-            margin-top: 4px; display: none;
-        }
+        .summary-row.final { border-top: 2px solid var(--bg-light); padding-top: 24px; margin-top: 16px; font-size: 16px; font-weight: 600; color: var(--text-main); flex-direction: column; align-items: flex-start; gap: 10px; }
+        .final-price-value { font-size: 42px; font-weight: 800; color: var(--george-blue); align-self: flex-end; line-height: 1; }
+        .min-premium-note { font-size: 13px; color: #e67e22; font-weight: 600; align-self: flex-end; margin-top: 4px; display: none; }
 
         .progress-container { width: 100%; margin-top: 8px; }
         .progress-labels { display: flex; justify-content: space-between; font-size: 11px; color: #888; font-weight: 600; margin-bottom: 4px;}
         .progress-bar-bg { width: 100%; height: 8px; background: var(--border-color); border-radius: 4px; position: relative; overflow: hidden;}
         .progress-bar-fill { height: 100%; background: var(--george-green); width: 0%; transition: width 0.4s; }
         .progress-marker { position: absolute; top: 0; height: 100%; width: 2px; background: rgba(255,255,255,0.7); }
+
+        /* Vyskakovací okno (Modal) */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-color: rgba(0, 0, 0, 0.6); z-index: 1000;
+            display: flex; align-items: center; justify-content: center;
+            opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
+        }
+        .modal-overlay.active {
+            opacity: 1; pointer-events: all;
+        }
+        .modal-content {
+            background-color: var(--card-bg); width: 90%; max-width: 500px;
+            border-radius: 16px; box-shadow: var(--shadow-lg);
+            transform: translateY(20px); transition: transform 0.3s ease;
+            overflow: hidden;
+        }
+        .modal-overlay.active .modal-content { transform: translateY(0); }
+        
+        .modal-header {
+            background-color: var(--george-blue); color: white;
+            padding: 20px 24px; font-size: 18px; font-weight: 700;
+            display: flex; align-items: center; gap: 12px;
+        }
+        .modal-header .info-icon {
+            background-color: white; color: var(--george-blue);
+        }
+        .modal-body {
+            padding: 24px; font-size: 15px; color: var(--text-main); line-height: 1.6;
+        }
+        .modal-footer {
+            padding: 16px 24px; border-top: 1px solid var(--border-color);
+            display: flex; justify-content: flex-end; background-color: #fafbfc;
+        }
+        .modal-btn {
+            background-color: var(--george-blue); color: white;
+            border: none; padding: 10px 24px; font-size: 14px; font-weight: 600;
+            border-radius: 8px; cursor: pointer; transition: background-color 0.2s;
+        }
+        .modal-btn:hover { background-color: var(--george-blue-hover); }
 
         @media (max-width: 1200px) {
             .app-layout { grid-template-columns: 1fr 350px; }
@@ -555,7 +351,6 @@
         </aside>
 
         <main class="main-content">
-            
             <div class="client-card">
                 <div class="client-info">
                     <h1>Jan Novák (Modelový klient)</h1>
@@ -565,7 +360,6 @@
 
             <div id="accordions-container">
                 </div>
-
         </main>
 
         <aside class="summary-panel" id="summary">
@@ -628,12 +422,26 @@
         </aside>
     </div>
 
+    <div class="modal-overlay" id="info-modal" onclick="closeModal(event)">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <div class="modal-header">
+                <span class="info-icon">i</span>
+                <span id="modal-title">Název rizika</span>
+            </div>
+            <div class="modal-body" id="modal-body">
+                Lidový popis rizika se načte sem.
+            </div>
+            <div class="modal-footer">
+                <button class="modal-btn" onclick="closeModal(event, true)">Rozumím</button>
+            </div>
+        </div>
+    </div>
+
     <script>
         const CLIENT_AGE = 30;
         const STANDARD_END_AGE = 65;
         const STANDARD_DURATION = STANDARD_END_AGE - CLIENT_AGE;
 
-        // Kategorie přejmenované přesně podle zadání + Čisté SVG Line-art ikony
         const categories = {
             'accident': {
                 title: 'Úraz nebo nemoc mě na pár měsíců vyřadí z provozu',
@@ -649,26 +457,38 @@
             }
         };
 
-        // Přeorganizované pole rizik přesně podle zadání
+        // Přeorganizované pole rizik - Přidáno "description" (pro UI pod textem) a "tooltip" (pro vyskakovací okno)
         const risks = [
-            // 1. Akordeon: Úraz a Nemoc (Sádra)
-            { id: 'incapacity', category: 'accident', label: 'Pracovní neschopnost', rate: 62.00, max: 5000, suffix: 'Kč/den', divisor: 100, hasDecrease: false },
+            { id: 'incapacity', category: 'accident', label: 'Pracovní neschopnost', rate: 62.00, max: 5000, suffix: 'Kč/den', divisor: 100, hasDecrease: false,
+              description: "Pomůže vám dorovnat příjem, když kvůli nemoci nebo úrazu nemůžete pracovat.",
+              tooltip: "Když dlouhodobě omarodíte (třeba i s obyčejnou chřipkou nebo zablokovanými zády), pošleme vám za každý den marodění sjednanou částku. Nepřijdete tak o svůj standard, i když vám zaměstnavatel nebo stát na nemocenské platí podstatně méně." },
             
-            // 2. Akordeon: Vážné obtíže (Kříž)
-            { id: 'disability3', category: 'disability', label: 'Invalidita 3. stupně', rate: 42.10, max: 20000000, suffix: 'Kč', divisor: 100000, hasDecrease: true },
-            { id: 'disability2', category: 'disability', label: 'Invalidita 2. stupně', rate: 30.00, max: 20000000, suffix: 'Kč', divisor: 100000, hasDecrease: true },
-            { id: 'disability1', category: 'disability', label: 'Invalidita 1. stupně', rate: 24.30, max: 20000000, suffix: 'Kč', divisor: 100000, hasDecrease: true },
-            { id: 'illness', category: 'disability', label: 'Velmi vážná onemocnění', rate: 48.20, max: 20000000, suffix: 'Kč', divisor: 100000, hasDecrease: true },
-            { id: 'injury', category: 'disability', label: 'Trvalé následky úrazu s progresí', rate: 13.50, max: 20000000, suffix: 'Kč', divisor: 100000, hasDecrease: false },
+            { id: 'disability3', category: 'disability', label: 'Invalidita 3. stupně', rate: 42.10, max: 20000000, suffix: 'Kč', divisor: 100000, hasDecrease: true,
+              description: "Zajistí vám peníze na život, když ze zdravotních důvodů nebudete moct vůbec pracovat.",
+              tooltip: "Tohle je ten nejtěžší stupeň invalidity. Znamená to, že vaše pracovní schopnost klesla o více než 70 %. Jde o následky těžkých úrazů nebo vážných nemocí (např. roztroušená skleróza). Vyplacené peníze vám pomohou předělat byt na bezbariérový, pořídit si speciální auto nebo zaplatit potřebnou péči." },
             
-            // 3. Akordeon: Zajištění blízkých (Ruka se srdíčkem)
-            { id: 'death', category: 'life', label: 'Pojištění pro případ smrti', rate: 24.50, max: 20000000, suffix: 'Kč', divisor: 100000, hasDecrease: true }
+            { id: 'disability2', category: 'disability', label: 'Invalidita 2. stupně', rate: 30.00, max: 20000000, suffix: 'Kč', divisor: 100000, hasDecrease: true,
+              description: "Dorovná váš příjem při částečném, ale výrazném omezení schopnosti pracovat.",
+              tooltip: "Při 2. stupni vaše schopnost pracovat klesla o 50 až 69 %. Můžete sice dělat nějakou jednodušší práci na zkrácený úvazek, ale už nikdy nevyděláte tolik co dřív. Pojistka tento dlouhodobý propad v příjmech pomůže dorovnat, abyste nemuseli slevovat ze svého životního standardu." },
+            
+            { id: 'disability1', category: 'disability', label: 'Invalidita 1. stupně', rate: 24.30, max: 20000000, suffix: 'Kč', divisor: 100000, hasDecrease: true,
+              description: "Finanční polštář při mírnějším omezení vaší pracovní schopnosti.",
+              tooltip: "Pracovní schopnost klesla o 35 až 49 %. Stále můžete pracovat, ale třeba už nezvládnete takovou zátěž jako dřív. Pojistka vám usnadní přechod na méně placenou pozici nebo vám dá čas se v klidu rekvalifikovat." },
+            
+            { id: 'illness', category: 'disability', label: 'Velmi vážná onemocnění', rate: 48.20, max: 20000000, suffix: 'Kč', divisor: 100000, hasDecrease: true,
+              description: "Peníze na nákladnou léčbu a rekonvalescenci při vážné diagnóze.",
+              tooltip: "Kryje desítky vážných diagnóz, jako je rakovina, infarkt, mrtvice nebo selhání orgánů. Peníze dostanete prakticky hned po potvrzení diagnózy lékařem. Můžete je využít na nadstandardní či zahraniční léčbu, drahé léky, nebo prostě na to, abyste se mohli v klidu a bez finančního stresu uzdravovat." },
+            
+            { id: 'injury', category: 'disability', label: 'Trvalé následky úrazu s progresí', rate: 13.50, max: 20000000, suffix: 'Kč', divisor: 100000, hasDecrease: false,
+              description: "Odškodnění, pokud ve vás úraz zanechá nevratné tělesné poškození.",
+              tooltip: "Vyplatíme vám peníze, když po úrazu zůstane trvalé poškození (např. omezená hybnost kloubu, ztráta zraku nebo i ošklivé jizvy). 'S progresí' znamená, že čím vážnější následek to je, tím více peněz dostanete – u těch opravdu těžkých případů to může být až několikrát více, než je sjednaná částka." },
+            
+            { id: 'death', category: 'life', label: 'Pojištění pro případ smrti', rate: 24.50, max: 20000000, suffix: 'Kč', divisor: 100000, hasDecrease: true,
+              description: "Pomůže vašim blízkým zvládnout finanční situaci a splatit případné dluhy.",
+              tooltip: "Pokud se stane to nejhorší, vaši nejbližší nezůstanou bez prostředků. Vyplacené peníze jim pomohou zaplatit hypotéku, udržet si bydlení a zajistit děti, když v rodině náhle vypadne váš hlavní příjem." }
         ];
 
-        const values = {};
-        const types = {};
-        const indivEndEnabled = {};
-        const indivEndAges = {};
+        const values = {}; const types = {}; const indivEndEnabled = {}; const indivEndAges = {};
 
         function formatNumber(num) {
             if (num === 0) return "0";
@@ -702,10 +522,8 @@
 
         // Vložení rizik do správných sekcí
         risks.forEach(risk => {
-            values[risk.id] = 0;
-            types[risk.id] = 'constant';
-            indivEndEnabled[risk.id] = false;
-            indivEndAges[risk.id] = STANDARD_END_AGE;
+            values[risk.id] = 0; types[risk.id] = 'constant';
+            indivEndEnabled[risk.id] = false; indivEndAges[risk.id] = STANDARD_END_AGE;
 
             let toggleHTML = '';
             if (risk.hasDecrease) {
@@ -720,9 +538,13 @@
             const html = `
                 <div class="input-group">
                     <div class="label-row">
-                        <label class="label">${risk.label}</label>
+                        <div class="label-title-wrapper">
+                            <label class="label">${risk.label}</label>
+                            <span class="info-icon" onclick="openModal('${risk.id}')" title="Více informací">i</span>
+                        </div>
                         ${toggleHTML}
                     </div>
+                    <div class="risk-description">${risk.description}</div>
                     <div class="input-wrapper">
                         <input type="text" class="amount-input" id="${risk.id}-input" value="" placeholder="0" inputmode="numeric">
                         <span class="currency-suffix">${risk.suffix}</span>
@@ -747,24 +569,38 @@
             document.getElementById(`cat-content-${risk.category}`).insertAdjacentHTML('beforeend', html);
         });
 
-        // Otevření/zavření akordeonu
         function toggleAccordion(headerElement) {
-            const item = headerElement.parentElement;
-            item.classList.toggle('active');
+            headerElement.parentElement.classList.toggle('active');
         }
 
-        // FUNKCE PRO LEVÉ MENU (Scroll & Otevření)
         function scrollToCategory(catId, menuElement) {
             document.querySelectorAll('.sidebar .menu-item').forEach(el => el.classList.remove('active'));
             menuElement.classList.add('active');
-
             const targetElement = document.getElementById(catId);
-            
             if (targetElement) {
-                if(targetElement.classList.contains('accordion-item')) {
-                    targetElement.classList.add('active');
-                }
+                if(targetElement.classList.contains('accordion-item')) targetElement.classList.add('active');
                 targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }
+
+        // --- Modální okno (Vyskakovací nápověda) ---
+        function openModal(riskId) {
+            const risk = risks.find(r => r.id === riskId);
+            if (!risk) return;
+            
+            document.getElementById('modal-title').textContent = risk.label;
+            document.getElementById('modal-body').textContent = risk.tooltip;
+            
+            document.getElementById('info-modal').classList.add('active');
+            // Zablokuje scrollování stránky pod oknem
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal(event, force = false) {
+            // Zavře se, pokud klikneme na pozadí (overlay) nebo přímo na tlačítko (force)
+            if (force || event.target.id === 'info-modal') {
+                document.getElementById('info-modal').classList.remove('active');
+                document.body.style.overflow = '';
             }
         }
 
@@ -785,13 +621,11 @@
         }
 
         function calculateDiscountSumValue(riskId) {
-            const value = values[riskId];
-            return types[riskId] === 'linear' ? value * 0.5 : value;
+            return types[riskId] === 'linear' ? values[riskId] * 0.5 : values[riskId];
         }
 
         function updateUI() {
-            let basePremium = 0;
-            let breakdownHTML = '';
+            let basePremium = 0; let breakdownHTML = '';
             
             risks.forEach(risk => {
                 const value = values[risk.id];
@@ -801,23 +635,13 @@
                 if (value > 0) {
                     let typeLabel = types[risk.id] === 'linear' ? ' (Klesající)' : '';
                     let ageLabel = indivEndEnabled[risk.id] ? ` • do ${indivEndAges[risk.id]} let` : '';
-
-                    breakdownHTML += `
-                        <div class="breakdown-item">
-                            <span>${risk.label} <small>${formatNumber(value)} ${risk.suffix}${typeLabel}${ageLabel}</small></span>
-                            <strong>${formatNumber(riskPrice)} Kč</strong>
-                        </div>
-                    `;
+                    breakdownHTML += `<div class="breakdown-item"><span>${risk.label} <small>${formatNumber(value)} ${risk.suffix}${typeLabel}${ageLabel}</small></span><strong>${formatNumber(riskPrice)} Kč</strong></div>`;
                 }
             });
 
-            if (basePremium === 0) {
-                breakdownHTML = `<div style="text-align: center; color: #888; font-style: italic; padding: 20px 0;">Zadejte pojistné částky.</div>`;
-            }
+            if (basePremium === 0) breakdownHTML = `<div style="text-align: center; color: #888; font-style: italic; padding: 20px 0;">Zadejte pojistné částky.</div>`;
 
-            const discountSum = calculateDiscountSumValue('death') + 
-                                calculateDiscountSumValue('illness') + 
-                                calculateDiscountSumValue('disability3');
+            const discountSum = calculateDiscountSumValue('death') + calculateDiscountSumValue('illness') + calculateDiscountSumValue('disability3');
             
             let discountPct = 0;
             if (discountSum >= 5000000) discountPct = 30;
@@ -839,17 +663,12 @@
                 discountRow.classList.remove('hidden');
                 document.getElementById('discount-label').textContent = `Sleva za rozsah (${discountPct}%):`;
                 document.getElementById('discount-amount').textContent = `-${formatNumber(discountAmount)} Kč`;
-            } else {
-                discountRow.classList.add('hidden');
-            }
+            } else { discountRow.classList.add('hidden'); }
 
             const minPremiumNote = document.getElementById('min-premium-note');
             if (basePremium > 0 && finalPremium < 300) {
-                finalPremium = 300;
-                minPremiumNote.style.display = 'block';
-            } else {
-                minPremiumNote.style.display = 'none';
-            }
+                finalPremium = 300; minPremiumNote.style.display = 'block';
+            } else { minPremiumNote.style.display = 'none'; }
 
             document.getElementById('final-premium').textContent = formatNumber(finalPremium) + ' Kč';
         }
@@ -859,23 +678,16 @@
             const inputField = document.getElementById(`${risk.id}-input`);
             
             inputField.addEventListener('blur', (e) => {
-                if (e.target.value.trim() === '') {
-                    e.target.value = '';
-                    values[risk.id] = 0;
-                    updateUI();
-                }
+                if (e.target.value.trim() === '') { e.target.value = ''; values[risk.id] = 0; updateUI(); }
             });
 
             inputField.addEventListener('input', (e) => {
                 let rawValue = e.target.value.replace(/\D/g, '');
-                if (rawValue === '') {
-                    values[risk.id] = 0;
-                    e.target.value = '';
-                } else {
+                if (rawValue === '') { values[risk.id] = 0; e.target.value = ''; }
+                else {
                     let numValue = parseInt(rawValue, 10);
                     if (numValue > risk.max) numValue = risk.max;
-                    values[risk.id] = numValue;
-                    e.target.value = formatNumber(numValue);
+                    values[risk.id] = numValue; e.target.value = formatNumber(numValue);
                 }
                 updateUI();
             });
@@ -885,9 +697,7 @@
                 buttons.forEach(btn => {
                     btn.addEventListener('click', (e) => {
                         buttons.forEach(b => b.classList.remove('active'));
-                        e.target.classList.add('active');
-                        types[risk.id] = e.target.dataset.type;
-                        updateUI();
+                        e.target.classList.add('active'); types[risk.id] = e.target.dataset.type; updateUI();
                     });
                 });
             }
@@ -899,13 +709,9 @@
             toggleCheckbox.addEventListener('change', (e) => {
                 indivEndEnabled[risk.id] = e.target.checked;
                 if (e.target.checked) {
-                    ageWrapper.classList.add('visible');
-                    ageInput.focus();
-                    ageInput.select();
+                    ageWrapper.classList.add('visible'); ageInput.focus(); ageInput.select();
                 } else {
-                    ageWrapper.classList.remove('visible');
-                    indivEndAges[risk.id] = STANDARD_END_AGE;
-                    ageInput.value = STANDARD_END_AGE;
+                    ageWrapper.classList.remove('visible'); indivEndAges[risk.id] = STANDARD_END_AGE; ageInput.value = STANDARD_END_AGE;
                 }
                 updateUI();
             });
@@ -913,17 +719,14 @@
             ageInput.addEventListener('input', (e) => {
                 let age = parseInt(e.target.value, 10);
                 if (isNaN(age)) age = STANDARD_END_AGE;
-                indivEndAges[risk.id] = age;
-                updateUI();
+                indivEndAges[risk.id] = age; updateUI();
             });
             
             ageInput.addEventListener('blur', (e) => {
                 let age = parseInt(e.target.value, 10);
                 if (isNaN(age) || age <= CLIENT_AGE) age = CLIENT_AGE + 1;
                 if (age > STANDARD_END_AGE) age = STANDARD_END_AGE;
-                e.target.value = age;
-                indivEndAges[risk.id] = age;
-                updateUI();
+                e.target.value = age; indivEndAges[risk.id] = age; updateUI();
             });
         });
 
